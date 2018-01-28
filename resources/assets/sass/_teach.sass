@@ -1,0 +1,42 @@
+#passo2
+  .card img
+      opacity: 0.8
+  .is-active .card img
+    opacity: 1
+    border: 2px solid $primary
+
+$radius: 3px
+#teach-component
+  #passo4
+    margin-top: 30px
+    figure
+      text-align: center
+    .gopher
+      height: 30vh
+      margin: auto
+  .modal-content
+    min-width: 640px
+    width: auto
+  .close-lesson
+    color: $danger
+    position: absolute
+    top: 5px
+    right: 0
+    font-size: 1.3rem
+  .add
+    font-size: 2em
+    position: absolute
+    top: 50%
+    left: 0
+    width: 100%
+    text-align: center
+    transform: translateY(-50%)
+  .card.create figure
+    border-radius: $radius
+    border: thin dashed $text
+    @include after('')
+  .card
+    box-shadow: none
+    img
+      border-radius: $radius
+      margin-bottom: -8px

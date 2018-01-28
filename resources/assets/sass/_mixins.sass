@@ -1,0 +1,24 @@
+@mixin opacity($opacity)
+  filter: alpha(opacity=$opacity)
+  opacity: $opacity
+@mixin blur($px)
+  -webkit-filter: blur($px)
+  -moz-filter: blur($px)
+  -o-filter: blur($px)
+  -ms-filter: blur($px)
+  filter: blur($px)
+@mixin calc($a, $b)
+  height: -webkit-calc(#{$a} - #{$b})
+  height: -moz-calc(#{$a} - #{$b})
+  height:      calc(#{$a} - #{$b})
+@mixin after($content)
+  &::after
+    position: absolute
+    left: 0
+    top: 0
+    content: $content
+    display: block
+    height: 100%
+    width: 100%
+@mixin has-border($direction)
+  border-#{$direction}: thin solid $border-color

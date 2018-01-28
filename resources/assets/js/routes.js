@@ -1,0 +1,20 @@
+module.exports = [
+  // { path: '/', component: require('./components/HomeComponent.vue') },
+  { path: '/material', component: require('./components/Lesson/Material.vue') },
+  { path: '/material/game/:id', component: require('./components/Game/GameComponent.vue') },
+  { path: '/courses/:course/material/game/:id', component: require('./components/Game/GameComponent.vue') },
+  { path: '/courses/', component: require('./components/Course/CoursesComponent.vue') },
+  { path: '/courses/create', component: require('./components/Course/Create.vue') },
+  { path: '/courses/:id', component: require('./components/Course/Associate.vue') },
+  { path: '/courses/item', component: require('./components/Course/CourseMainComponent.vue') },
+  { path: '/courses/graph/:id', component: require('./components/Course/CourseGraphComponent.vue') },
+  { path: '/teach/', component: require('./components/Test.vue') },
+  //{ path: '/teach/', component: require('./components/TeachComponent.vue') },
+  { path: '/learn/', component: require('./components/LearnComponent.vue') },
+  { path: '/blockly/', component: require('./components/BlocklyComponent.vue') },
+  { path: '/me/', component: require('./components/Personal/MeComponent.vue') },
+  { path: '/material/create', component: require('./components/Form/CreateLesson.vue') },
+  { path: '/material/topic', component: require('./components/Form/CreateTopic.vue') },
+  { path: '/material/concept', component: require('./components/Form/CreateConcept.vue') },
+  { path: '*', redirect: '/material/' }
+]

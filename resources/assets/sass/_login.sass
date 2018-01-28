@@ -1,0 +1,57 @@
+$button-size: 2.25em
+#login-component
+  background-color: white
+  figure
+    width: 30%
+    padding-bottom: 3rem
+    margin: auto
+    margin-top: 50px
+    padding: 5rem
+    @media screen and (max-width: $tablet)
+      width: 70%
+      padding: 1rem
+  .field
+    margin-bottom: 5px
+  .input
+    border-radius: 0
+  .btn-link
+    float: right
+    font-size: 0.8rem
+  .button
+    margin-top: 10px
+    height: $button-size
+    border-radius: $button-size/2
+  #bar
+    background-color: $primary
+    height: 0.5rem
+    width: 100%
+  
+.login-container
+  h1
+    font-family: $login-font
+    color: black
+    &:after, &:before
+      content: ''
+      display: inline-block
+      width: 70px
+      height: 1px
+      background-color: $border
+      margin: 0 15px 4px
+      @media screen and (max-width: $tablet)
+        display: none
+  .social
+    $btn: 60px
+    background-color: transparent
+    display: inline-block;
+    height: $btn
+    width: $btn
+    margin: 0 5px
+    border-radius: 50%
+    i
+      font-size: 1.5rem
+      line-height: $btn - ($flat-border * 2)
+    &:hover
+      background-color: var(--default, tomato)
+    &:hover, &:active
+      i
+        color: white
