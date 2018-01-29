@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Comment extends Model
 {
+    use Traits\Uuids;
+    public $incrementing = false;
+
     protected $fillable = [ 'body', 'user_id', 'receiver' ];
     /**
      * Get all of the owning commentable models.

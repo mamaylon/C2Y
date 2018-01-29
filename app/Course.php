@@ -7,6 +7,9 @@ use DB;
 
 class Course extends Model
 {
+  use Traits\Uuids;
+  public $incrementing = false;
+
   protected $fillable = [ 'name', 'photo', 'description', 'user_id' ];
 
   /**
@@ -49,8 +52,8 @@ class Course extends Model
 
     if (isset($params['user'])) {
       $builder = self::getComplete($builder, $params['user']);
+      $user = $params['user'];
       unset($params['user']);
-      $user = true;
     }
 
     foreach ($params as $key => $value) {
@@ -61,13 +64,10 @@ class Course extends Model
     $builder = $builder->withCount('likes');
     if (!$user)
       return $builder->get();
-    $builder = $builder->with(['likes' => function ($q) use ($user) {
-      $q->select('id')->where('user_id', $user);
-    }]);
 
     return array_map(function ($item) {
       $item['student'] = count($item['students']) > 0;
-      $item['liked'] = $item['likes'] > 0;
+      // $item['liked'] = $item['likes'] > 0;
       $item['likes'] = $item['likes_count'];
       unset($item['students']);
       unset($item['likes_count']);

@@ -6,7 +6,7 @@
           <nav class="level is-mobile" slot="content">
             <div class="level-left">
               <div class="level-item primary">
-                <span class="icon is-small"><i class="fa fa-heart"></i></span>&nbsp;
+                <span class="icon is-small" v-if="course.likes > 0"><i class="fa fa-heart"></i></span>&nbsp;
                 <small v-if="course.likes === 1">Uma pessoa gostou desse curso</small>
                 <small v-if="course.likes > 1">{{ course.likes }} pessoas gostaram desse curso</small>
               </div>

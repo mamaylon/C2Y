@@ -7,6 +7,8 @@
 
 require('./bootstrap')
 const store = require('./store.js')
+store.state.user = window.User
+// delete window.User
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -32,3 +34,5 @@ const app = new Vue({
   router,
   store: new Vuex.Store(store)
 }).$mount('#app');
+
+window.store = app.$store

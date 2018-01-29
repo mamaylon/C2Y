@@ -55,9 +55,14 @@
         page: 0
       }
     },
+    computed: {
+      user () {
+        return this.$store.getters.user
+      }
+    },
     mounted () {
       let self = this
-      self.$http.get('/api/course', { params: { user: window.User.id } })
+      self.$http.get('/api/course', { params: { user: this.user.id } })
         .then(resp => (self.courses = resp.body.data.courses))
         .catch(err => console.log(err))
     },

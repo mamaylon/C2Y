@@ -1,5 +1,5 @@
 <?php
-namespace C2Y;
+namespace C2Y\Traits;
 use Webpatser\Uuid\Uuid;
 
 trait Uuids

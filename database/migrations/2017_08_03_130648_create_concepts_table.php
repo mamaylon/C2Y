@@ -15,17 +15,18 @@ class CreateConceptsTable extends Migration
     {
         /* Create concept */
         Schema::create('concepts', function (Blueprint $table) {
-            $table->increments('id');
+            $table->uuid('id');
+            $table->primary('id');
             $table->string('name');
         });
         
         /* Create lessons_topics */
         Schema::create('concepts_lessons', function (Blueprint $table) {
-            $table->integer('lesson_id')->unsigned()->nullable();
+            $table->uuid('lesson_id')->nullable();
             $table->foreign('lesson_id')->references('id')
                 ->on('lessons')->onDelete('cascade');
             
-            $table->integer('concept_id')->unsigned()->nullable();
+            $table->uuid('concept_id')->nullable();
             $table->foreign('concept_id')->references('id')
                 ->on('concepts')->onDelete('cascade');
             

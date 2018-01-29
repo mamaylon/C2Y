@@ -1,18 +1,18 @@
 module.exports = {  
   state: {
-    message: null
+    user: null
   },
   mutations: {
-    SET_MESSAGE (store, obj) {
-      store.message = obj
+    SET_USER (store, payload) {
+      store.user = payload
     }
   },
   actions: {
-    message ({commit}, obj) {
-      commit('SET_MESSAGE', obj)
+    user ({commit}, payload) {
+      commit('SET_USER', payload)
     }
   },
   getters: {
-    message: state => state.message
+    user: state => state.user
   }
 }

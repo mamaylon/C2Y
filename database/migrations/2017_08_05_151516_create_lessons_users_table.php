@@ -15,11 +15,11 @@ class CreateLessonsUsersTable extends Migration
     {
         /* Create courses_users */
         Schema::create('lessons_users', function (Blueprint $table) {
-            $table->integer('lesson_id')->unsigned()->nullable();
+            $table->uuid('lesson_id')->nullable();
             $table->foreign('lesson_id')->references('id')
                 ->on('lessons')->onDelete('cascade');
             
-            $table->integer('user_id')->unsigned()->nullable();
+            $table->uuid('user_id')->nullable();
             $table->foreign('user_id')->references('id')
                 ->on('users')->onDelete('cascade');
             

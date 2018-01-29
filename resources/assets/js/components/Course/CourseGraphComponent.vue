@@ -92,7 +92,7 @@
     mounted: init,
     computed: {
       levels () {
-        if (!this.course) return []
+        if (!this.course || this.course.lessons.length === 0) return []
         let block = false
         let obj = this.course.lessons.reduce((prev, curr) => {
           curr.lock = !curr.completeds

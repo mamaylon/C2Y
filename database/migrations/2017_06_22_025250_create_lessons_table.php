@@ -15,19 +15,21 @@ class CreateLessonsTable extends Migration
     {
         /* Create topics */
         Schema::create('topics', function (Blueprint $table) {
-            $table->increments('id');
+            $table->uuid('id');
+            $table->primary('id');
             $table->string('name');
         });
 
         /* Create lessons */
         Schema::create('lessons', function (Blueprint $table) {
-            $table->increments('id');
+            $table->uuid('id');
+            $table->primary('id');
             $table->string('name');
             $table->text('description')->nullable();
             $table->integer('age')->nullable();
             $table->string('photo')->nullable();
             $table->string('link')->nullable();
-            $table->integer('user_id')->unsigned()->nullable();
+            $table->uuid('user_id')->nullable();
             $table->foreign('user_id')->references('id')
                 ->on('users')->onDelete('cascade');
             $table->timestamps();
@@ -35,11 +37,11 @@ class CreateLessonsTable extends Migration
 
         /* Create lessons_topics */
         Schema::create('lessons_topics', function (Blueprint $table) {
-            $table->integer('lesson_id')->unsigned()->nullable();
+            $table->uuid('lesson_id')->nullable();
             $table->foreign('lesson_id')->references('id')
                 ->on('lessons')->onDelete('cascade');
             
-            $table->integer('topic_id')->unsigned()->nullable();
+            $table->uuid('topic_id')->nullable();
             $table->foreign('topic_id')->references('id')
                 ->on('topics')->onDelete('cascade');
             
@@ -49,11 +51,12 @@ class CreateLessonsTable extends Migration
 
         /* Create courses */
         Schema::create('courses', function (Blueprint $table) {
-            $table->increments('id');
+            $table->uuid('id');
+            $table->primary('id');
             $table->string('name');
             $table->string('photo')->nullable();
             $table->text('description');
-            $table->integer('user_id')->unsigned();
+            $table->uuid('user_id');
             $table->foreign('user_id')->references('id')
                 ->on('users')->onDelete('cascade');
             $table->timestamps();
@@ -61,14 +64,15 @@ class CreateLessonsTable extends Migration
 
         /* Create courses_users */
         Schema::create('lessons_courses', function (Blueprint $table) {
-            $table->increments('id');
+            $table->uuid('id');
+            $table->primary('id');
             $table->integer('level')->unsigned();
             
-            $table->integer('course_id')->unsigned()->nullable();
+            $table->uuid('course_id')->nullable();
             $table->foreign('course_id')->references('id')
                 ->on('courses')->onDelete('cascade');
             
-            $table->integer('lesson_id')->unsigned()->nullable();
+            $table->uuid('lesson_id')->nullable();
             $table->foreign('lesson_id')->references('id')
                 ->on('lessons')->onDelete('cascade');
             
@@ -77,11 +81,11 @@ class CreateLessonsTable extends Migration
 
         /* Create courses_users */
         Schema::create('courses_users', function (Blueprint $table) {
-            $table->integer('course_id')->unsigned()->nullable();
+            $table->uuid('course_id')->nullable();
             $table->foreign('course_id')->references('id')
                 ->on('courses')->onDelete('cascade');
             
-            $table->integer('user_id')->unsigned()->nullable();
+            $table->uuid('user_id')->nullable();
             $table->foreign('user_id')->references('id')
                 ->on('users')->onDelete('cascade');
             

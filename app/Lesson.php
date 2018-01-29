@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Lesson extends Model
 {
+  use Traits\Uuids;
+  public $incrementing = false;
+
   protected $fillable = ['name', 'description', 'link', 'age', 'user_id', 'photo'];
   protected static $integer = ['age'];
 

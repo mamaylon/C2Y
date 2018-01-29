@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Like extends Model
 {
-    use Uuids;
+    use Traits\Uuids;
     public $incrementing = false;
     protected $fillable = ['user_id', 'likable_type', 'likable_id'];
 
