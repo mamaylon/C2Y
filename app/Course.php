@@ -56,6 +56,23 @@ class Course extends Model
       unset($params['user']);
     }
 
+    if (isset($params['concepts'])) {
+      $concepts = $params['concepts'];
+      $builder = $builder->whereHas('lessons', function ($q) use ($concepts) {
+        $q->join('concepts_lessons', 'lessons.id', '=', 'concepts_lessons.lesson_id')
+          ->join('concepts', 'concepts_lessons.concept_id', '=', 'concepts.id');
+        $q->where(function ($query) use ($concepts) {
+          foreach ($concepts as $c) {
+            $query->orWhere('concepts.name', $c);
+          }
+        });
+      });
+      unset($params['concepts']);
+    }
+    if (isset($params['types'])) {
+      unset($params['types']);
+    }
+
     foreach ($params as $key => $value) {
       if ($value)
         $builder = $builder->where($key, 'ilike', "%$value%");

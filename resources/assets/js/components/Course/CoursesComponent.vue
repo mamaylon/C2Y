@@ -2,7 +2,7 @@
   <section>
     <white-component></white-component>
     <nav class="navbar has-shadow has-border-top" style="margin: -20px 0 20px 0" id="nav-component">
-      <form @submit.prevent="submit" class="container">
+      <form @submit.prevent="submit()" class="container">
         <div class="navbar">
           <i class="fa fa-search fa-2x"></i>
           <p class="control">
@@ -11,7 +11,7 @@
           <div class="navbar-menu">
             <div class="navbar-end">
               <button type="submit" class="button is-primary is-outlined">Pesquisar</button>
-              <button type="submit" class="button is-outlined">Busca avançada</button>
+              <button type="button" class="button is-outlined" @click="advanced()">Busca avançada</button>
             </div>
           </div>
         </div>
@@ -37,6 +37,8 @@
   import NavComponent from '../NavComponent.vue'
   import ModalComponent from '../ModalComponent.vue'
   import CourseModal from './CourseModal.vue'
+  import AdvancedSearch from './AdvancedSearch.vue'
+  const format = arr => arr.map(item => ({ name: item, selected: false}))
 
   export default {
     components: {
@@ -52,7 +54,9 @@
           name: ''
         },
         selected: null,
-        page: 0
+        page: 0,
+        types: format(['Plugadas', 'Desplugadas']),
+        concepts: format(['Algoritmo', 'Lógica', 'Abstração', 'Decomposição', 'Padrões', 'Avaliação'])
       }
     },
     computed: {
@@ -67,6 +71,13 @@
         .catch(err => console.log(err))
     },
     methods: {
+      advanced () {
+        this.$modal({
+          component: AdvancedSearch,
+          onClose: true,
+          headerFooter: true
+        })
+      },
       range: (ini, end) =>  _.range(ini, end, 1),
       modal (item) {
         console.log('item', item)
@@ -89,12 +100,14 @@
         })
         this.courses.splice(index, 1)
       },
-      submit () {
+      submit (_data) {
         let self = this
-        let data = { page: self.page }
+        let data = {}
         for (let i in self.form)
           if (self.form[i] != '' && self.form[i] != 0)        
             data[i] = self.form[i]
+        data = _data || data
+        data.page = self.page
         self.$http.get('/api/course', { params: data })
           .then(resp => (self.courses = resp.body.data.courses))
           .catch(err => console.log(err))
