@@ -13,7 +13,7 @@
   footer {
     padding: 0.2em 1em;
     position: absolute;
-    bottom: 0;
+    /*bottom: 0;*/
     width: 100%;
     font-size: 0.8em;
     background-color: white;
