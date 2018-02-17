@@ -22,9 +22,19 @@ window.VueRouter = require('vue-router').default;
 window.VueResource = require('vue-resource').default;
 window.VueCroppie = require('vue-croppie').default;
 window.VueModal = require('vue-modal').default;
+
+const VeeValidate = require('vee-validate').default;
+const { messages } = require('vee-validate/dist/locale/pt_BR');
 const VTooltip = require('v-tooltip').default
 const LikeTool = require('./modules/like').default;
 
+console.log('messages', messages);
+Vue.use(VeeValidate, {
+	locale: 'pt_BR',
+	dictionary: {
+    pt_BR: { messages }
+  }
+});
 Vue.use(VTooltip)
 Vue.use(VueCroppie);
 Vue.use(VueRouter);

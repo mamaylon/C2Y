@@ -35,6 +35,7 @@
     "node-sass": "^4.7.2",
     "uglify-es": "github:mishoo/UglifyJS2#harmony",
     "v-tooltip": "^2.0.0-rc.30",
+    "vee-validate": "^2.0.4",
     "vue-croppie": "^1.2.2",
     "vue-modal": "git@gitlab.com:onesports/vue-modal.git",
     "vue-resource": "^1.3.4",

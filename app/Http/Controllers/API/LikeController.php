@@ -16,7 +16,7 @@ class LikeController extends Controller
      */
     public function index()
     {
-        return Like::all();
+        return APIController::success(['likes' => Like::all()]);
     }
 
     /**

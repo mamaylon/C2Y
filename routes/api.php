@@ -17,15 +17,25 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+// Courses routes
 Route::resource('course', 'API\CourseController');
 Route::post('course/sync', 'API\CourseController@sync');
 Route::post('course/registry', 'API\CourseController@registry');
+
+// Lesson routes
 Route::resource('lesson', 'API\LessonController');
-Route::resource('like', 'API\LikeController');
 Route::post('lesson/complete/{id}', 'API\LessonController@complete');
+
+// Like route
+Route::resource('like', 'API\LikeController');
+
+// Concept/Topic route
 Route::resource('concept', 'API\ConceptController');
 Route::resource('topic', 'API\TopicController');
-// Route::resource('comment', 'API\CommentController');
+
+// Comments route
 Route::post('comment/lesson/{id}', 'API\CommentController@store');
 Route::get('comment', 'API\CommentController@index');
-// Route::get('/lesson/page/{page}', 'API\LessonController@index');
+
+// Class route
+Route::resource('classroom', 'API\ClassController');

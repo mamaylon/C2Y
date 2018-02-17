@@ -19,16 +19,29 @@
               <div style="margin-top: 10px; width: 60%">
                 <label for="" class="text-medium">Dê um nome para a sua classe</label>
                 <input class="input"
+                  v-validate="'required'"
+                  :class="{'is-danger': errors.has('nome')}"
+                  name="nome"
                   v-model="form.name"
                   placeholder="3º Ano A"
                   type="text">
+                <span v-show="errors.has('nome')" class="help is-danger">
+                  {{ errors.first('nome') }}
+                </span>
               </div>
               <div style="width: 60%; margin-top: 1rem">
                 <label for="" class="text-medium">A qual escola pertence esta classe?</label>
                 <input class="input"
+                  v-validate="'required'"
+                  :class="{'is-danger': errors.has('escola')}"
+                  name="escola"
                   v-model="form.school"
                   placeholder="Escolar Joaquin Timótio"
                   type="text">
+                <span v-show="errors.has('escola')" class="help is-danger">
+                  {{ errors.first('escola') }}
+                </span>
+
               </div>
               <div style="margin-top: 10px">
                 <button type="submit"
@@ -52,14 +65,34 @@
       CourseItemComponent,
       ModalComponent
     },
-    data: () => ({
-      form: {
-        name: '',
-        school: ''
+    data () {
+      return {
+        form: {
+          name: '',
+          school: '',
+          user: this.$store.getters.user.id
+        }
       }
-    }),
+    },
     methods: {
       submit () {
+        this.$http.post(`/api/classroom`, this.form)
+          .then(this.success)
+          .catch(this.error)
+      },
+      success (resp) {
+        this.$modal({
+          data: {
+            text: 'Sua sala foi criada com sucesso',
+            subtext: 'Parabéns pela iniciativa'
+          },
+          onClose: true,
+          timeout: 3000,
+          success: true
+        })
+      },
+      error (err) {
+        console.log(err)
       }
     }
   }
