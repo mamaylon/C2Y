@@ -21,7 +21,7 @@
               <a v-show="!wait" v-tooltip="'Editar curso'" @click="goTo('/courses/' + course.id)" class="fa fa-pencil"></a>
               <i v-show="wait" v-tooltip="'Carregando...'" class="fa fa-circle-o-notch fa-spin fa-1x fa-fw wait"></i>
             </span>
-          </div>          
+          </div>
         </course-header>
       </article>
     </article>

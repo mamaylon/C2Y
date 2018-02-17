@@ -5,10 +5,11 @@
       <article class="content" style="position: relative; margin-top: -20px; min-height: 440px; padding-top: 20px; padding-bottom: 20px">
         <section class="columns">
           <article class="is-10 is-offset-1 column">
-            <div>Top classes</div>
-            <figure v-for="i in 8" style="display: inline-block;" class="image is-96x96">
-              <img src="http://bulma.io/images/placeholders/128x128.png" alt="">
-            </figure>
+            <!-- <div class="text-medium my-classes">Minhas classes</div> -->
+            <div class="grid">
+              <class-component v-for="i in 9"></class-component>
+              <class-component :fake="true"></class-component>
+            </div>
           </article>
         </section>
         <section class="columns">
@@ -60,10 +61,13 @@
 <script>
   import CourseItemComponent from './Course/CourseItemComponent.vue'
   import ModalComponent from './ModalComponent.vue'
+  import ClassComponent from './Classroom/Class.vue'
+
   export default {
     components: {
       CourseItemComponent,
-      ModalComponent
+      ModalComponent,
+      ClassComponent
     },
     data () {
       return {
@@ -99,8 +103,11 @@
 </script>
 
 <style lang="sass" scoped>
-  figure
-    margin-right: 10px
-    border-radius: 3px
-    overflow: hidden
+  .my-classes
+    font-size: 1.5rem
+  .grid
+    display: grid
+    grid-template-columns: repeat(4, 1fr)
+    grid-column-gap: .7rem
+    grid-row-gap: .7rem
 </style>

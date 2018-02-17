@@ -12,7 +12,7 @@
           <router-link to="/material" class="navbar-item">Materiais</router-link>
           <router-link to="/courses" class="navbar-item">Cursos</router-link>
           <!--<router-link to="/learn" class="nav-item is-tab is-hidden-mobile">Aprender</router-link>-->
-          <router-link to="/teach" class="navbar-item">Ensinar</router-link>
+          <router-link to="/classroom" class="navbar-item">Classes</router-link>
           <!--<a class="nav-item is-tab is-hidden-mobile">Contato</a>-->
           <!--<a class="nav-item is-tab is-hidden-mobile">Blog</a>-->
         </div>

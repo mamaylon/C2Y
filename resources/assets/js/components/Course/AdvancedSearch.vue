@@ -15,7 +15,7 @@
         <div>Atividades do tipo: </div>
         <span v-for="(item, index) in types"
           :key="index"
-          class="tag"
+          class="tag no-select"
           :class="{ 'is-primary': item.selected }"
           @click="item.selected = !item.selected">
           {{ item.name }}
@@ -25,7 +25,7 @@
         <div>Conceitos: </div>
         <span v-for="(item, index) in concepts"
           :key="index"
-          class="tag"
+          class="tag no-select"
           :class="{ 'is-primary': item.selected }"
           @click="item.selected = !item.selected">
           {{ item.name }}
@@ -65,9 +65,11 @@
   }
 </script>
 
-<style lang="sass" scoped> 
+<style lang="sass" scoped>
   .body, .modal-footer
     padding: 1.25rem
+  .body
+    padding: 2rem
   .modal-footer
     display: flex
     border-top: thin solid var(--border)

@@ -23,7 +23,7 @@
           <strong class="example" style="--size: 46%" v-if="example"></strong>
           <strong class="example" style="--size: 56%" v-if="example"></strong>
           <strong class="example" style="--size: 86%" v-if="example"></strong>
-          
+
           <strong v-if="!example">{{ item.name }}</strong> <small v-if="!example && item.link">Disponível por <a :href="item.link">{{ item.source }}</a></small>
           <br>
           <span v-if="!example">
@@ -78,6 +78,9 @@
 </script>
 
 <style lang="sass" scoped>
+  .media-left img
+    border-radius: 3px
+    overflow: hidden
   .image.is-64x64
     overflow: hidden
     margin-top: 10px

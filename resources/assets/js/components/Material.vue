@@ -16,7 +16,7 @@
                 <loading-component :message="false" v-if="loading">
                   <item-component :example="true" v-for="i in Math.max(lessons.length, 1)"></item-component>
                 </loading-component>
-                <empty-component v-show="!lessons.length && !loading" :message="'Não há itens a serem exibidos nestas condições'"></empty-component>
+                <empty-component v-show="!lessons.length && !loading" :message="'Nenhuma atividade encontrada'"></empty-component>
                 <item-component v-show="!loading && lessons.length > 0" @drop="remove" @error="err" v-for="item in lessons" :item="item"></item-component>
                 <paginator-component v-if="pages>1" @paginate="atualize" :form="form" :pages="pages" :page="page"></paginator-component>
               </article>
@@ -29,11 +29,12 @@
 </template>
 
 <script>
-  import ItemComponent from './Item.vue'
-  import LoadingComponent from '../LoadingComponent.vue'
-  import EmptyComponent from '../EmptyComponent.vue'
-  import FilterComponent from './FilterComponent.vue'
-  import PaginatorComponent from '../Paginator/PaginatorComponent.vue'
+  import ItemComponent from './Material/Item.vue'
+  import LoadingComponent from './LoadingComponent.vue'
+  import EmptyComponent from './EmptyComponent.vue'
+  import FilterComponent from './Material/FilterComponent.vue'
+  import PaginatorComponent from './Paginator/PaginatorComponent.vue'
+
   export default {
     mounted () {
       let self = this
