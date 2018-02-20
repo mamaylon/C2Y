@@ -1,9 +1,10 @@
 <template>
-	<div class="card" v-if="!fake">
-	  <header class="card-header relative">
-	    <span class="text-bold">Component</span>
-	    <small>Jorge da capadócia</small>
-      <img src="http://bulma.io/images/placeholders/64x64.png" alt="Image">
+	<div class="card pointer" v-if="!fake">
+	  <header class="card-header relative" :style="`--color: ${item.color || '#333'}`">
+	    <span class="text-bold">{{ item.name }}</span>
+	    <small v-if="item.master.id !== user.id">{{ item.master.name }}</small>
+	    <small v-else>Criada por mim</small>
+      <img v-if="item.master.id !== user.id" :src="item.master.photo" alt="Image">
 	  </header>
 	  <div class="card-content">
 	    <div class="content">
@@ -21,7 +22,13 @@
 		name: 'ClassComponent',
 		props: {
 			name: String,
-			fake: Boolean
+			fake: Boolean,
+			item: Object
+		},
+		computed: {
+			user: function () {
+				return this.$store.getters.user
+			}
 		}
 	}
 </script>
@@ -40,15 +47,20 @@
 		i
 			margin-bottom: .5rem
 	#teach-component
+		.ghost
+			min-height: 9rem
+			height: 100%
 		.card-header
-			background-color: gold
+			background-color: var(--color)
 			color: white
 			flex-direction: column;
 			padding: 1rem
 		.card
+			overflow: hidden
 			margin-bottom: 0
 			box-shadow: 0 2px 3px rgba(10, 10, 10, 0.1), 0 0 0 1px rgba(10, 10, 10, 0.1)
 			img
+				max-width: 30%
 				border-radius: 50%
 				position: absolute
 				bottom: 0

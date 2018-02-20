@@ -7,41 +7,46 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    use Traits\Uuids;
-    use Notifiable;
-    public $incrementing = false;  
+  use Traits\Uuids;
+  use Notifiable;
+  public $incrementing = false;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = [
-        'name', 'email', 'password', 'birth_date', 'photo'
-    ];
+  /**
+   * The attributes that are mass assignable.
+   *
+   * @var array
+   */
+  protected $fillable = [ 'name', 'email', 'password', 'birth_date', 'photo' ];
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-    protected $hidden = [
-        'password', 'remember_token',
-    ];
+  /**
+   * The attributes that should be hidden for arrays.
+   *
+   * @var array
+   */
+  protected $hidden = [ 'password', 'remember_token' ];
 
-    /**
-     * Get the lessons for the user.
-     */
-    public function lessons()
-    {
-        return $this->hasMany('C2Y\Lesson');
-    }
-    
-    /**
-     * Get the lessons for the user.
-     */
-    public function likes()
-    {
-        return $this->hasMany('C2Y\Like');
-    }
+  /**
+   * Get the lessons for the user.
+   */
+  public function lessons()
+  {
+    return $this->hasMany('C2Y\Lesson');
+  }
+
+  /**
+   * Get the lessons for the user.
+   */
+  public function likes()
+  {
+    return $this->hasMany('C2Y\Like');
+  }
+
+  /**
+   * The classrooms that belong to the user.
+   */
+  public function classrooms()
+  {
+    return $this->belongsToMany('C2Y\Classroom', 'classes_users', 'user_id', 'class_id')
+      ->withPivot('role');
+  }
 }

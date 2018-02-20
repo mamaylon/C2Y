@@ -7,7 +7,7 @@ use C2Y\Http\Controllers\Controller;
 use C2Y\Http\Controllers\API\APIController;
 
 // Models
-use C2Y\ClassRoom;
+use C2Y\Classroom;
 
 class ClassController extends Controller
 {
@@ -18,7 +18,7 @@ class ClassController extends Controller
    */
   public function index()
   {
-    $all = ClassRoom::show();
+    $all = Classroom::show();
     return APIController::success(['classrooms' => $all]);
   }
 
@@ -46,7 +46,7 @@ class ClassController extends Controller
       $message = 'Required field not found. Request must contain "name", "school" and "user"';
       return APIController::error($message);
     }
-    $class = ClassRoom::create($all);
+    $class = Classroom::create($all);
     try {
       $class->users()->sync([
         $request->user => [ 'role' => 'master' ]
@@ -54,6 +54,34 @@ class ClassController extends Controller
       return APIController::success(['classroom' => $class]);
     } catch (\Exception $err) {
       return APIController::error('user must be a unique UUID');
+    }
+  }
+
+  public function sync (Request $request) {
+    $all = $request->all();
+    $all = APIController::verify(['user', 'code'], $all);
+    if (!$all) {
+      return APIController::error('Required field not found. Request must contain "code" and "user"');
+    }
+    $class = Classroom::where('code', $request->code)
+      ->with(['users' => function ($q) {
+        $q->where('role', 'master');
+      }])
+      ->first();
+    if (!$class) {
+      return APIController::error('Classroom not found');
+    }
+    $class->master = $class->users[0];
+    unset($class->users);
+    unset($class->pivot);
+    unset($class->master->pivot);
+
+    try {
+      $class->users()->sync($request->user, false);
+      return APIController::success([ 'classroom' => $class ]);
+    }
+    catch (Exception $e) {
+      return APIController::error($e->getMessage());
     }
   }
 
@@ -65,7 +93,7 @@ class ClassController extends Controller
    */
   public function show($id)
   {
-    $class = ClassRoom::show($id);
+    $class = Classroom::show($id);
     if (!$class) {
       return APIController::error('Classroom not found');
     }

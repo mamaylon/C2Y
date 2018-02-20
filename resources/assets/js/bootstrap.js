@@ -28,7 +28,6 @@ const { messages } = require('vee-validate/dist/locale/pt_BR');
 const VTooltip = require('v-tooltip').default
 const LikeTool = require('./modules/like').default;
 
-console.log('messages', messages);
 Vue.use(VeeValidate, {
 	locale: 'pt_BR',
 	dictionary: {

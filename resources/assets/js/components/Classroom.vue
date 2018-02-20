@@ -7,51 +7,13 @@
           <article class="is-10 is-offset-1 column">
             <!-- <div class="text-medium my-classes">Minhas classes</div> -->
             <div class="grid">
-              <class-component v-for="i in 9"></class-component>
-              <class-component :fake="true"></class-component>
+              <section v-for="(item, $index) in classrooms" :key="$index">
+                <classroom :item="item"></classroom>
+              </section>
+              <section @click="open()">
+                <classroom :fake="true"></classroom>
+              </section>
             </div>
-          </article>
-        </section>
-        <section class="columns">
-          <article class="column is-10 is-offset-1">
-            <div style="font-weight: bold">Crie sua classe</div>
-            <div>Elit nostrud butcher, keytar trust fund pop-up ennui af kickstarter post-ironic deep v hot chicken ugh.  Leggings adaptogen bitters sapiente tousled umami.  In  chicharrones irure, butcher pour-over thundercats helvetica coloring book fanny pack minim kinfolk nisi voluptate.  Veniam irony put a bird on it, church-key photo booth DIY.</div>
-            <form @submit.prevent="submit">
-              <div style="margin-top: 10px; width: 60%">
-                <label for="" class="text-medium">Dê um nome para a sua classe</label>
-                <input class="input"
-                  v-validate="'required'"
-                  :class="{'is-danger': errors.has('nome')}"
-                  name="nome"
-                  v-model="form.name"
-                  placeholder="3º Ano A"
-                  type="text">
-                <span v-show="errors.has('nome')" class="help is-danger">
-                  {{ errors.first('nome') }}
-                </span>
-              </div>
-              <div style="width: 60%; margin-top: 1rem">
-                <label for="" class="text-medium">A qual escola pertence esta classe?</label>
-                <input class="input"
-                  v-validate="'required'"
-                  :class="{'is-danger': errors.has('escola')}"
-                  name="escola"
-                  v-model="form.school"
-                  placeholder="Escolar Joaquin Timótio"
-                  type="text">
-                <span v-show="errors.has('escola')" class="help is-danger">
-                  {{ errors.first('escola') }}
-                </span>
-
-              </div>
-              <div style="margin-top: 10px">
-                <button type="submit"
-                  :disabled="form.name === '' || form.school === ''" 
-                  class="button is-primary is-outlined">
-                  Criar classe
-                </button>
-              </div>
-            </form>
           </article>
         </section>
       </article>
@@ -61,34 +23,58 @@
 <script>
   import CourseItemComponent from './Course/CourseItemComponent.vue'
   import ModalComponent from './ModalComponent.vue'
-  import ClassComponent from './Classroom/Class.vue'
+  import Classroom from './Classroom/Classroom.vue'
+  import AddClassroom from './Classroom/Modal/AddClassroom.vue'
+  import FormClassroom from './Classroom/Modal/FormClassroom.vue'
 
   export default {
     components: {
       CourseItemComponent,
       ModalComponent,
-      ClassComponent
+      Classroom
     },
-    data () {
-      return {
-        form: {
-          name: '',
-          school: '',
-          user: this.$store.getters.user.id
-        }
+    computed: {
+      classrooms: function () {
+        return this.$store.getters.user.classrooms || []
       }
     },
     methods: {
-      submit () {
-        this.$http.post(`/api/classroom`, this.form)
+      open () {
+        this.$modal({
+          component: AddClassroom,
+          onClose: true
+        })
+      },
+      sync (code) {
+        let form = {
+          user: this.$store.getters.user.id,
+          code
+        }
+        return this.$http.post(`/api/classroom/sync`, form)
+      },
+      form () {
+        this.$modal({
+          component: FormClassroom,
+          onClose: true
+        })
+      },
+      submit (form) {
+        this.$http.post(`/api/classroom`, form)
+          .then(data => {
+            let classroom = data.body.data.classroom
+            classroom.master = this.$store.getters.user
+            this.$store.dispatch('push_classroom', classroom)
+            return classroom
+          })
           .then(this.success)
           .catch(this.error)
       },
-      success (resp) {
+      success () {
         this.$modal({
           data: {
             text: 'Sua sala foi criada com sucesso',
-            subtext: 'Parabéns pela iniciativa'
+            subtext: 'Parabéns pela iniciativa',
+            success: true
           },
           onClose: true,
           timeout: 3000,

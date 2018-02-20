@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ptBR">
   <head>
-    <title>C2Y!</title>
+    <title>C2Y! - Computing to You!</title>
     <link rel="stylesheet" href="/vendor/prism/themes/prism.css">
     <link rel="stylesheet" href="/assets/css/light-bootstrap-dashboard.css">
     <link rel="stylesheet" href="/css/app.css">

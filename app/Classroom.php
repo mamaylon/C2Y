@@ -4,7 +4,7 @@ namespace C2Y;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ClassRoom extends Model
+class Classroom extends Model
 {
   use Traits\Classroom;
   protected $table = 'classes';
