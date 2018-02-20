@@ -96,4 +96,11 @@
     grid-template-columns: repeat(4, 1fr)
     grid-column-gap: .7rem
     grid-row-gap: .7rem
+  @media screen and (max-width: 768px)
+    .grid
+      padding: 1rem
+      grid-template-columns: repeat(2, 1fr)
+  @media screen and (max-width: 500px)
+    .grid
+      grid-template-columns: repeat(1, 1fr)
 </style>
