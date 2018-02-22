@@ -131,15 +131,21 @@ body
 .box
   border-radius: 3px
 .fade-enter-active, .fade-leave-active
-  transition: opacity .3s;
+  transition: opacity .3s
 .fade-enter, .fade-leave-to
-  opacity: 0;
+  opacity: 0
 .modal-content
   @extend .box
-  width: auto
-  & > *:not(.modal-body), .modal-body > *
-    width: var(--modal, 640px)
-  padding: 0
+.modal-dialog.min
+  width: var(--modal-min)
+  .modal-body, .modal-content
+    width: 100%
+.modal-dialog:not(.min)
+  .modal-content
+    width: auto
+    & > *:not(.modal-body), .modal-body > *
+      width: var(--modal, 640px)
+    padding: 0
 .thin-font
   font-family: $login-font !important
 .is-bold

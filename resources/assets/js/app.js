@@ -8,6 +8,10 @@
 require('./bootstrap')
 const modules = require('./store.js')
 modules.user.state.user = window.User
+modules.user.state.user.classrooms = modules.user.state.user.classrooms.map(it => {
+  it.color = null
+  return it
+})
 // delete window.User
 
 /**

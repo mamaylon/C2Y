@@ -20,9 +20,14 @@
     <section class="container">
       <div class="columns">
         <div class="column is-10 is-offset-1">
-          <div class="columns" v-for="j in range(0, Math.ceil(courses.length/4))">
+          <div class="columns"
+            v-for="(j, index) in range(0, Math.ceil(courses.length/4))"
+            :key="index">
             <!-- to="'/courses/graph/' + courses[i].id" -->
-            <article @click="modal(courses[i])" class="column is-3" v-for="i in range(j*4, Math.min((j*4)+4, courses.length) )">
+            <article @click="modal(courses[i])"
+              class="column is-3"
+              v-for="(i, key) in range(j*4, Math.min((j*4)+4, courses.length) )"
+              :key="key">
               <course-item-component :item="courses[i]"></course-item-component>
             </article>
           </div>

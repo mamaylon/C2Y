@@ -28,7 +28,9 @@
           <div class="select is-fullwidth">
             <select v-model="form.topic">
               <option value="" disabled>Tema/Assunto da atividade</option>
-              <option v-for="resp in topics" :value="resp.id">{{ resp.name }}</option>
+              <option v-for="(resp, index) in topics"
+                :value="resp.id"
+                :key="index">{{ resp.name }}</option>
             </select>
           </div>
         </div>

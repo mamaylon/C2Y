@@ -1,7 +1,7 @@
 <template>
   <nav class="navbar has-shadow"
     :class="{ 'classroom': classroom }"
-    :style="classroom && classroom.color ? `--default: ${item.color}` : ''"
+    :style="classroom && classroom.color ? `--default: ${classroom.color}` : ''"
     id="nav-component">
     <div class="container">
       <div class="navbar">
