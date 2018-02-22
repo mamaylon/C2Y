@@ -41,7 +41,9 @@
           <div class="select is-fullwidth is-multiple">
             <select v-model="form.concept" multiple="true">
               <option value="" class="option-title" disabled>Conceito da atividade</option>
-              <option v-for="resp in concepts" :value="resp.id">{{ resp.name }}</option>
+              <option v-for="(resp, index) in concepts"
+                :value="resp.id"
+                :key="index">{{ resp.name }}</option>
             </select>
           </div>
         </div>
@@ -51,7 +53,7 @@
 </template>
 
 <script>
-  import Create from '../Course/CreatePrototype.vue'
+  import Create from '../Courses/CreatePrototype.vue'
   import WhiteComponent from '../WhiteComponent.vue'
     
   export default {

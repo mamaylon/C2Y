@@ -32,12 +32,12 @@
   </section>
 </template>
 <script>
-  import WhiteComponent from '../WhiteComponent.vue'
-  import CourseItemComponent from './CourseItemComponent.vue'
-  import NavComponent from '../NavComponent.vue'
-  import ModalComponent from '../ModalComponent.vue'
-  import CourseModal from './CourseModal.vue'
-  import AdvancedSearch from './AdvancedSearch.vue'
+  import WhiteComponent from './WhiteComponent.vue'
+  import CourseItemComponent from './Courses/CourseItemComponent.vue'
+  import NavComponent from './NavComponent.vue'
+  import ModalComponent from './ModalComponent.vue'
+  import CourseModal from './Courses/CourseModal.vue'
+  import AdvancedSearch from './Courses/AdvancedSearch.vue'
   const format = arr => arr.map(item => ({ name: item, selected: false}))
 
   export default {

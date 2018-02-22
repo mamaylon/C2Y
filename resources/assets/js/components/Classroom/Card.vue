@@ -1,6 +1,6 @@
 <template>
 	<div class="card pointer" v-if="!fake">
-	  <header class="card-header relative" :style="`--color: ${item.color || '#333'}`">
+	  <header class="card-header relative" :style="item.color ? `--default: ${item.color}` : ''">
 	    <span class="text-bold">{{ item.name }}</span>
 	    <small v-if="item.master.id !== user.id">{{ item.master.name }}</small>
 	    <small v-else>Criada por mim</small>
@@ -19,7 +19,7 @@
 
 <script>
 	export default {
-		name: 'ClassComponent',
+		name: 'ClassCard',
 		props: {
 			name: String,
 			fake: Boolean,
@@ -51,7 +51,7 @@
 			min-height: 9rem
 			height: 100%
 		.card-header
-			background-color: var(--color)
+			background-color: var(--default)
 			color: white
 			flex-direction: column;
 			padding: 1rem

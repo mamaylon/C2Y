@@ -6,8 +6,8 @@
  */
 
 require('./bootstrap')
-const store = require('./store.js')
-store.state.user = window.User
+const modules = require('./store.js')
+modules.user.state.user = window.User
 // delete window.User
 
 /**
@@ -32,7 +32,9 @@ const router = new VueRouter({
 
 const app = new Vue({
   router,
-  store: new Vuex.Store(store)
+  store: new Vuex.Store({
+    modules
+  })
 }).$mount('#app');
 
 window.store = app.$store

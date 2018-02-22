@@ -3,27 +3,40 @@
     <div style="background-color:white; height: 100%; width: 100%; position: absolute; top: 0; left: 0; z-index: 0"></div>
     <section class="container" id="teach-component">
       <article class="content" style="position: relative; margin-top: -20px; min-height: 440px; padding-top: 20px; padding-bottom: 20px">
-        <section class="columns">
+        <section class="columns" v-if="classrooms.length">
           <article class="is-10 is-offset-1 column">
             <!-- <div class="text-medium my-classes">Minhas classes</div> -->
             <div class="grid">
-              <section v-for="(item, $index) in classrooms" :key="$index">
-                <classroom :item="item"></classroom>
+              <section v-for="(item, $index) in classrooms"
+                @click="goTo(item)"
+                :key="$index">
+                <card :item="item"></card>
               </section>
               <section @click="open()">
-                <classroom :fake="true"></classroom>
+                <card :fake="true"></card>
               </section>
             </div>
           </article>
+        </section>
+        <section class="has-text-centered empty ghost" @click="open()" v-else>
+          <span>
+            <i class="fa fa-users fa-fw fa-5x"></i>
+          </span>
+          <div class="title">
+            Você não possui nenhuma classe.
+          </div>
+          <div class="subtitle">
+            Clique aqui para adicionar sua primeira
+          </div> 
         </section>
       </article>
     </section>
   </section>
 </template>
 <script>
-  import CourseItemComponent from './Course/CourseItemComponent.vue'
+  import CourseItemComponent from './Courses/CourseItemComponent.vue'
   import ModalComponent from './ModalComponent.vue'
-  import Classroom from './Classroom/Classroom.vue'
+  import Card from './Classroom/Card.vue'
   import AddClassroom from './Classroom/Modal/AddClassroom.vue'
   import FormClassroom from './Classroom/Modal/FormClassroom.vue'
 
@@ -31,7 +44,7 @@
     components: {
       CourseItemComponent,
       ModalComponent,
-      Classroom
+      Card
     },
     computed: {
       classrooms: function () {
@@ -44,6 +57,10 @@
           component: AddClassroom,
           onClose: true
         })
+      },
+      goTo (classroom) {
+        this.$store.dispatch('classroom', classroom)
+        this.$router.replace(`/classroom/${classroom.id}`)
       },
       sync (code) {
         let form = {
@@ -89,6 +106,13 @@
 </script>
 
 <style lang="sass" scoped>
+  .empty
+    height: 70vh
+    display: flex
+    justify-content: center
+    flex-direction: column
+  .title, .subtitle
+    font-weight: 100
   .my-classes
     font-size: 1.5rem
   .grid
