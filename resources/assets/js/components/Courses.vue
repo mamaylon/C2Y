@@ -1,6 +1,5 @@
 <template>
-  <section>
-    <white-component></white-component>
+  <section style="flex: 1">
     <nav class="navbar has-shadow has-border-top" style="margin: -20px 0 20px 0" id="nav-component">
       <form @submit.prevent="submit()" class="container">
         <div class="navbar">

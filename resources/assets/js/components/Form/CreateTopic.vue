@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <section style="flex: 1">
     <article class="">
       <form-component :form="data" :name="'tópico'" :api="'/api/topic'"></form-component>
     </article>

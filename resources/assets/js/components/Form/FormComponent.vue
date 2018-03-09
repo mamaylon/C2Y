@@ -1,5 +1,10 @@
 <template>
-  <form :action="api" @submit.prevent="submit" method="POST" class="content box column is-6 is-offset-3">
+  <form
+    :action="api"
+    @submit.prevent="submit"
+    method="POST"
+    style="flex: 1"
+    class="content box column is-6 is-offset-3">
     <div class="notification is-success" v-show="modal">
       <button type="button" class="delete" @click="modal = false"></button>
       Informações salva com sucesso :)
@@ -8,15 +13,17 @@
       <button type="button" class="delete" @click="error = false"></button>
       Ocorreram erros durante o salvamento das informações :(
       <ul>
-        <div v-for="err in error">
-          <li v-for="e in err">
+        <div v-for="(err, index) in error" :key="index">
+          <li v-for="(e, key) in err" :key="key">
             {{ e }}
           </li>
         </div>
       </ul>
     </div>
     <h3>Cadastrar {{ name }}</h3>
-    <div class="field" v-for="item in form">
+    <div class="field"
+      v-for="(item, index) in form"
+      :key="index">
       <div class="file" v-if="item.file">
         <label v-show="!form.image" class="file-label">
           <input type="file" @change="change" :name="item.input">
@@ -36,7 +43,9 @@
         <div v-if="item.api" class="select is-fullwidth" :class="{ 'is-multiple' : item.api.multiple }">
           <select v-model="data[ item.input ]" :multiple="item.api.multiple">
             <option value="0" disabled v-if="!item.api.multiple">{{ item.text }}</option>
-            <option v-for="resp in apiData[ item.input ]" :value="resp.id">{{ resp[ item.api.field ] }}</option>
+            <option v-for="(resp, key) in apiData[ item.input ]"
+              :value="resp.id"
+              :key="key">{{ resp[ item.api.field ] }}</option>
           </select>
         </div>
       </div>

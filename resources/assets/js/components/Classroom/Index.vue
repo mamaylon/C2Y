@@ -1,19 +1,26 @@
 <template>
-  <section :style="classroom.color ? `--default: ${classroom.color}` : ''">
+  <section
+    class="classroom"
+    :style="classroom.color ? `--default: ${classroom.color}` : ''">
     <navigator :routes="routes">
       <span v-tooltip.bottom="'Alternar cor do curso'"
         @click="open()"
         class="pointer color-picker"></span>
     </navigator>
-
-
-
+    <div class="scroll">
+      <article class="container">
+        <side-users :masters="masters" class="aside"></side-users>
+        <main-board class="main"></main-board>
+      </article>
+    </div>
   </section>
 </template>
 
 <script>
   import Navigator from '../commons/Navigator.vue'
   import ColorPicker from './Modal/ColorPicker.vue'
+  import SideUsers from './SideUsers.vue'
+  import MainBoard from './MainBoard.vue'
 
   let fromStore = name => {
     return function () {
@@ -46,7 +53,9 @@
     name: 'Classroom',
     created,
     components: {
-      Navigator
+      Navigator,
+      SideUsers,
+      MainBoard
     },
     data: _ => ({
       routes: [],
@@ -86,13 +95,27 @@
         if (!this.classroom.users) {
           return []
         }
-        return this.classroom.users.filter(user => user.role === 'master')
+        return this.classroom.users.filter(user => /master|assistant|monitor/ig.test(user.role))
       }
     }
   }
 </script>
 
 <style lang="sass" scoped>
+  .classroom >>> nav
+    margin-bottom: 0
+  .scroll
+    padding: 1.4rem
+    overflow: auto
+  .scroll, .classroom
+    flex: 1
+  .classroom, .container
+    display: flex
+    flex-direction: column
+  .container
+    flex-direction: row
+  .main
+    flex: 1
   .color-picker
     --s: 2rem
     background-color: var(--default)

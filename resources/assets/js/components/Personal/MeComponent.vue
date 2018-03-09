@@ -1,5 +1,7 @@
 <template>
-  <section class="margin-bottom" style="min-height: 480px;">
+  <section
+    class="margin-bottom"
+    style="flex: 1; min-height: 480px;">
     <div style="background-color:white; height: 100%; width: 100%; position: absolute; top: 0; left: 0; z-index:0;"></div>
     <div class="container" id="me-component">
       <div class="columns">

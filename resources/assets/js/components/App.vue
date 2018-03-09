@@ -45,6 +45,8 @@
       flex: 1
     #router-view
       flex: 1
+      display: flex
+      overflow: auto
 </style>
 <style lang="sass" scoped>
   .message.box

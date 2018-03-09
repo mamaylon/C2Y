@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <section style="flex: 1">
     <!-- <article class="">
       <form-component :form="data" :name="'atividade'" :api="'/api/lesson'"></form-component>
     </article> -->
@@ -8,7 +8,7 @@
       <div class="column is-8 is-offset-2 notification is-success">
         <button type="button" class="delete" @click="success = false"></button>
         Parabéns, você cadastrou um atividade :)
-      </div>  
+      </div>
     </section>
     <create :title="'Criar atividade'" :api="'/api/lesson'" :hide="true" :model="form" :callback="callback" @error="handle">
       <div class="columns">

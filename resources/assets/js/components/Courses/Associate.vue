@@ -1,5 +1,5 @@
 <template>
-  <section id="teach-component">
+  <section id="teach-component" style="flex: 1">
     <white-component></white-component>
     <section class="columns no-margin">
       <article class="column is-8 is-offset-2 z-index levels" v-if="course">
@@ -24,7 +24,9 @@
               <!-- <i class="fa fa-pencil pointer primary" @click="edit()" aria-hidden="true"></i> -->
             </div>
         </article>
-        <div v-for="(f, i) in levels">
+        <div
+          v-for="(f, i) in levels"
+          :key="f">
           <level class="item-level" :level="f" @add="addLesson" @push="push" :index="i" @remove="remove" @drop="drop"></level>
         </div>
         <add-level class="add-level" @add="add"></add-level>

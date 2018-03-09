@@ -1,10 +1,9 @@
 <template>
-  <section id="teach-component">
-    <white-component></white-component>
+  <section id="teach-component" style="flex: 1">
     <section class="columns no-margin">
       <article class="column is-8 is-offset-2 z-index levels" v-if="course">
         <course-header :course="course" @like="like()" @unlike="unlike()" :likable="true"></course-header>
-        <div v-for="(f, i) in levels">
+        <div v-for="(f, i) in levels" :key="i">
           <level :editable="false" :course="course.id" :link="true" class="item-level" :level="f" :index="i"></level>
         </div>
       </article>
