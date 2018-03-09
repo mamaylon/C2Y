@@ -11,10 +11,17 @@ module.exports = {
         return
       }
       store.user.classrooms.push(payload)
+    },
+    SET_CLASS_COLOR (store, payload) {
+      let cl = store.user.classrooms.find(item => item.code === payload.code)
+      if (!cl) {
+        return
+      }
+      cl.color = payload.color
     }
   },
   actions: {
-    user ({commit}, payload) {
+    user ({ commit }, payload) {
       commit('SET_USER', payload)
     },
     push_classroom ({commit}, payload) {

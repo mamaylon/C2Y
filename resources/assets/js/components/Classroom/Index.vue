@@ -5,30 +5,41 @@
         @click="open()"
         class="pointer color-picker"></span>
     </navigator>
+
+
+
   </section>
 </template>
 
 <script>
   import Navigator from '../commons/Navigator.vue'
   import ColorPicker from './Modal/ColorPicker.vue'
+
   let fromStore = name => {
     return function () {
       return this.$store.getters[name]
     }
   }
-  let created = function () {
+  let created = async function () {
     let id = this.$route.params.id
-    // let classroom = this.classroom
-    // if (!this.classroom) {
     let classroom = this.user.classrooms.find(it => it.id === id)
-    // }
-    // Busca no banco
     this.$store.dispatch('classroom', classroom)
     this.routes.push({
       icon: 'home',
       text: classroom.name,
       route: `/classroom/${classroom.id}`
     })
+    let promise = this.$http.get(`/api/classroom/${classroom.id}`, {
+      params: { users: true }
+    })
+    promise
+      .then(result => {
+        let data = result.body.data
+        this.$store.dispatch('classroom', data.classroom)
+      })
+      .catch(err => {
+        this.err = err
+      })
   }
 
   export default {
@@ -37,27 +48,46 @@
     components: {
       Navigator
     },
+    data: _ => ({
+      routes: [],
+      err: null
+    }),
     methods: {
       open () {
+        let color = this.$store.getters.classroom.color
+        let onClose = () => {
+          this.$modal('close')
+          if (color === this.$store.getters.classroom.color) {
+            return
+          }
+          this.$store.dispatch('color', {
+            color: this.$store.getters.classroom.color,
+            code: this.$store.getters.classroom.code,
+            save: true
+          })
+        }
         this.$modal({
           component: ColorPicker,
-          onClose: true,
+          onClose,
           class: 'min'
         })
       }
     },
     mounted () {
-      this.$nextTick(_ => this.open())
+      // this.$nextTick(_ => this.open())
     },
     destroyed () {
-      this.$store.dispatch('classroom', null)
+      this.$store.dispatch('destroy', null)
     },
-    data: _ => ({
-      routes: []
-    }),
     computed: {
       user: fromStore('user'),
-      classroom: fromStore('classroom')
+      classroom: fromStore('classroom'),
+      masters: function () {
+        if (!this.classroom.users) {
+          return []
+        }
+        return this.classroom.users.filter(user => user.role === 'master')
+      }
     }
   }
 </script>

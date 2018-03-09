@@ -57,7 +57,7 @@
     methods: {
       setColor (color) {
         this.active = color
-        this.$store.dispatch('color', color)
+        this.$store.dispatch('color', { color })
       }
     },
     computed: {
@@ -78,9 +78,9 @@
       // border-radius: 50%
       // padding: var(--minus)
       transition: opacity .3s
-      opacity: .5
+      opacity: 1
       &:hover
-        opacity: .8
+        opacity: 1
       &.is-active
         opacity: 1
         i

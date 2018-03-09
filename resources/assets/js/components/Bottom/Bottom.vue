@@ -1,5 +1,5 @@
 <template>
-  <div class="todo">
+  <div class="bottom">
     <div class="menu">
       <!-- <bug-component></bug-component>  -->
       <link-component :route="'/material/create'" :color="'#22A7F0'" :text="'Cadastrar atividade'" :icon="'puzzle-piece'"></link-component>
@@ -27,7 +27,7 @@
 <style lang="sass" scoped>
   .is-success
     background-color: #07BEB8
-  .todo
+  .bottom
     --size: 3.5rem
     --bottom: 1.5rem
     --r: 2rem

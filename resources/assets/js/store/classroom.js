@@ -1,8 +1,13 @@
+import axios from 'axios'
+
+const state = () => ({
+  color: null,
+  code: null
+})
+
 module.exports = {
   state: {
-    classroom: {
-      color: null
-    }
+    classroom: state()
   },
   mutations: {
     SET_CLASSROOM (store, payload) {
@@ -15,11 +20,20 @@ module.exports = {
     }
   },
   actions: {
-    classroom ({commit}, payload) {
+    classroom ({ commit }, payload) {
       commit('SET_CLASSROOM', payload)
     },
-    color ({commit}, payload) {
-      commit('SET_COLOR', payload)
+    destroy ({ commit }) {
+      commit('SET_CLASSROOM', state())
+    },
+    color ({ commit }, payload) {
+      commit('SET_COLOR', payload.color)
+      if (!payload.save) {
+        return
+      }
+      let hex = payload.color.replace('#', '')
+      axios.post(`/api/classroom/${payload.code}/color/${hex}`)
+      commit('SET_CLASS_COLOR', payload)
     }
   },
   getters: {

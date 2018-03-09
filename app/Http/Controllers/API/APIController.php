@@ -2,7 +2,7 @@
 namespace C2Y\Http\Controllers\API;
 
 class APIController {
-  public static function success ($arr) {
+  public static function success ($arr = []) {
     return response()->json([ 'data' => $arr ]);
   }
   public static function error ($err, $response = 200) {

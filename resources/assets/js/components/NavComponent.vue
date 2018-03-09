@@ -1,6 +1,6 @@
 <template>
   <nav class="navbar has-shadow"
-    :class="{ 'classroom': classroom }"
+    :class="{ 'classroom': classroom.code }"
     :style="classroom && classroom.color ? `--default: ${classroom.color}` : ''"
     id="nav-component">
     <div class="container">
@@ -20,7 +20,7 @@
             <!--<a class="nav-item is-tab is-hidden-mobile">Contato</a>-->
             <!--<a class="nav-item is-tab is-hidden-mobile">Blog</a>-->
           </nav>
-          <nav class="navbar-end" v-if="classroom">
+          <nav class="navbar-end" v-if="classroom.code">
             <span>Código: {{ classroom.code }}</span>
           </nav>
         </div>

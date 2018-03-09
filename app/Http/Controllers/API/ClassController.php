@@ -16,9 +16,8 @@ class ClassController extends Controller
    *
    * @return \Illuminate\Http\Response
    */
-  public function index()
-  {
-    $all = Classroom::show();
+  public function index(Request $request) {
+    $all = Classroom::show(null, $request->users == 'true' || $request->users === true);
     return APIController::success(['classrooms' => $all]);
   }
 
@@ -57,6 +56,13 @@ class ClassController extends Controller
     }
   }
 
+  public function color ($code, $color) {
+    $color = isset($color) ? '#'.$color : null;
+    Classroom::where('code', $code)
+      ->update(['color' => $color]);
+    return APIController::success();
+  }
+
   public function sync (Request $request) {
     $all = $request->all();
     $all = APIController::verify(['user', 'code'], $all);
@@ -93,7 +99,7 @@ class ClassController extends Controller
    */
   public function show($id)
   {
-    $class = Classroom::show($id);
+    $class = Classroom::show($id, true);
     if (!$class) {
       return APIController::error('Classroom not found');
     }

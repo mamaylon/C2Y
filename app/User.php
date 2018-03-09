@@ -49,4 +49,15 @@ class User extends Authenticatable
     return $this->belongsToMany('C2Y\Classroom', 'classes_users', 'user_id', 'class_id')
       ->withPivot('role');
   }
+
+  public function toArray () {
+    $attributes = $this->attributesToArray();
+    if ($this->pivot) {
+      $attributes['role'] = $this->pivot->role;
+    }
+    // $attributes = array_merge($attributes, $this->relationsToArray());
+    // unset($attributes['pivot']['created_at']);
+    return $attributes;
+  }
+
 }

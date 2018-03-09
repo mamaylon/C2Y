@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <section class="todo">
     <hero-component></hero-component>
     <nav-component></nav-component>
     <section id="router-view" class="relative">
@@ -36,6 +36,16 @@
   }
 </script>
 
+<style lang="sass">
+  #app
+    display: flex
+    .todo
+      display: flex
+      flex-direction: column
+      flex: 1
+    #router-view
+      flex: 1
+</style>
 <style lang="sass" scoped>
   .message.box
     width: 70%
