@@ -3535,6 +3535,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _vuex = __webpack_require__(299);
+
 var _Post = __webpack_require__(328);
 
 var _Post2 = _interopRequireDefault(_Post);
@@ -3544,24 +3546,6 @@ var _DoPost = __webpack_require__(322);
 var _DoPost2 = _interopRequireDefault(_DoPost);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 exports.default = {
   name: 'MainBoard',
@@ -3573,8 +3557,46 @@ exports.default = {
     return {
       posts: []
     };
+  },
+  computed: {
+    classroom: function classroom() {
+      return this.$store.getters.classroom;
+    }
+  },
+  methods: {
+    add: function add(post) {
+      this.posts.unshift(post);
+    }
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    var params = {};
+    params.id = this.classroom.id;
+    params.type = 'classroom';
+    this.$http.get('/api/post', { params: params }).then(function (data) {
+      _this.posts = data.body.data.posts;
+    });
   }
-};
+}; //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /***/ }),
 /* 56 */
@@ -53220,9 +53242,16 @@ if (false) {
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('section', {
     staticClass: "root"
-  }, [_c('do-post'), _vm._v(" "), _vm._l((_vm.posts), function(post, index) {
+  }, [_c('do-post', {
+    on: {
+      "add": _vm.add
+    }
+  }), _vm._v(" "), _vm._l((_vm.posts), function(post, index) {
     return _c('post', {
-      key: index
+      key: index,
+      attrs: {
+        "post": post
+      }
     })
   }), _vm._v(" "), (!_vm.posts.length) ? _c('div', {
     staticClass: "empty"
@@ -72284,6 +72313,43 @@ exports.default = {
     user: function user() {
       return this.$store.getters.user;
     }
+  },
+  data: function data(_) {
+    return {
+      text: '',
+      err: null,
+      wait: false
+    };
+  },
+  methods: {
+    save: function save() {
+      var _this = this;
+
+      this.wait = true;
+      var params = {
+        type: 'classroom',
+        user_id: this.$store.getters.user.id,
+        text: this.text,
+        id: this.$route.params.id
+      };
+      this.$http.post('/api/post', params).then(function (resul) {
+        resul = resul.body;
+        resul.error ? _this.error(resul.error) : _this.success(resul.data.post);
+      }).catch(this.error);
+    },
+    clear: function clear() {
+      this.text = '';
+      this.wait = false;
+    },
+    success: function success(post) {
+      this.$emit('add', post);
+      this.clear();
+    },
+    error: function error(err) {
+      this.err = err;
+      this.wait = false;
+      // this.clear()
+    }
   }
 };
 
@@ -72337,8 +72403,14 @@ module.exports = Component.exports
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: "card"
+  return _c('form', {
+    staticClass: "card",
+    on: {
+      "submit": function($event) {
+        $event.preventDefault();
+        _vm.save($event)
+      }
+    }
   }, [_c('div', {
     staticClass: "card-content"
   }, [_c('div', {
@@ -72355,9 +72427,24 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   })])]), _vm._v(" "), _c('div', {
     staticClass: "media-content"
   }, [_c('textarea', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.text),
+      expression: "text"
+    }],
     ref: "textarea",
     attrs: {
       "placeholder": "O que deseja compartilhar com sua turma?"
+    },
+    domProps: {
+      "value": (_vm.text)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.text = $event.target.value
+      }
     }
   })])])]), _vm._v(" "), _vm._m(0)])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -72720,10 +72807,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 exports.default = {
   name: 'Post',
+  props: {
+    post: Object
+  },
   mixins: [_images2.default]
 }; //
-//
-//
 //
 //
 //
@@ -72805,8 +72893,6 @@ module.exports = Component.exports
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _vm._m(0)
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('section', [_c('div', {
     staticClass: "card"
   }, [_c('header', {
@@ -72819,16 +72905,24 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "image is-32x32"
   }, [_c('img', {
     attrs: {
-      "src": "https://bulma.io/images/placeholders/96x96.png",
+      "src": _vm.toSize(_vm.post.user.photo, 48),
       "alt": "Placeholder image"
     }
   })])]), _vm._v(" "), _c('div', {
     staticClass: "media-content"
-  }, [_c('p', {}, [_vm._v("John Smith")]), _vm._v(" "), _c('small', [_c('time', {
+  }, [_c('p', {}, [_vm._v(_vm._s(_vm.post.user.name))]), _vm._v(" "), _vm._m(0)])]), _vm._v(" "), _vm._m(1)]), _vm._v(" "), _c('div', {
+    staticClass: "card-content"
+  }, [_c('div', {
+    staticClass: "content"
+  }, [_vm._v("\n        " + _vm._s(_vm.post.text) + "\n        "), _c('br')])])])])
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('small', [_c('time', {
     attrs: {
       "datetime": "2016-1-1"
     }
-  }, [_vm._v("11:09 PM - 1 Jan 2016")])])])]), _vm._v(" "), _c('a', {
+  }, [_vm._v("11:09 PM - 1 Jan 2016")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('a', {
     staticClass: "card-header-icon",
     attrs: {
       "href": "#",
@@ -72841,19 +72935,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "aria-hidden": "true"
     }
-  })])])]), _vm._v(" "), _c('div', {
-    staticClass: "card-content"
-  }, [_c('div', {
-    staticClass: "content"
-  }, [_vm._v("\n        Lorem ipsum dolor sit amet, consectetur adipiscing elit.\n        Phasellus nec iaculis mauris. "), _c('a', [_vm._v("@bulmaio")]), _vm._v(".\n        "), _c('a', {
-    attrs: {
-      "href": "#"
-    }
-  }, [_vm._v("#css")]), _vm._v(" "), _c('a', {
-    attrs: {
-      "href": "#"
-    }
-  }, [_vm._v("#responsive")]), _vm._v(" "), _c('br')])])])])
+  })])])
 }]}
 module.exports.render._withStripped = true
 if (false) {

@@ -1,5 +1,5 @@
 <template>
-  <div class="card">
+  <form class="card" @submit.prevent="save">
     <div class="card-content">
       <div class="media">
         <div class="media-left">
@@ -8,14 +8,14 @@
           </figure>
         </div>
         <div class="media-content">
-          <textarea ref="textarea" placeholder="O que deseja compartilhar com sua turma?"></textarea>
+          <textarea ref="textarea" v-model="text" placeholder="O que deseja compartilhar com sua turma?"></textarea>
         </div>
       </div>
     </div>
     <footer class="card-footer">
       <button class="button is-outlined is-primary">Publicar</button>
     </footer>
-  </div>
+  </form>
 </template>
 
 <script>
@@ -29,6 +29,41 @@ export default {
   computed: {
     user () {
       return this.$store.getters.user
+    }
+  },
+  data: _ => ({
+    text: '',
+    err: null,
+    wait: false
+  }),
+  methods: {
+    save () {
+      this.wait = true
+      let params = {
+        type: 'classroom',
+        user_id: this.$store.getters.user.id,
+        text: this.text,
+        id: this.$route.params.id
+      }
+      this.$http.post(`/api/post`, params)
+        .then(resul => {
+          resul = resul.body
+          resul.error ? this.error(resul.error) : this.success(resul.data.post)
+        })
+        .catch(this.error)
+    },
+    clear () {
+      this.text = ''
+      this.wait = false
+    },
+    success (post) {
+      this.$emit('add', post)
+      this.clear()
+    },
+    error (err) {
+      this.err = err
+      this.wait = false
+      // this.clear()
     }
   }
 }

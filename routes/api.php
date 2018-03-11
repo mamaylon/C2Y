@@ -41,3 +41,6 @@ Route::get('comment', 'API\CommentController@index');
 Route::resource('classroom', 'API\ClassController');
 Route::post('classroom/{code}/color/{color?}', 'API\ClassController@color');
 Route::post('classroom/sync', 'API\ClassController@sync');
+
+// Post route
+Route::resource('post', 'API\PostController');

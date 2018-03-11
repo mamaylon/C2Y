@@ -1,8 +1,10 @@
 <template>
   <section class="root">
-    <do-post></do-post>
+    <do-post
+      @add="add"></do-post>
     <post
       v-for="(post, index) in posts"
+      :post="post"
       :key="index" />
     <div
       class="empty"
@@ -16,6 +18,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import Post from './Post.vue'
 import DoPost from './DoPost.vue'
 export default {
@@ -26,7 +29,26 @@ export default {
   },
   data: _ => ({
     posts: []
-  })
+  }),
+  computed: {
+    classroom () {
+      return this.$store.getters.classroom
+    }
+  },
+  methods: {
+    add (post) {
+      this.posts.unshift(post)
+    }
+  },
+  mounted () {
+    let params = {}
+    params.id = this.classroom.id
+    params.type = 'classroom'
+    this.$http.get('/api/post', { params })
+      .then(data => {
+        this.posts = data.body.data.posts
+      })
+  }
 }
 </script>
 

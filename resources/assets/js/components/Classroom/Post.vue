@@ -5,11 +5,11 @@
         <div class="media">
           <div class="media-left">
             <figure class="image is-32x32">
-              <img src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image">
+              <img :src="toSize(post.user.photo, 48)" alt="Placeholder image">
             </figure>
           </div>
           <div class="media-content">
-            <p class="">John Smith</p>
+            <p class="">{{ post.user.name }}</p>
             <small><time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time></small>
           </div>
         </div>
@@ -21,9 +21,7 @@
       </header>
       <div class="card-content">
         <div class="content">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-          Phasellus nec iaculis mauris. <a>@bulmaio</a>.
-          <a href="#">#css</a> <a href="#">#responsive</a>
+          {{ post.text }}
           <br>
         </div>
       </div>
@@ -35,6 +33,9 @@
 import mixin from '../../mixins/images'
 export default {
   name: 'Post',
+  props: {
+    post: Object
+  },
   mixins: [mixin]
 }
 </script>
