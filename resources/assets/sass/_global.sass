@@ -1,3 +1,7 @@
+textarea.autosize
+  width: 100%
+  border: 0
+  resize: vertical
 .or
   display: inline-block
   background-color: tomato
@@ -151,12 +155,14 @@ body
 
 /* Ajuste para custom property */
 .button.is-primary.is-outlined
-  color: var(--primary, $primary)
-  border-color: var(--primary, $primary)
-  &:hover, &:focus
+  &, &:disabled
+    color: var(--primary, $primary)
     border-color: var(--primary, $primary)
-    color: white
-    background-color: var(--primary, $primary)
+  &:hover, &:focus
+    &:not(:disabled)
+      border-color: var(--primary, $primary)
+      color: white
+      background-color: var(--primary, $primary)
 a
   color: var(--primary, $primary)
 

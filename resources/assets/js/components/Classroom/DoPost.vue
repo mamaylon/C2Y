@@ -13,14 +13,15 @@
       </div>
     </div>
     <footer class="card-footer">
-      <button class="button is-outlined is-primary">Publicar</button>
+      <button class="button is-outlined is-primary"
+        :disabled="text.trim() === ''">Publicar</button>
     </footer>
   </form>
 </template>
 
 <script>
 import autosize from 'autosize'
-import mixin from '../../mixins/images'
+import mixin from '../../mixins/index'
 export default {
   mixins: [mixin],
   mounted () {
@@ -55,6 +56,7 @@ export default {
     clear () {
       this.text = ''
       this.wait = false
+      this.$nextTick(_ => autosize.update(this.$refs.textarea))
     },
     success (post) {
       this.$emit('add', post)

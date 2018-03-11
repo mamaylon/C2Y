@@ -107,7 +107,13 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        try {
+            $post = Post::where('id', $id)
+                ->update($request->all());
+            return APIController::success(['post' => $post]);
+        } catch (Exception $e) {
+            return APIController::error($e->getMessage());
+        }
     }
 
     /**

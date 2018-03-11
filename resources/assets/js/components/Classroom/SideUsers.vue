@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import mixin from '../../mixins/images'
+import mixin from '../../mixins/index'
 const roles = {
   master: 'Professor',
   assistant: 'Professor auxiliar',

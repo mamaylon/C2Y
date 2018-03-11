@@ -44,7 +44,7 @@
 </template>
 
 <script>
-  import mixin from '../mixins/images'
+  import mixin from '../mixins/index'
   export default {
     mixins: [mixin],
     computed: {

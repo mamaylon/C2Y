@@ -1,4 +1,3 @@
-
 window._ = require('lodash');
 
 /**
@@ -27,13 +26,16 @@ const VeeValidate = require('vee-validate').default;
 const { messages } = require('vee-validate/dist/locale/pt_BR');
 const VTooltip = require('v-tooltip').default
 const LikeTool = require('./modules/like').default;
+const Toastr = require('vue-toastr').default
 
 Vue.use(VeeValidate, {
 	locale: 'pt_BR',
 	dictionary: {
     pt_BR: { messages }
   }
-});
+})
+
+// Vue.use(Toastr)
 Vue.use(VTooltip)
 Vue.use(VueCroppie);
 Vue.use(VueRouter);

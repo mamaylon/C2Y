@@ -14,6 +14,7 @@
 </template>
 
 <script>
+  import 'vue-toastr/dist/vue-toastr.min.css'
   import 'vue-modal/dist/vue-modal.css'
   import NavComponent from './NavComponent.vue'
   import HeroComponent from './HeroComponent.vue'
@@ -38,6 +39,10 @@
       classroom () {
         return this.$store.getters.classroom
       }
+    },
+    created () {
+      this.$toastr.defaultProgressBar = false
+      this.$toastr.defaultPosition = 'toast-bottom-right'
     }
   }
 </script>
