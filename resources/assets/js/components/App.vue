@@ -1,5 +1,6 @@
 <template>
-  <section class="todo">
+  <section class="todo"
+    :style="classroom.code ? `--primary: ${classroom.color || 'var(--default)'}` : ''">
     <hero-component></hero-component>
     <nav-component></nav-component>
     <section id="router-view" class="relative">
@@ -32,11 +33,18 @@
       err (data) {
         console.log(data)
       }
+    },
+    computed: {
+      classroom () {
+        return this.$store.getters.classroom
+      }
     }
   }
 </script>
 
 <style lang="sass">
+  html, body
+    overflow: hidden
   #app
     display: flex
     .todo

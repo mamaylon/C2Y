@@ -1,21 +1,18 @@
 <template>
   <section>
-    <div
-      v-for="i in 6"
-      :key="i">
-      <div class="user has-text-centered"
-        v-for="master in masters"
-        :key="master.id">
-        <figure class="image is-96x96">
-          <img :src="master.photo">
-        </figure>
-        <small>{{ roles[ master.role ] }}</small>
-      </div>
+    <div class="user has-text-centered"
+      v-for="master in masters"
+      :key="master.id">
+      <figure class="image is-96x96">
+        <img :src="toSize(master.photo, 96)">
+      </figure>
+      <small>{{ roles[ master.role ] }}</small>
     </div>
   </section>
 </template>
 
 <script>
+import mixin from '../../mixins/images'
 const roles = {
   master: 'Professor',
   assistant: 'Professor auxiliar',
@@ -24,6 +21,7 @@ const roles = {
 }
 export default {
   name: 'SideUsers',
+  mixins: [mixin],
   props: {
     masters: Array
   },
@@ -34,6 +32,11 @@ export default {
 </script>
 
 <style lang="sass" scoped>
+  section
+    display: flex
+    // background-color: gold
+    flex-direction: column
+    align-items: flex-end
   .user
     margin-bottom: .5rem
   figure

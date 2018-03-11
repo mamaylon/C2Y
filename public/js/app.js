@@ -2982,6 +2982,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
+//
 
 exports.default = {
   components: {
@@ -2994,6 +2995,11 @@ exports.default = {
   methods: {
     err: function err(data) {
       console.log(data);
+    }
+  },
+  computed: {
+    classroom: function classroom() {
+      return this.$store.getters.classroom;
     }
   }
 };
@@ -3400,12 +3406,21 @@ var _SideUsers = __webpack_require__(172);
 
 var _SideUsers2 = _interopRequireDefault(_SideUsers);
 
+var _SideMenuClassroom = __webpack_require__(311);
+
+var _SideMenuClassroom2 = _interopRequireDefault(_SideMenuClassroom);
+
 var _MainBoard = __webpack_require__(168);
 
 var _MainBoard2 = _interopRequireDefault(_MainBoard);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+var fromStore = function fromStore(name) {
+  return function () {
+    return this.$store.getters[name];
+  };
+}; //
 //
 //
 //
@@ -3425,11 +3440,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 
-var fromStore = function fromStore(name) {
-  return function () {
-    return this.$store.getters[name];
-  };
-};
 var created = async function created() {
   var _this = this;
 
@@ -3460,6 +3470,7 @@ exports.default = {
   components: {
     Navigator: _Navigator2.default,
     SideUsers: _SideUsers2.default,
+    SideMenuClassroom: _SideMenuClassroom2.default,
     MainBoard: _MainBoard2.default
   },
   data: function data(_) {
@@ -3523,6 +3534,21 @@ exports.default = {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+
+var _Post = __webpack_require__(328);
+
+var _Post2 = _interopRequireDefault(_Post);
+
+var _DoPost = __webpack_require__(322);
+
+var _DoPost2 = _interopRequireDefault(_DoPost);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+//
+//
+//
+//
 //
 //
 //
@@ -3531,7 +3557,16 @@ Object.defineProperty(exports, "__esModule", {
 //
 
 exports.default = {
-  name: 'MainBoard'
+  name: 'MainBoard',
+  components: {
+    Post: _Post2.default,
+    DoPost: _DoPost2.default
+  },
+  data: function data(_) {
+    return {
+      posts: []
+    };
+  }
 };
 
 /***/ }),
@@ -3781,11 +3816,19 @@ exports.default = {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-//
-//
-//
-//
-//
+
+var _images = __webpack_require__(319);
+
+var _images2 = _interopRequireDefault(_images);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var roles = {
+  master: 'Professor',
+  assistant: 'Professor auxiliar',
+  monitor: 'Monitor',
+  student: 'Aluno'
+}; //
 //
 //
 //
@@ -3799,14 +3842,9 @@ Object.defineProperty(exports, "__esModule", {
 //
 //
 
-var roles = {
-  master: 'Professor',
-  assistant: 'Professor auxiliar',
-  monitor: 'Monitor',
-  student: 'Aluno'
-};
 exports.default = {
   name: 'SideUsers',
+  mixins: [_images2.default],
   props: {
     masters: Array
   },
@@ -5587,59 +5625,65 @@ exports.default = {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+
+var _images = __webpack_require__(319);
+
+var _images2 = _interopRequireDefault(_images);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = {
-  data: function data() {
-    return {
-      user: window.User
-    };
+  mixins: [_images2.default],
+  computed: {
+    user: function user() {
+      return this.$store.getters.user;
+    }
   }
-};
+}; //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /***/ }),
 /* 83 */
@@ -8450,7 +8494,7 @@ exports.push([module.i, "\n.main[data-v-4423808c] {\n  border-radius: 5px;\n  bo
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)();
-exports.push([module.i, "", ""]);
+exports.push([module.i, "\n.root[data-v-46244ea2] {\n  margin: 1rem;\n  margin-top: 0;\n}\n", ""]);
 
 /***/ }),
 /* 123 */
@@ -8492,7 +8536,7 @@ exports.push([module.i, "", ""]);
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)();
-exports.push([module.i, "\n.lock[data-v-7139fd94] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  color: #333;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  background-color: rgba(255, 255, 255, 0.8);\n  height: calc(100% + 1px);\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n}\n.card[data-v-7139fd94] {\n  box-shadow: none;\n  border-radius: 0;\n  margin-bottom: 0;\n}\n.card img[data-v-7139fd94] {\n    border-radius: 5px;\n}\n.card .image[data-v-7139fd94] {\n    height: 0;\n}\n.card .content[data-v-7139fd94] {\n    font-size: 0.8em;\n    margin-top: 0;\n    padding-top: 0.1em;\n}\n", ""]);
+exports.push([module.i, "\n.lock[data-v-7139fd94] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  color: #333;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  background-color: rgba(255, 255, 255, 0.8);\n  height: calc(100% + 1px);\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%w;\n}\n.card[data-v-7139fd94] {\n  background: transparent;\n  box-shadow: none;\n  border-radius: 0;\n  margin-bottom: 0;\n}\n.card img[data-v-7139fd94] {\n    border-radius: 5px;\n}\n.card .image[data-v-7139fd94] {\n    height: 0;\n}\n.card .content[data-v-7139fd94] {\n    font-size: 0.8em;\n    margin-top: 0;\n    padding-top: 0.1em;\n}\n", ""]);
 
 /***/ }),
 /* 129 */
@@ -8513,7 +8557,7 @@ exports.push([module.i, "\n.div-button[data-v-7428af1a] {\n  margin-top: 2em;\n}
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)();
-exports.push([module.i, "\n#app {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n#app .todo {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n        -ms-flex-direction: column;\n            flex-direction: column;\n    -webkit-box-flex: 1;\n        -ms-flex: 1;\n            flex: 1;\n}\n#app #router-view {\n    -webkit-box-flex: 1;\n        -ms-flex: 1;\n            flex: 1;\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    overflow: auto;\n}\n", ""]);
+exports.push([module.i, "\nhtml, body {\n  overflow: hidden;\n}\n#app {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n#app .todo {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n        -ms-flex-direction: column;\n            flex-direction: column;\n    -webkit-box-flex: 1;\n        -ms-flex: 1;\n            flex: 1;\n}\n#app #router-view {\n    -webkit-box-flex: 1;\n        -ms-flex: 1;\n            flex: 1;\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    overflow: auto;\n}\n", ""]);
 
 /***/ }),
 /* 132 */
@@ -8555,14 +8599,14 @@ exports.push([module.i, "\nsection.container[data-v-953503d4] {\n  margin-bottom
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)();
-exports.push([module.i, "\n.user[data-v-b0f41e1a] {\n  margin-bottom: .5rem;\n}\nfigure[data-v-b0f41e1a] {\n  border-radius: 3px;\n  overflow: hidden;\n}\nsmall[data-v-b0f41e1a] {\n  line-height: 0.9rem;\n  display: block;\n}\n", ""]);
+exports.push([module.i, "\nsection[data-v-b0f41e1a] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  -webkit-box-align: end;\n      -ms-flex-align: end;\n          align-items: flex-end;\n}\n.user[data-v-b0f41e1a] {\n  margin-bottom: .5rem;\n}\nfigure[data-v-b0f41e1a] {\n  border-radius: 3px;\n  overflow: hidden;\n}\nsmall[data-v-b0f41e1a] {\n  line-height: 0.9rem;\n  display: block;\n}\n", ""]);
 
 /***/ }),
 /* 138 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)();
-exports.push([module.i, "\n.classroom > nav[data-v-b41b7158] {\n  margin-bottom: 0;\n}\n.scroll[data-v-b41b7158] {\n  padding: 1.4rem;\n  overflow: auto;\n}\n.scroll[data-v-b41b7158], .classroom[data-v-b41b7158] {\n  -webkit-box-flex: 1;\n      -ms-flex: 1;\n          flex: 1;\n}\n.classroom[data-v-b41b7158], .container[data-v-b41b7158] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.container[data-v-b41b7158] {\n  -webkit-box-orient: horizontal;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: row;\n          flex-direction: row;\n}\n.main[data-v-b41b7158] {\n  -webkit-box-flex: 1;\n      -ms-flex: 1;\n          flex: 1;\n}\n.color-picker[data-v-b41b7158] {\n  --s: 2rem;\n  background-color: var(--default);\n  border-radius: 50%;\n  box-shadow: 0 0 3px #ccc;\n  height: var(--s);\n  width: var(--s);\n}\n", ""]);
+exports.push([module.i, "\n.container.main[data-v-b41b7158] {\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.container.main > *[data-v-b41b7158]:nth-child(1) {\n    -webkit-box-flex: 0;\n        -ms-flex: 0 1 10%;\n            flex: 0 1 10%;\n}\n.container.main > *[data-v-b41b7158]:nth-child(2) {\n    -webkit-box-flex: 0;\n        -ms-flex: 0 1 50%;\n            flex: 0 1 50%;\n}\n.container.main > *[data-v-b41b7158]:nth-child(3) {\n    -webkit-box-flex: 0;\n        -ms-flex: 0 1 30%;\n            flex: 0 1 30%;\n}\n.classroom > nav[data-v-b41b7158] {\n  margin-bottom: 0;\n}\n.scroll[data-v-b41b7158] {\n  padding: 1.4rem;\n  overflow: auto;\n}\n.scroll[data-v-b41b7158], .classroom[data-v-b41b7158] {\n  -webkit-box-flex: 1;\n      -ms-flex: 1;\n          flex: 1;\n}\n.classroom[data-v-b41b7158], .container[data-v-b41b7158] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.container[data-v-b41b7158] {\n  -webkit-box-orient: horizontal;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: row;\n          flex-direction: row;\n}\n.main[data-v-b41b7158] {\n  -webkit-box-flex: 1;\n      -ms-flex: 1;\n          flex: 1;\n}\n.color-picker[data-v-b41b7158] {\n  --s: 2rem;\n  background-color: var(--default);\n  border-radius: 50%;\n  box-shadow: 0 0 3px #ccc;\n  height: var(--s);\n  width: var(--s);\n}\n", ""]);
 
 /***/ }),
 /* 139 */
@@ -52598,7 +52642,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('img', {
     staticClass: "round",
     attrs: {
-      "src": _vm.user.photo,
+      "src": _vm.toSize(_vm.user.photo, 48),
       "alt": ""
     }
   })])], 1)])])])
@@ -53167,12 +53211,14 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _vm._m(0)
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('section', [_c('h1', {
-    staticClass: "title"
-  }, [_vm._v("iansdiasjdasdiasjaij")])])
-}]}
+  return _c('section', {
+    staticClass: "root"
+  }, [_c('do-post'), _vm._v(" "), _vm._l((_vm.posts), function(post, index) {
+    return _c('post', {
+      key: index
+    })
+  })], 2)
+},staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
@@ -53841,7 +53887,8 @@ if (false) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('section', {
-    staticClass: "todo"
+    staticClass: "todo",
+    style: (_vm.classroom.code ? ("--primary: " + (_vm.classroom.color || 'var(--default)')) : '')
   }, [_c('hero-component'), _vm._v(" "), _c('nav-component'), _vm._v(" "), _c('section', {
     staticClass: "relative",
     attrs: {
@@ -54135,21 +54182,17 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('section', _vm._l((6), function(i) {
+  return _c('section', _vm._l((_vm.masters), function(master) {
     return _c('div', {
-      key: i
-    }, _vm._l((_vm.masters), function(master) {
-      return _c('div', {
-        key: master.id,
-        staticClass: "user has-text-centered"
-      }, [_c('figure', {
-        staticClass: "image is-96x96"
-      }, [_c('img', {
-        attrs: {
-          "src": master.photo
-        }
-      })]), _vm._v(" "), _c('small', [_vm._v(_vm._s(_vm.roles[master.role]))])])
-    }))
+      key: master.id,
+      staticClass: "user has-text-centered"
+    }, [_c('figure', {
+      staticClass: "image is-96x96"
+    }, [_c('img', {
+      attrs: {
+        "src": _vm.toSize(master.photo, 96)
+      }
+    })]), _vm._v(" "), _c('small', [_vm._v(_vm._s(_vm.roles[master.role]))])])
   }))
 },staticRenderFns: []}
 module.exports.render._withStripped = true
@@ -54191,7 +54234,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   })]), _vm._v(" "), _c('div', {
     staticClass: "scroll"
   }, [_c('article', {
-    staticClass: "container"
+    staticClass: "container main"
   }, [_c('side-users', {
     staticClass: "aside",
     attrs: {
@@ -54199,7 +54242,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }), _vm._v(" "), _c('main-board', {
     staticClass: "main"
-  })], 1)])], 1)
+  }), _vm._v(" "), _c('side-menu-classroom')], 1)])], 1)
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -71944,6 +71987,891 @@ module.exports = function(module) {
 __webpack_require__(28);
 module.exports = __webpack_require__(29);
 
+
+/***/ }),
+/* 303 */,
+/* 304 */,
+/* 305 */,
+/* 306 */,
+/* 307 */,
+/* 308 */,
+/* 309 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+exports.default = {
+  name: 'SideMenuClassroom'
+};
+
+/***/ }),
+/* 310 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(1)();
+exports.push([module.i, "\n.square[data-v-4109fd9f] {\n  background-color: tomato;\n  --c: 8rem;\n  width: var(--c);\n  height: var(--c);\n  margin-bottom: 1rem;\n}\n", ""]);
+
+/***/ }),
+/* 311 */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+/* styles */
+__webpack_require__(313)
+
+var Component = __webpack_require__(0)(
+  /* script */
+  __webpack_require__(309),
+  /* template */
+  __webpack_require__(312),
+  /* scopeId */
+  "data-v-4109fd9f",
+  /* cssModules */
+  null
+)
+Component.options.__file = "/home/zerodois/Github/app/C2Y/resources/assets/js/components/Classroom/SideMenuClassroom.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] SideMenuClassroom.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-4109fd9f", Component.options)
+  } else {
+    hotAPI.reload("data-v-4109fd9f", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 312 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('section', _vm._l((3), function(i) {
+    return _c('div', {
+      key: i,
+      staticClass: "card"
+    }, [_vm._m(0, true), _vm._v(" "), _vm._m(1, true), _vm._v(" "), _vm._m(2, true)])
+  }))
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('header', {
+    staticClass: "card-header"
+  }, [_c('p', {
+    staticClass: "card-header-title"
+  }, [_vm._v("\n        Component\n      ")]), _vm._v(" "), _c('a', {
+    staticClass: "card-header-icon",
+    attrs: {
+      "href": "#",
+      "aria-label": "more options"
+    }
+  }, [_c('span', {
+    staticClass: "icon"
+  }, [_c('i', {
+    staticClass: "fa fa-angle-down",
+    attrs: {
+      "aria-hidden": "true"
+    }
+  })])])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "card-content"
+  }, [_c('div', {
+    staticClass: "content"
+  }, [_vm._v("\n        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris.\n        "), _c('a', {
+    attrs: {
+      "href": "#"
+    }
+  }, [_vm._v("@bulmaio")]), _vm._v(". "), _c('a', {
+    attrs: {
+      "href": "#"
+    }
+  }, [_vm._v("#css")]), _vm._v(" "), _c('a', {
+    attrs: {
+      "href": "#"
+    }
+  }, [_vm._v("#responsive")]), _vm._v(" "), _c('br'), _vm._v(" "), _c('time', {
+    attrs: {
+      "datetime": "2016-1-1"
+    }
+  }, [_vm._v("11:09 PM - 1 Jan 2016")])])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('footer', {
+    staticClass: "card-footer"
+  }, [_c('a', {
+    staticClass: "card-footer-item",
+    attrs: {
+      "href": "#"
+    }
+  }, [_vm._v("Save")]), _vm._v(" "), _c('a', {
+    staticClass: "card-footer-item",
+    attrs: {
+      "href": "#"
+    }
+  }, [_vm._v("Edit")]), _vm._v(" "), _c('a', {
+    staticClass: "card-footer-item",
+    attrs: {
+      "href": "#"
+    }
+  }, [_vm._v("Delete")])])
+}]}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-4109fd9f", module.exports)
+  }
+}
+
+/***/ }),
+/* 313 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(310);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(2)("03cb3388", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-4109fd9f&scoped=true!../../../../../node_modules/sass-loader/lib/loader.js?indentedSyntax!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./SideMenuClassroom.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-4109fd9f&scoped=true!../../../../../node_modules/sass-loader/lib/loader.js?indentedSyntax!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./SideMenuClassroom.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 314 */,
+/* 315 */,
+/* 316 */,
+/* 317 */,
+/* 318 */,
+/* 319 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = {
+  methods: {
+    toSize: function toSize(url, size) {
+      if (/facebook\.[\w\/.?]*width=([0-9]+)/i.test(url)) {
+        return url.replace(/width=[0-9]+/i, "width=" + size);
+      }
+      return url + "?sz=" + size;
+    }
+  }
+};
+
+/***/ }),
+/* 320 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _autosize = __webpack_require__(325);
+
+var _autosize2 = _interopRequireDefault(_autosize);
+
+var _images = __webpack_require__(319);
+
+var _images2 = _interopRequireDefault(_images);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+exports.default = {
+  mixins: [_images2.default],
+  mounted: function mounted() {
+    (0, _autosize2.default)(this.$refs.textarea);
+  },
+
+  computed: {
+    user: function user() {
+      return this.$store.getters.user;
+    }
+  }
+};
+
+/***/ }),
+/* 321 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(1)();
+exports.push([module.i, "\n.image[data-v-5477ad8e] {\n  border-radius: 3px;\n}\nfooter[data-v-5477ad8e] {\n  padding: .5rem;\n  -webkit-box-pack: end;\n      -ms-flex-pack: end;\n          justify-content: flex-end;\n}\n.card[data-v-5477ad8e] {\n  margin-bottom: 1rem;\n}\n.card .card-content[data-v-5477ad8e] {\n    padding: 1rem;\n}\ntextarea[data-v-5477ad8e] {\n  width: 100%;\n  border: 0;\n  resize: vertical;\n}\ntextarea[data-v-5477ad8e]:focus {\n  outline-style: solid;\n  outline-width: 0;\n}\n", ""]);
+
+/***/ }),
+/* 322 */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+/* styles */
+__webpack_require__(324)
+
+var Component = __webpack_require__(0)(
+  /* script */
+  __webpack_require__(320),
+  /* template */
+  __webpack_require__(323),
+  /* scopeId */
+  "data-v-5477ad8e",
+  /* cssModules */
+  null
+)
+Component.options.__file = "/home/zerodois/Github/app/C2Y/resources/assets/js/components/Classroom/DoPost.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] DoPost.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-5477ad8e", Component.options)
+  } else {
+    hotAPI.reload("data-v-5477ad8e", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 323 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "card"
+  }, [_c('div', {
+    staticClass: "card-content"
+  }, [_c('div', {
+    staticClass: "media"
+  }, [_c('div', {
+    staticClass: "media-left"
+  }, [_c('figure', {
+    staticClass: "image is-48x48"
+  }, [_c('img', {
+    attrs: {
+      "src": _vm.toSize(_vm.user.photo, 48),
+      "alt": "Placeholder image"
+    }
+  })])]), _vm._v(" "), _c('div', {
+    staticClass: "media-content"
+  }, [_c('textarea', {
+    ref: "textarea",
+    attrs: {
+      "placeholder": "O que deseja compartilhar com sua turma?"
+    }
+  })])])]), _vm._v(" "), _vm._m(0)])
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('footer', {
+    staticClass: "card-footer"
+  }, [_c('button', {
+    staticClass: "button is-outlined is-primary"
+  }, [_vm._v("Publicar")])])
+}]}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-5477ad8e", module.exports)
+  }
+}
+
+/***/ }),
+/* 324 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(321);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(2)("00c25764", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-5477ad8e&scoped=true!../../../../../node_modules/sass-loader/lib/loader.js?indentedSyntax!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./DoPost.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-5477ad8e&scoped=true!../../../../../node_modules/sass-loader/lib/loader.js?indentedSyntax!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./DoPost.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 325 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
+	Autosize 4.0.0
+	license: MIT
+	http://www.jacklmoore.com/autosize
+*/
+(function (global, factory) {
+	if (true) {
+		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [exports, module], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
+				(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+	} else if (typeof exports !== 'undefined' && typeof module !== 'undefined') {
+		factory(exports, module);
+	} else {
+		var mod = {
+			exports: {}
+		};
+		factory(mod.exports, mod);
+		global.autosize = mod.exports;
+	}
+})(this, function (exports, module) {
+	'use strict';
+
+	var map = typeof Map === "function" ? new Map() : (function () {
+		var keys = [];
+		var values = [];
+
+		return {
+			has: function has(key) {
+				return keys.indexOf(key) > -1;
+			},
+			get: function get(key) {
+				return values[keys.indexOf(key)];
+			},
+			set: function set(key, value) {
+				if (keys.indexOf(key) === -1) {
+					keys.push(key);
+					values.push(value);
+				}
+			},
+			'delete': function _delete(key) {
+				var index = keys.indexOf(key);
+				if (index > -1) {
+					keys.splice(index, 1);
+					values.splice(index, 1);
+				}
+			}
+		};
+	})();
+
+	var createEvent = function createEvent(name) {
+		return new Event(name, { bubbles: true });
+	};
+	try {
+		new Event('test');
+	} catch (e) {
+		// IE does not support `new Event()`
+		createEvent = function (name) {
+			var evt = document.createEvent('Event');
+			evt.initEvent(name, true, false);
+			return evt;
+		};
+	}
+
+	function assign(ta) {
+		if (!ta || !ta.nodeName || ta.nodeName !== 'TEXTAREA' || map.has(ta)) return;
+
+		var heightOffset = null;
+		var clientWidth = ta.clientWidth;
+		var cachedHeight = null;
+
+		function init() {
+			var style = window.getComputedStyle(ta, null);
+
+			if (style.resize === 'vertical') {
+				ta.style.resize = 'none';
+			} else if (style.resize === 'both') {
+				ta.style.resize = 'horizontal';
+			}
+
+			if (style.boxSizing === 'content-box') {
+				heightOffset = -(parseFloat(style.paddingTop) + parseFloat(style.paddingBottom));
+			} else {
+				heightOffset = parseFloat(style.borderTopWidth) + parseFloat(style.borderBottomWidth);
+			}
+			// Fix when a textarea is not on document body and heightOffset is Not a Number
+			if (isNaN(heightOffset)) {
+				heightOffset = 0;
+			}
+
+			update();
+		}
+
+		function changeOverflow(value) {
+			{
+				// Chrome/Safari-specific fix:
+				// When the textarea y-overflow is hidden, Chrome/Safari do not reflow the text to account for the space
+				// made available by removing the scrollbar. The following forces the necessary text reflow.
+				var width = ta.style.width;
+				ta.style.width = '0px';
+				// Force reflow:
+				/* jshint ignore:start */
+				ta.offsetWidth;
+				/* jshint ignore:end */
+				ta.style.width = width;
+			}
+
+			ta.style.overflowY = value;
+		}
+
+		function getParentOverflows(el) {
+			var arr = [];
+
+			while (el && el.parentNode && el.parentNode instanceof Element) {
+				if (el.parentNode.scrollTop) {
+					arr.push({
+						node: el.parentNode,
+						scrollTop: el.parentNode.scrollTop
+					});
+				}
+				el = el.parentNode;
+			}
+
+			return arr;
+		}
+
+		function resize() {
+			var originalHeight = ta.style.height;
+			var overflows = getParentOverflows(ta);
+			var docTop = document.documentElement && document.documentElement.scrollTop; // Needed for Mobile IE (ticket #240)
+
+			ta.style.height = '';
+
+			var endHeight = ta.scrollHeight + heightOffset;
+
+			if (ta.scrollHeight === 0) {
+				// If the scrollHeight is 0, then the element probably has display:none or is detached from the DOM.
+				ta.style.height = originalHeight;
+				return;
+			}
+
+			ta.style.height = endHeight + 'px';
+
+			// used to check if an update is actually necessary on window.resize
+			clientWidth = ta.clientWidth;
+
+			// prevents scroll-position jumping
+			overflows.forEach(function (el) {
+				el.node.scrollTop = el.scrollTop;
+			});
+
+			if (docTop) {
+				document.documentElement.scrollTop = docTop;
+			}
+		}
+
+		function update() {
+			resize();
+
+			var styleHeight = Math.round(parseFloat(ta.style.height));
+			var computed = window.getComputedStyle(ta, null);
+
+			// Using offsetHeight as a replacement for computed.height in IE, because IE does not account use of border-box
+			var actualHeight = computed.boxSizing === 'content-box' ? Math.round(parseFloat(computed.height)) : ta.offsetHeight;
+
+			// The actual height not matching the style height (set via the resize method) indicates that
+			// the max-height has been exceeded, in which case the overflow should be allowed.
+			if (actualHeight !== styleHeight) {
+				if (computed.overflowY === 'hidden') {
+					changeOverflow('scroll');
+					resize();
+					actualHeight = computed.boxSizing === 'content-box' ? Math.round(parseFloat(window.getComputedStyle(ta, null).height)) : ta.offsetHeight;
+				}
+			} else {
+				// Normally keep overflow set to hidden, to avoid flash of scrollbar as the textarea expands.
+				if (computed.overflowY !== 'hidden') {
+					changeOverflow('hidden');
+					resize();
+					actualHeight = computed.boxSizing === 'content-box' ? Math.round(parseFloat(window.getComputedStyle(ta, null).height)) : ta.offsetHeight;
+				}
+			}
+
+			if (cachedHeight !== actualHeight) {
+				cachedHeight = actualHeight;
+				var evt = createEvent('autosize:resized');
+				try {
+					ta.dispatchEvent(evt);
+				} catch (err) {
+					// Firefox will throw an error on dispatchEvent for a detached element
+					// https://bugzilla.mozilla.org/show_bug.cgi?id=889376
+				}
+			}
+		}
+
+		var pageResize = function pageResize() {
+			if (ta.clientWidth !== clientWidth) {
+				update();
+			}
+		};
+
+		var destroy = (function (style) {
+			window.removeEventListener('resize', pageResize, false);
+			ta.removeEventListener('input', update, false);
+			ta.removeEventListener('keyup', update, false);
+			ta.removeEventListener('autosize:destroy', destroy, false);
+			ta.removeEventListener('autosize:update', update, false);
+
+			Object.keys(style).forEach(function (key) {
+				ta.style[key] = style[key];
+			});
+
+			map['delete'](ta);
+		}).bind(ta, {
+			height: ta.style.height,
+			resize: ta.style.resize,
+			overflowY: ta.style.overflowY,
+			overflowX: ta.style.overflowX,
+			wordWrap: ta.style.wordWrap
+		});
+
+		ta.addEventListener('autosize:destroy', destroy, false);
+
+		// IE9 does not fire onpropertychange or oninput for deletions,
+		// so binding to onkeyup to catch most of those events.
+		// There is no way that I know of to detect something like 'cut' in IE9.
+		if ('onpropertychange' in ta && 'oninput' in ta) {
+			ta.addEventListener('keyup', update, false);
+		}
+
+		window.addEventListener('resize', pageResize, false);
+		ta.addEventListener('input', update, false);
+		ta.addEventListener('autosize:update', update, false);
+		ta.style.overflowX = 'hidden';
+		ta.style.wordWrap = 'break-word';
+
+		map.set(ta, {
+			destroy: destroy,
+			update: update
+		});
+
+		init();
+	}
+
+	function destroy(ta) {
+		var methods = map.get(ta);
+		if (methods) {
+			methods.destroy();
+		}
+	}
+
+	function update(ta) {
+		var methods = map.get(ta);
+		if (methods) {
+			methods.update();
+		}
+	}
+
+	var autosize = null;
+
+	// Do nothing in Node.js environment and IE8 (or lower)
+	if (typeof window === 'undefined' || typeof window.getComputedStyle !== 'function') {
+		autosize = function (el) {
+			return el;
+		};
+		autosize.destroy = function (el) {
+			return el;
+		};
+		autosize.update = function (el) {
+			return el;
+		};
+	} else {
+		autosize = function (el, options) {
+			if (el) {
+				Array.prototype.forEach.call(el.length ? el : [el], function (x) {
+					return assign(x, options);
+				});
+			}
+			return el;
+		};
+		autosize.destroy = function (el) {
+			if (el) {
+				Array.prototype.forEach.call(el.length ? el : [el], destroy);
+			}
+			return el;
+		};
+		autosize.update = function (el) {
+			if (el) {
+				Array.prototype.forEach.call(el.length ? el : [el], update);
+			}
+			return el;
+		};
+	}
+
+	module.exports = autosize;
+});
+
+/***/ }),
+/* 326 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _images = __webpack_require__(319);
+
+var _images2 = _interopRequireDefault(_images);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = {
+  name: 'Post',
+  mixins: [_images2.default]
+}; //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/***/ }),
+/* 327 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(1)();
+exports.push([module.i, "\n.card[data-v-6ec8dde4] {\n  margin-bottom: .8rem;\n}\n.image[data-v-6ec8dde4] {\n  border-radius: 50%;\n}\n.media-content[data-v-6ec8dde4] {\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.media-content p[data-v-6ec8dde4] {\n    line-height: .9rem;\n}\nsmall[data-v-6ec8dde4] {\n  color: #666;\n  font-size: .8rem;\n}\n.media[data-v-6ec8dde4] {\n  -webkit-box-flex: 1;\n      -ms-flex: 1;\n          flex: 1;\n  margin: 0 !important;\n  padding: .8rem;\n}\n.content[data-v-6ec8dde4] {\n  padding: 0;\n}\n", ""]);
+
+/***/ }),
+/* 328 */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+/* styles */
+__webpack_require__(330)
+
+var Component = __webpack_require__(0)(
+  /* script */
+  __webpack_require__(326),
+  /* template */
+  __webpack_require__(329),
+  /* scopeId */
+  "data-v-6ec8dde4",
+  /* cssModules */
+  null
+)
+Component.options.__file = "/home/zerodois/Github/app/C2Y/resources/assets/js/components/Classroom/Post.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] Post.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-6ec8dde4", Component.options)
+  } else {
+    hotAPI.reload("data-v-6ec8dde4", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 329 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _vm._m(0)
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('section', [_c('div', {
+    staticClass: "card"
+  }, [_c('header', {
+    staticClass: "card-header"
+  }, [_c('div', {
+    staticClass: "media"
+  }, [_c('div', {
+    staticClass: "media-left"
+  }, [_c('figure', {
+    staticClass: "image is-32x32"
+  }, [_c('img', {
+    attrs: {
+      "src": "https://bulma.io/images/placeholders/96x96.png",
+      "alt": "Placeholder image"
+    }
+  })])]), _vm._v(" "), _c('div', {
+    staticClass: "media-content"
+  }, [_c('p', {}, [_vm._v("John Smith")]), _vm._v(" "), _c('small', [_c('time', {
+    attrs: {
+      "datetime": "2016-1-1"
+    }
+  }, [_vm._v("11:09 PM - 1 Jan 2016")])])])]), _vm._v(" "), _c('a', {
+    staticClass: "card-header-icon",
+    attrs: {
+      "href": "#",
+      "aria-label": "more options"
+    }
+  }, [_c('span', {
+    staticClass: "icon"
+  }, [_c('i', {
+    staticClass: "fa fa-angle-down",
+    attrs: {
+      "aria-hidden": "true"
+    }
+  })])])]), _vm._v(" "), _c('div', {
+    staticClass: "card-content"
+  }, [_c('div', {
+    staticClass: "content"
+  }, [_vm._v("\n        Lorem ipsum dolor sit amet, consectetur adipiscing elit.\n        Phasellus nec iaculis mauris. "), _c('a', [_vm._v("@bulmaio")]), _vm._v(".\n        "), _c('a', {
+    attrs: {
+      "href": "#"
+    }
+  }, [_vm._v("#css")]), _vm._v(" "), _c('a', {
+    attrs: {
+      "href": "#"
+    }
+  }, [_vm._v("#responsive")]), _vm._v(" "), _c('br')])])])])
+}]}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-6ec8dde4", module.exports)
+  }
+}
+
+/***/ }),
+/* 330 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(327);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(2)("42b359dd", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-6ec8dde4&scoped=true!../../../../../node_modules/sass-loader/lib/loader.js?indentedSyntax!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Post.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-6ec8dde4&scoped=true!../../../../../node_modules/sass-loader/lib/loader.js?indentedSyntax!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Post.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
 
 /***/ })
 /******/ ]);

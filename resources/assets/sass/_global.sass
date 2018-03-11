@@ -148,6 +148,15 @@ body
     padding: 0
 .thin-font
   font-family: $login-font !important
+
+/* Ajuste para custom property */
+.button.is-primary.is-outlined
+  color: var(--primary, $primary)
+  border-color: var(--primary, $primary)
+  &:hover, &:focus
+    border-color: var(--primary, $primary)
+    color: white
+    background-color: var(--primary, $primary)
 .is-bold
   font-weight: 700
 .columns

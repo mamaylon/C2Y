@@ -4,7 +4,7 @@
       <figure class="is-square" :class="size || ''">
         <img :src="item && item.photo ? '/upload/' + item.photo : '/images/placeholders/256x256.png'" alt="Image" v-tooltip.auto="item ? item.name : 'O que são algoritmos?'">
         <div class="lock" v-if="lock">
-          <i class="fa fa-lock fa-2x fa-fw" aria-hidden="true"></i>            
+          <i class="fa fa-lock fa-2x fa-fw" aria-hidden="true"></i>
         </div>
         <!-- <a :href="link || '/#/courses/graph'">
         </a> -->
@@ -39,8 +39,9 @@
     position: absolute
     top: 0
     left: 0
-    width: 100%
+    width: 100%w
   .card
+    background: transparent
     box-shadow: none
     border-radius: 0
     margin-bottom: 0

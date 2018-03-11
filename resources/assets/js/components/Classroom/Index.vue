@@ -8,9 +8,10 @@
         class="pointer color-picker"></span>
     </navigator>
     <div class="scroll">
-      <article class="container">
+      <article class="container main">
         <side-users :masters="masters" class="aside"></side-users>
         <main-board class="main"></main-board>
+        <side-menu-classroom></side-menu-classroom>
       </article>
     </div>
   </section>
@@ -20,6 +21,7 @@
   import Navigator from '../commons/Navigator.vue'
   import ColorPicker from './Modal/ColorPicker.vue'
   import SideUsers from './SideUsers.vue'
+  import SideMenuClassroom from './SideMenuClassroom.vue'
   import MainBoard from './MainBoard.vue'
 
   let fromStore = name => {
@@ -55,6 +57,7 @@
     components: {
       Navigator,
       SideUsers,
+      SideMenuClassroom,
       MainBoard
     },
     data: _ => ({
@@ -102,6 +105,15 @@
 </script>
 
 <style lang="sass" scoped>
+  .container.main
+    justify-content: center
+    > *
+      &:nth-child(1)
+        flex: 0 1 10%
+      &:nth-child(2)
+        flex: 0 1 50%
+      &:nth-child(3)
+        flex: 0 1 30%
   .classroom >>> nav
     margin-bottom: 0
   .scroll

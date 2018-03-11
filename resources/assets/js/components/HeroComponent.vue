@@ -35,7 +35,7 @@
         </div>
         <div class="column is-1 is-hidden-mobile">
           <router-link to="/me">
-            <img :src="user.photo" class="round" alt="">
+            <img :src="toSize(user.photo, 48)" class="round" alt="">
           </router-link>
         </div>
       </div>
@@ -44,10 +44,12 @@
 </template>
 
 <script>
+  import mixin from '../mixins/images'
   export default {
-    data () {
-      return {
-        user: window.User
+    mixins: [mixin],
+    computed: {
+      user: function () {
+        return this.$store.getters.user
       }
     }
   }
