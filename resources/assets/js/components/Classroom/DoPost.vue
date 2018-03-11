@@ -1,5 +1,7 @@
 <template>
-  <form class="card" @submit.prevent="save">
+  <form class="card"
+    :class="{'wait': wait}"
+    @submit.prevent="save">
     <div class="card-content">
       <div class="media">
         <div class="media-left">
@@ -8,13 +10,20 @@
           </figure>
         </div>
         <div class="media-content">
-          <textarea ref="textarea" v-model="text" placeholder="O que deseja compartilhar com sua turma?"></textarea>
+          <textarea ref="textarea"
+            :disabled="wait"
+            v-model="text"
+            placeholder="O que deseja compartilhar com sua turma?"></textarea>
         </div>
       </div>
     </div>
     <footer class="card-footer">
-      <button class="button is-outlined is-primary"
-        :disabled="text.trim() === ''">Publicar</button>
+      <button class="button is-primary"
+        :class="{'is-outlined': !wait}"
+        :disabled="wait || text.trim() === ''">
+        <i class="fa fa-circle-o-notch fa-spin fa-fw" v-if="wait"></i>
+        {{ wait ? 'Publicando' : 'Publicar' }}
+      </button>
     </footer>
   </form>
 </template>
@@ -63,6 +72,7 @@ export default {
       this.clear()
     },
     error (err) {
+      this.$toastr.e('Erro ao publicar postagem')
       this.err = err
       this.wait = false
       // this.clear()
@@ -79,12 +89,19 @@ export default {
     justify-content: flex-end
   .card
     margin-bottom: 1rem
+    button i
+      margin-right: 5px
+    &.wait
+      opacity: 1
+      filter: brightness(.95)
     .card-content
       padding: 1rem
   textarea
     width: 100%
     border: 0
     resize: vertical
+    &:disabled
+      background: transparent
   textarea:focus
     outline-style: solid
     outline-width: 0

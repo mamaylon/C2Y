@@ -154,15 +154,22 @@ body
   font-family: $login-font !important
 
 /* Ajuste para custom property */
-.button.is-primary.is-outlined
-  &, &:disabled
-    color: var(--primary, $primary)
+.button.is-primary
+  &, &[disabled]
     border-color: var(--primary, $primary)
-  &:hover, &:focus
-    &:not(:disabled)
+    color: white
+    background-color: var(--primary, $primary)
+  &.is-outlined
+    &, &[disabled]
+      color: var(--primary, $primary)
       border-color: var(--primary, $primary)
-      color: white
-      background-color: var(--primary, $primary)
+    &:hover, &:focus, &:active
+      &:not([disabled])
+        @extend .button.is-primary
+        color: white
+.card-footer
+  border-bottom-left-radius: 5px !important
+  border-bottom-right-radius: 5px !important
 a
   color: var(--primary, $primary)
 

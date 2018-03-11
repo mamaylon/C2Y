@@ -4544,6 +4544,15 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 exports.default = {
   mixins: [_index2.default],
@@ -4593,6 +4602,7 @@ exports.default = {
       this.clear();
     },
     error: function error(err) {
+      this.$toastr.e('Erro ao publicar postagem');
       this.err = err;
       this.wait = false;
       // this.clear()
@@ -9944,7 +9954,7 @@ exports.push([module.i, "\nh3[data-v-50aa7680] {\n  margin: 1rem 0 1rem 0.5rem;\
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)();
-exports.push([module.i, "\n.image[data-v-5477ad8e] {\n  border-radius: 3px;\n}\nfooter[data-v-5477ad8e] {\n  padding: .5rem;\n  -webkit-box-pack: end;\n      -ms-flex-pack: end;\n          justify-content: flex-end;\n}\n.card[data-v-5477ad8e] {\n  margin-bottom: 1rem;\n}\n.card .card-content[data-v-5477ad8e] {\n    padding: 1rem;\n}\ntextarea[data-v-5477ad8e] {\n  width: 100%;\n  border: 0;\n  resize: vertical;\n}\ntextarea[data-v-5477ad8e]:focus {\n  outline-style: solid;\n  outline-width: 0;\n}\n", ""]);
+exports.push([module.i, "\n.image[data-v-5477ad8e] {\n  border-radius: 3px;\n}\nfooter[data-v-5477ad8e] {\n  padding: .5rem;\n  -webkit-box-pack: end;\n      -ms-flex-pack: end;\n          justify-content: flex-end;\n}\n.card[data-v-5477ad8e] {\n  margin-bottom: 1rem;\n}\n.card button i[data-v-5477ad8e] {\n    margin-right: 5px;\n}\n.card.wait[data-v-5477ad8e] {\n    opacity: 1;\n    -webkit-filter: brightness(0.95);\n            filter: brightness(0.95);\n}\n.card .card-content[data-v-5477ad8e] {\n    padding: 1rem;\n}\ntextarea[data-v-5477ad8e] {\n  width: 100%;\n  border: 0;\n  resize: vertical;\n}\ntextarea[data-v-5477ad8e]:disabled {\n    background: transparent;\n}\ntextarea[data-v-5477ad8e]:focus {\n  outline-style: solid;\n  outline-width: 0;\n}\n", ""]);
 
 /***/ }),
 /* 132 */
@@ -55086,6 +55096,9 @@ if (false) {
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('form', {
     staticClass: "card",
+    class: {
+      'wait': _vm.wait
+    },
     on: {
       "submit": function($event) {
         $event.preventDefault();
@@ -55116,6 +55129,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }],
     ref: "textarea",
     attrs: {
+      "disabled": _vm.wait,
       "placeholder": "O que deseja compartilhar com sua turma?"
     },
     domProps: {
@@ -55130,11 +55144,16 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   })])])]), _vm._v(" "), _c('footer', {
     staticClass: "card-footer"
   }, [_c('button', {
-    staticClass: "button is-outlined is-primary",
+    staticClass: "button is-primary",
+    class: {
+      'is-outlined': !_vm.wait
+    },
     attrs: {
-      "disabled": _vm.text.trim() === ''
+      "disabled": _vm.wait || _vm.text.trim() === ''
     }
-  }, [_vm._v("Publicar")])])])
+  }, [(_vm.wait) ? _c('i', {
+    staticClass: "fa fa-circle-o-notch fa-spin fa-fw"
+  }) : _vm._e(), _vm._v("\n      " + _vm._s(_vm.wait ? 'Publicando' : 'Publicar') + "\n    ")])])])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
