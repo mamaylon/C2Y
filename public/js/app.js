@@ -3555,6 +3555,13 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 exports.default = {
   name: 'MainBoard',
@@ -8494,7 +8501,7 @@ exports.push([module.i, "\n.main[data-v-4423808c] {\n  border-radius: 5px;\n  bo
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)();
-exports.push([module.i, "\n.root[data-v-46244ea2] {\n  margin: 1rem;\n  margin-top: 0;\n}\n", ""]);
+exports.push([module.i, "\n.root[data-v-46244ea2] {\n  margin: 1rem;\n  margin-top: 0;\n}\n.empty[data-v-46244ea2] {\n  opacity: .7;\n  color: black;\n  margin-top: 2rem;\n  padding: 1rem;\n  text-align: center;\n  font-size: 1.2rem;\n}\n.empty > div[data-v-46244ea2] {\n    margin: auto;\n    width: 50%;\n}\n.empty i[data-v-46244ea2] {\n    font-size: 2rem;\n    margin: auto;\n    display: block;\n}\n", ""]);
 
 /***/ }),
 /* 123 */
@@ -53217,8 +53224,17 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     return _c('post', {
       key: index
     })
-  })], 2)
-},staticRenderFns: []}
+  }), _vm._v(" "), (!_vm.posts.length) ? _c('div', {
+    staticClass: "empty"
+  }, [_vm._m(0)]) : _vm._e()], 2)
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', [_c('i', {
+    staticClass: "fa fa-file-text",
+    attrs: {
+      "aria-hidden": "true"
+    }
+  }), _vm._v("\n      Ainda não foram realizadas postagens nessa turma\n    ")])
+}]}
 module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
