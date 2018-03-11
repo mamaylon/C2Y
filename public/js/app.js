@@ -3566,6 +3566,9 @@ exports.default = {
   methods: {
     add: function add(post) {
       this.posts.unshift(post);
+    },
+    remove: function remove(index) {
+      this.posts.splice(index, 1);
     }
   },
   mounted: function mounted() {
@@ -3579,6 +3582,7 @@ exports.default = {
     });
   }
 }; //
+//
 //
 //
 //
@@ -53251,6 +53255,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       key: index,
       attrs: {
         "post": post
+      },
+      on: {
+        "delete": function($event) {
+          _vm.remove(index)
+        }
       }
     })
   }), _vm._v(" "), (!_vm.posts.length) ? _c('div', {
@@ -72810,8 +72819,25 @@ exports.default = {
   props: {
     post: Object
   },
-  mixins: [_images2.default]
+  mixins: [_images2.default],
+  methods: {
+    drop: function drop() {
+      var _this = this;
+
+      this.$http.delete('/api/post/' + this.post.id).then(function (data) {
+        return _this.$emit('delete');
+      });
+    }
+  },
+  computed: {
+    user: function user() {
+      return this.$store.getters.user;
+    }
+  }
 }; //
+//
+//
+//
 //
 //
 //
@@ -72848,7 +72874,7 @@ exports.default = {
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)();
-exports.push([module.i, "\n.card[data-v-6ec8dde4] {\n  margin-bottom: .8rem;\n}\n.image[data-v-6ec8dde4] {\n  border-radius: 50%;\n}\n.media-content[data-v-6ec8dde4] {\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.media-content p[data-v-6ec8dde4] {\n    line-height: .9rem;\n}\nsmall[data-v-6ec8dde4] {\n  color: #666;\n  font-size: .8rem;\n}\n.media[data-v-6ec8dde4] {\n  -webkit-box-flex: 1;\n      -ms-flex: 1;\n          flex: 1;\n  margin: 0 !important;\n  padding: .8rem;\n}\n.content[data-v-6ec8dde4] {\n  padding: 0;\n}\n", ""]);
+exports.push([module.i, "\n.options[data-v-6ec8dde4] {\n  display: inline-block;\n}\n.menu[data-v-6ec8dde4] {\n  position: relative;\n}\n.menu a[data-v-6ec8dde4] {\n    font-size: 1.4rem;\n}\n.menu a i[data-v-6ec8dde4] {\n      -webkit-text-fill-color: black;\n      -webkit-text-stroke-width: 3px;\n      -webkit-text-stroke-color: white;\n}\n.menu a i.fa-pencil[data-v-6ec8dde4] {\n        padding: .2rem;\n        font-size: 1rem;\n        -webkit-text-stroke-width: 0px;\n}\n.card[data-v-6ec8dde4] {\n  margin-bottom: .8rem;\n}\n.image[data-v-6ec8dde4] {\n  border-radius: 50%;\n}\n.media-content[data-v-6ec8dde4] {\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.media-content p[data-v-6ec8dde4] {\n    line-height: .9rem;\n}\nsmall[data-v-6ec8dde4] {\n  color: #666;\n  font-size: .8rem;\n}\n.media[data-v-6ec8dde4] {\n  -webkit-box-flex: 1;\n      -ms-flex: 1;\n          flex: 1;\n  margin: 0 !important;\n  padding: .8rem;\n}\n.content[data-v-6ec8dde4] {\n  padding: 0;\n}\n", ""]);
 
 /***/ }),
 /* 328 */
@@ -72910,7 +72936,32 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   })])]), _vm._v(" "), _c('div', {
     staticClass: "media-content"
-  }, [_c('p', {}, [_vm._v(_vm._s(_vm.post.user.name))]), _vm._v(" "), _vm._m(0)])]), _vm._v(" "), _vm._m(1)]), _vm._v(" "), _c('div', {
+  }, [_c('p', {}, [_vm._v(_vm._s(_vm.post.user.name))]), _vm._v(" "), _vm._m(0)])]), _vm._v(" "), (_vm.post.user.id === _vm.user.id) ? _c('div', {
+    staticClass: "menu"
+  }, [_c('a', {
+    directives: [{
+      name: "tooltip",
+      rawName: "v-tooltip",
+      value: ('Editar publicação'),
+      expression: "'Editar publicação'"
+    }]
+  }, [_c('i', {
+    staticClass: "fa fa-pencil fa-fw"
+  })]), _vm._v(" "), _c('a', {
+    directives: [{
+      name: "tooltip",
+      rawName: "v-tooltip",
+      value: ('Excluir publicação'),
+      expression: "'Excluir publicação'"
+    }],
+    on: {
+      "click": function($event) {
+        _vm.drop()
+      }
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-times fa-fw"
+  })])]) : _vm._e()]), _vm._v(" "), _c('div', {
     staticClass: "card-content"
   }, [_c('div', {
     staticClass: "content"
@@ -72921,21 +72972,6 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "datetime": "2016-1-1"
     }
   }, [_vm._v("11:09 PM - 1 Jan 2016")])])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('a', {
-    staticClass: "card-header-icon",
-    attrs: {
-      "href": "#",
-      "aria-label": "more options"
-    }
-  }, [_c('span', {
-    staticClass: "icon"
-  }, [_c('i', {
-    staticClass: "fa fa-angle-down",
-    attrs: {
-      "aria-hidden": "true"
-    }
-  })])])
 }]}
 module.exports.render._withStripped = true
 if (false) {

@@ -4,6 +4,7 @@
       @add="add"></do-post>
     <post
       v-for="(post, index) in posts"
+      @delete="remove(index)"
       :post="post"
       :key="index" />
     <div
@@ -38,6 +39,9 @@ export default {
   methods: {
     add (post) {
       this.posts.unshift(post)
+    },
+    remove(index) {
+      this.posts.splice(index, 1)
     }
   },
   mounted () {
