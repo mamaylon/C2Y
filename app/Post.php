@@ -30,6 +30,15 @@ class Post extends Model
             ->where('postable_id', $id)
             ->where('postable_type', $type)
             ->orderBy('created_at', 'desc')
+            ->withCount('comments')
             ->get();
     }
+
+    /**
+     * Get all of the post's comments.
+    */
+    public function comments () {
+        return $this->morphMany('C2Y\Comment', 'commentable');
+    }
+
 }

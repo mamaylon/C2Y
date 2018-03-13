@@ -31,6 +31,15 @@
           {{ post.text }}
           <br>
         </div>
+        <div class="bottom">
+          <div class="attachs"></div>
+          <a
+            class="edit-link"
+            @click="comments = !comments"
+            v-if="!editing">
+            <i class="fa fa-comments" aria-hidden="true"></i> 34 comentários
+          </a>
+        </div>
       </div>
       <footer class="card-footer" v-if="editing">
         <button
@@ -43,6 +52,14 @@
           type="submit"
           form="submit">Salvar alterações</button>
       </footer>
+      <footer
+        class="card-footer comments"
+        :class="{'expanded': comments}"
+        v-if="comments">
+        <comments
+          v-for="i in 2"
+          :key="i"/>
+      </footer>
     </div>
   </section>
 </template>
@@ -50,16 +67,26 @@
 <script>
 import mixin from '../../mixins/index'
 import autosize from 'autosize'
+import Comments from '../commons/Comments.vue'
 export default {
   name: 'Post',
   props: {
     post: Object
   },
+  components: {
+    Comments
+  },
   mixins: [mixin],
   data: _ => ({
     editing: false,
-    text: ''
+    text: '',
+    comments: false
   }),
+  computed: {
+    user: function () {
+      return this.$store.getters.user
+    }
+  },
   methods: {
     submit () {
       this.$http.put(`/api/post/${this.post.id}`, {
@@ -96,18 +123,28 @@ export default {
         })
         .catch(err => this.$toastr.e('Erro ao remover publicação'))
     }
-  },
-  computed: {
-    user: function () {
-      return this.$store.getters.user
-    }
   }
 }
 </script>
 
 <style lang="sass" scoped>
-  footer
+  .bottom
+    display: flex
+  .attachs
+    flex: 1
+  a.edit-link
+    display: flex
+    align-items: center
     justify-content: flex-end
+    font-size: .8rem
+    &:hover
+      color: var(--primary)
+      text-decoration: underline
+  footer.comments
+    flex-direction: column
+    padding-left: 1rem
+  footer
+    // justify-content: flex-end
     padding: .5rem
     button
       margin-left: .3rem
@@ -144,6 +181,7 @@ export default {
     margin: 0 !important
     padding: .8rem
   .content
+    margin-bottom: .5rem
     padding: 0
 </style>
 

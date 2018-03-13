@@ -17,7 +17,8 @@ class AppServiceProvider extends ServiceProvider
         Relation::morphMap([
             'lesson' => 'C2Y\Lesson',
             'course' => 'C2Y\Course',
-            'classroom' => 'C2Y\Classroom'
+            'classroom' => 'C2Y\Classroom',
+            'post' => 'C2Y\Post'
         ]);
     }
 

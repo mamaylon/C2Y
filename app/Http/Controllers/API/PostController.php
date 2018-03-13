@@ -24,6 +24,7 @@ class PostController extends Controller
         $posts = Post::show($request->id, $request->type);
         $posts = $posts->map(function ($item) {
             $new = [];
+            $new['comments_count'] = $item->comments_count;
             $new['text'] = $item->text;
             $new['id'] = $item->id;
             $new['attachments'] = $item->attachments;

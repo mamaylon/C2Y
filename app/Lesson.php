@@ -30,7 +30,7 @@ class Lesson extends Model
   public static function show ($params, $max = false) {
     $relations = ['concepts', 'topics', 'user'];
     $builder = self::select('*', DB::raw('count(1) over() as count'))->with($relations);
-    
+
     if (isset($params['user']))
       $builder = self::getComplete($builder, $params['user']);
     if (isset($params['course'])) {
@@ -93,9 +93,9 @@ class Lesson extends Model
   */
   public function comments()
   {
-      return $this->morphMany('C2Y\Comment', 'commentable');
+    return $this->morphMany('C2Y\Comment', 'commentable');
   }
-  
+
   /**
   * Get all of the lesson's courses.
   */
