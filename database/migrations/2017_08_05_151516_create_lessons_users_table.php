@@ -18,11 +18,11 @@ class CreateLessonsUsersTable extends Migration
             $table->uuid('lesson_id')->nullable();
             $table->foreign('lesson_id')->references('id')
                 ->on('lessons')->onDelete('cascade');
-            
+
             $table->uuid('user_id')->nullable();
             $table->foreign('user_id')->references('id')
                 ->on('users')->onDelete('cascade');
-            
+
             $table->primary(['lesson_id', 'user_id']);
             $table->timestamps();
         });

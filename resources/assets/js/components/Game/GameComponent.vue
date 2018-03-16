@@ -58,26 +58,30 @@
   }
   function load () {
     this.course = this.$route.params.course
-    let self = this
-    self.$http.get('/api/lesson/' + self.$route.params.id, { params: { user: window.User.id } })
-      .then(data => (self.lesson = format(data.body.data.lesson)))
+    this.$http.get('/api/lesson/' + this.$route.params.id, { params: { user: this.user.id } })
+      .then(data => (this.lesson = format(data.body.data.lesson)))
   }
   export default {
     mounted: load,
     methods: {
       complete () {
-        if (this.lesson.completeds.length)
+        if (this.lesson.completeds.length) {
           return false
-        let self = this
-        self.$http.post('/api/lesson/complete/' + self.lesson.id, { user: window.User.id })
-          .then(data => self.lesson.completeds.push(true))
+        }
+        this.$http.post('/api/lesson/complete/' + this.lesson.id, { user: this.user.id })
+          .then(data => this.lesson.completeds.push(true))
           .catch(err => console.log(err))
       },
       comment () {
-        let self = this
-        let data = { body: self.body, user_id: window.User.id, receiver: self.lesson.user.id }
-        self.$http.post('/api/comment/lesson/' + self.lesson.id, data)
-          .then(data => (self.notify = true, self.body = ''))
+        let data = {
+          type: 'lesson',
+          id: this.lesson.id,
+          body: this.body,
+          user: this.user.id,
+          receiver: this.lesson.user.id
+        }
+        this.$http.post('/api/comment', data)
+          .then(data => (this.notify = true, this.body = ''))
           .catch(err => console.log(err))
       }
     },
@@ -87,6 +91,11 @@
         lesson: null,
         course: null,
         body: ''
+      }
+    },
+    computed: {
+      user () {
+        return this.$store.user
       }
     }
   }

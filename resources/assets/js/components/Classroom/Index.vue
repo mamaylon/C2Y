@@ -10,7 +10,7 @@
     <div class="scroll">
       <article class="container main">
         <side-users :masters="masters" class="aside"></side-users>
-        <main-board class="main"></main-board>
+        <main-board :admin="admin" class="main"></main-board>
         <side-menu-classroom></side-menu-classroom>
       </article>
     </div>
@@ -94,6 +94,9 @@
     computed: {
       user: fromStore('user'),
       classroom: fromStore('classroom'),
+      admin: function () {
+        return this.masters.some(item => item.id === this.user.id)
+      },
       masters: function () {
         if (!this.classroom.users) {
           return []

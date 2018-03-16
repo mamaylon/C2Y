@@ -9,7 +9,7 @@ class Comment extends Model
     use Traits\Uuids;
     public $incrementing = false;
 
-    protected $fillable = [ 'body', 'user_id', 'receiver' ];
+    protected $fillable = [ 'body', 'user_id', 'commentable_id', 'commentable_type', 'receiver' ];
     /**
      * Get all of the owning commentable models.
      */
@@ -34,9 +34,11 @@ class Comment extends Model
         return $this->belongsTo('C2Y\User', 'receiver');
     }
 
-    public static function show ($user) {
-        return self::with(['user'])->whereHas('receiver', function($query) use ($user) {
-            $query->where('id', $user);
-        })->get();
+    public static function show ($params) {
+        return self::with(['user'])
+            ->where('commentable_type', $params['commentable_type'])
+            ->where('commentable_id', $params['commentable_id'])
+            ->orderBy('created_at', 'desc')
+            ->get();
     }
 }

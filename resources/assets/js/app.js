@@ -31,6 +31,8 @@ const router = new VueRouter({
 //   window.scrollTo(0, 0)
 // })
 
+Vue.config.keyCodes.ctrle = 17
+
 const app = new Vue({
   router,
   store: new Vuex.Store({

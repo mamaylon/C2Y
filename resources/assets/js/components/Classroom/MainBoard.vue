@@ -6,6 +6,7 @@
       v-for="(post, index) in posts"
       @delete="remove(index)"
       :post="post"
+      :admin="admin"
       :key="index" />
     <div
       class="empty"
@@ -24,6 +25,9 @@ import Post from './Post.vue'
 import DoPost from './DoPost.vue'
 export default {
   name: 'MainBoard',
+  props: {
+    admin: Boolean
+  },
   components: {
     Post,
     DoPost

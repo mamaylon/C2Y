@@ -13,8 +13,11 @@
             <small><time :datetime="post.created_at.date">{{ dateToLegible(post.created_at.date || post.created_at) }}</time></small>
           </div>
         </div>
-        <div class="menu" v-if="post.user.id === user.id && !editing">
-          <a v-tooltip="'Editar publicação'" @click="edit()">
+        <!-- Só o dono pode editar, mas os professores e monitores podem excluir se acharem desnecessaria -->
+        <div class="menu" v-if="(post.user.id === user.id || admin) && !editing">
+          <a v-if="post.user.id === user.id"
+            v-tooltip="'Editar publicação'"
+            @click="edit()">
             <i class="fa fa-pencil fa-fw"></i>
           </a>
           <a v-tooltip="'Excluir publicação'" @click="drop()">
@@ -35,9 +38,15 @@
           <div class="attachs"></div>
           <a
             class="edit-link"
-            @click="comments = !comments"
+            @click="toggle()"
             v-if="!editing">
-            <i class="fa fa-comments" aria-hidden="true"></i> 34 comentários
+            <template v-if="post.comments_count">
+              <i class="fa fa-comments" aria-hidden="true"></i>
+              {{ post.comments_count }} comentário{{ post.comments_count > 1 ? 's' : '' }}
+            </template>
+            <template v-else>
+              <i class="fa fa-comments" aria-hidden="true"></i> Seja o primeiro a comentar
+            </template>
           </a>
         </div>
       </div>
@@ -56,9 +65,23 @@
         class="card-footer comments"
         :class="{'expanded': comments}"
         v-if="comments">
-        <comments
-          v-for="i in 2"
-          :key="i"/>
+        <template v-if="!loaded">
+          <i class="loading fa fa-circle-o-notch fa-2x fa-fw fa-spin"></i>
+        </template>
+        <template v-else>
+          <comments
+            @comment="insert"
+            :post="post.id"
+            :insert="true" />
+          <comments
+            v-for="comment in arr"
+            @drop="dropComment"
+            :post="post.id"
+            :comment="comment"
+            :admin="admin"
+            :owner="post.user"
+            :key="comment.id"/>
+        </template>
       </footer>
     </div>
   </section>
@@ -71,7 +94,8 @@ import Comments from '../commons/Comments.vue'
 export default {
   name: 'Post',
   props: {
-    post: Object
+    post: Object,
+    admin: Boolean
   },
   components: {
     Comments
@@ -80,7 +104,9 @@ export default {
   data: _ => ({
     editing: false,
     text: '',
-    comments: false
+    comments: false,
+    loaded: false,
+    arr: []
   }),
   computed: {
     user: function () {
@@ -98,6 +124,32 @@ export default {
         .catch(err => {
           this.$toastr.e('Erro ao editar publicação')
         })
+    },
+    toggle () {
+      this.comments = !this.comments
+      if (this.loaded) {
+        return
+      }
+      let params = {
+        type: 'post',
+        id: this.post.id
+      }
+      this.$http.get(`/api/comment`, {params})
+        .then(resp => {
+          if (resp.body.error) {
+            throw new Error(resp.body.error)
+          }
+          this.arr = resp.body.data.comments
+          this.loaded = true
+        })
+        .catch(err => {
+          this.comments = false
+          this.$toastr.e('Erro ao carregar comentários')
+        })
+    },
+    insert (comment) {
+      this.arr.unshift(comment)
+      this.post.comments_count++
     },
     clear () {
       this.editing = false
@@ -122,6 +174,11 @@ export default {
           this.$toastr.s('Publicação removida')
         })
         .catch(err => this.$toastr.e('Erro ao remover publicação'))
+    },
+    dropComment (id) {
+      this.post.comments_count--
+      let index = this.arr.findIndex(it => it.id === id)
+      this.arr.splice(index, 1)
     }
   }
 }
@@ -141,8 +198,13 @@ export default {
       color: var(--primary)
       text-decoration: underline
   footer.comments
+    --comments: #f5f5f5
+    background-color: var(--comments)
     flex-direction: column
     padding-left: 1rem
+    .loading
+      align-self: center
+      padding: 1rem 0
   footer
     // justify-content: flex-end
     padding: .5rem

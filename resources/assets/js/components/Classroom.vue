@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <section class="root">
     <div style="background-color:white; height: 100%; width: 100%; position: absolute; top: 0; left: 0; z-index: 0"></div>
     <section class="container" id="teach-component">
       <article class="content" style="position: relative; margin-top: -20px; min-height: 440px; padding-top: 20px; padding-bottom: 20px">
@@ -27,7 +27,7 @@
           </div>
           <div class="subtitle">
             Clique aqui para adicionar sua primeira
-          </div> 
+          </div>
         </section>
       </article>
     </section>

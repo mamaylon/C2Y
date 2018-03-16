@@ -92,7 +92,6 @@ export default {
     button i
       margin-right: 5px
     &.wait
-      opacity: 1
       filter: brightness(.95)
     .card-content
       padding: 1rem

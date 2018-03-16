@@ -34,8 +34,7 @@ Route::resource('concept', 'API\ConceptController');
 Route::resource('topic', 'API\TopicController');
 
 // Comments route
-Route::post('comment/lesson/{id}', 'API\CommentController@store');
-Route::get('comment', 'API\CommentController@index');
+Route::resource('comment', 'API\CommentController');
 
 // Class route
 Route::resource('classroom', 'API\ClassController');

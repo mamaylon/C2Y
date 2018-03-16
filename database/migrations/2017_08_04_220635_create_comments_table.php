@@ -17,7 +17,7 @@ class CreateCommentsTable extends Migration
             $table->uuid('id');
             $table->primary('id');
             $table->string('body');
-            $table->uuid('receiver');
+            $table->uuid('receiver')->nullable();
             $table->foreign('receiver')->references('id')
                 ->on('users')->onDelete('cascade');
             $table->uuid('user_id');
