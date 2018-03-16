@@ -5865,6 +5865,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
+//
 
 var watcher = function watcher() {
   return function (curr, old) {
@@ -56961,9 +56962,13 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "media-left"
   }, [_c('p', {
     staticClass: "image relative"
-  }, [_c('img', {
+  }, [(_vm.course.photo) ? _c('img', {
     attrs: {
       "src": (_vm.url ? '/upload/' : '') + _vm.course.photo
+    }
+  }) : _c('img', {
+    attrs: {
+      "src": "/images/placeholders/128x128.png"
     }
   }), _vm._v(" "), _c('span', {
     staticClass: "hover pointer"

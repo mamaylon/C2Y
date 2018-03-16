@@ -6,7 +6,8 @@
         <article class="media">
             <figure class="media-left">
               <p class="image relative">
-                <img :src="(url ? '/upload/': '') + course.photo">
+                <img :src="(url ? '/upload/': '') + course.photo" v-if="course.photo">
+                <img src="/images/placeholders/128x128.png" v-else>
                 <span class="hover pointer">
                   <i class="fa fa-refresh fa-2x fa-fw" aria-hidden="true"></i>
                   <input type="file" @change="changePhoto">
