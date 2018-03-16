@@ -48,21 +48,21 @@
   export default {
     name: 'ColorPicker',
     data () {
-      console.log(this.classroom, this.classroom ? this.classroom.color : '')
       return {
-        active: this.classroom ? this.classroom.color : '',
         colors
       }
     },
     methods: {
       setColor (color) {
-        this.active = color
         this.$store.dispatch('color', { color })
       }
     },
     computed: {
       classroom: function () {
         return this.$store.getters.classroom
+      },
+      active: function () {
+        return this.classroom ? this.classroom.color : ''
       }
     }
   }

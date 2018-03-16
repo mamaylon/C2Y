@@ -4699,6 +4699,7 @@ var fromStore = function fromStore(name) {
 //
 //
 //
+//
 
 var created = async function created() {
   var _this = this;
@@ -5007,22 +5008,22 @@ var colors = ['#1abc9c', '#2ecc71', '#3498db', '#9b59b6', '#34495e', '#16a085', 
 exports.default = {
   name: 'ColorPicker',
   data: function data() {
-    console.log(this.classroom, this.classroom ? this.classroom.color : '');
     return {
-      active: this.classroom ? this.classroom.color : '',
       colors: colors
     };
   },
 
   methods: {
     setColor: function setColor(color) {
-      this.active = color;
       this.$store.dispatch('color', { color: color });
     }
   },
   computed: {
     classroom: function classroom() {
       return this.$store.getters.classroom;
+    },
+    active: function active() {
+      return this.classroom ? this.classroom.color : '';
     }
   }
 };
@@ -56666,7 +56667,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "routes": _vm.routes
     }
-  }, [_c('span', {
+  }, [(_vm.admin) ? _c('span', {
     directives: [{
       name: "tooltip",
       rawName: "v-tooltip.bottom",
@@ -56682,7 +56683,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.open()
       }
     }
-  })]), _vm._v(" "), _c('div', {
+  }) : _vm._e()]), _vm._v(" "), _c('div', {
     staticClass: "scroll"
   }, [_c('article', {
     staticClass: "container main"

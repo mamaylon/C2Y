@@ -5,6 +5,7 @@
     <navigator :routes="routes">
       <span v-tooltip.bottom="'Alternar cor do curso'"
         @click="open()"
+        v-if="admin"
         class="pointer color-picker"></span>
     </navigator>
     <div class="scroll">
