@@ -18,6 +18,11 @@
       </div>
     </div>
     <footer class="card-footer">
+      <div class="action">
+        <a @click="upload">
+          <i class="fa fa-link" aria-hidden="true"></i> Adicionar anexo
+        </a>
+      </div>
       <button class="button is-primary"
         :class="{'is-outlined': !wait}"
         :disabled="wait || text.trim() === ''">
@@ -31,10 +36,12 @@
 <script>
 import autosize from 'autosize'
 import mixin from '../../mixins/index'
+import Uploader from '../commons/Uploader.vue'
 export default {
   mixins: [mixin],
   mounted () {
     autosize(this.$refs.textarea)
+    this.$nextTick(_ => this.upload())
   },
   computed: {
     user () {
@@ -62,6 +69,12 @@ export default {
         })
         .catch(this.error)
     },
+    upload () {
+      this.$modal({
+        component: Uploader,
+        onClose: true
+      })
+    },
     clear () {
       this.text = ''
       this.wait = false
@@ -85,8 +98,14 @@ export default {
   .image
     border-radius: 3px
   footer
+    display: flex
+    align-items: center
+    .action
+      flex: 1
+      a
+        display: inline-flex
+        align-items: center
     padding: .5rem
-    justify-content: flex-end
   .card
     margin-bottom: 1rem
     button i

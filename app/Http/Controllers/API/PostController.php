@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use C2Y\Http\Controllers\Controller;
 use C2Y\Http\Controllers\API\APIController;
 use C2Y\Post;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -130,5 +131,16 @@ class PostController extends Controller
         } catch (Exception $err) {
             return APIController::error($err->getMessage());
         }
+    }
+
+    public function upload (Request $request) {
+        $file = $request->file('archive');
+        $filename = $file->getClientOriginalName();
+        $path = Storage::putFile('files', $file);
+        dd($path);
+        return APIController::success([
+            'path' => $path,
+            'filename' => $filename
+        ]);
     }
 }

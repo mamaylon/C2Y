@@ -42,6 +42,7 @@ Route::post('classroom/{code}/color/{color?}', 'API\ClassController@color');
 Route::post('classroom/sync', 'API\ClassController@sync');
 
 // Post route
+Route::post('post/upload', 'API\PostController@upload');
 Route::resource('post', 'API\PostController');
 
 // Custom api routes
