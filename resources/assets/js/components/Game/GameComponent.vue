@@ -19,7 +19,7 @@
               <div id="infos">
                 <div class="content">
                   <strong class="strong">{{ lesson.name }}</strong><br>
-                  <span v-if="lesson.link">Atividade fornecida por</span> <a :href="lesson.link">{{ lesson.source }}</a></span>
+                  <span v-if="lesson.link">Atividade fornecida por</span> <a :href="lesson.link">{{ lesson.source }}</a>
                   <span>Criada por</span> <a href="#">{{ lesson.user.name }}</a>
                 </div>
                 <div class="content">
@@ -62,7 +62,7 @@
       .then(data => (this.lesson = format(data.body.data.lesson)))
   }
   export default {
-    mounted: load,
+    created: load,
     methods: {
       complete () {
         if (this.lesson.completeds.length) {
@@ -95,7 +95,7 @@
     },
     computed: {
       user () {
-        return this.$store.user
+        return this.$store.getters.user
       }
     }
   }

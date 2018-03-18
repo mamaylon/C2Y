@@ -22,7 +22,7 @@ export default {
     fromURL (photo) {
       return photo
         ? '/upload/' + photo
-        : '/images/placeholders/128x128.png'
+        : '/images/placeholders/96x96.png'
     },
     toSize (url, size) {
       if (/facebook\.[\w\/.?]*width=([0-9]+)/i.test(url)) {

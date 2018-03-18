@@ -20,8 +20,8 @@
         <router-link
           v-for="lesson in lessons"
           :key="lesson.id"
-          :to="'/material/game/' + lessons[0].id"
-          v-tooltip.top="lessons[0].name">
+          :to="'/material/game/' + lesson.id"
+          v-tooltip.top="lesson.name">
           <figure
             class="image">
             <img :src="fromURL(lesson.photo)" alt="">
@@ -33,8 +33,22 @@
         Você não criou nenhuma atividade até o momento
       </div>
       <h4 class="subtitle text-medium">Meus cursos</h4>
+      <div
+        class="list"
+        v-if="courses.length">
+        <router-link
+          v-for="course in courses"
+          :key="course.id"
+          :to="'/material/game/' + course.id"
+          v-tooltip.top="course.name">
+          <figure
+            class="image">
+            <img :src="fromURL(course.photo)" alt="">
+          </figure>
+        </router-link>
+      </div>
       <div class="empty"
-        v-if="!courses.length">
+        v-else>
         Você não criou nenhum curso até o momento
       </div>
     </div>

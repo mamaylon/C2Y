@@ -1002,7 +1002,7 @@ exports.default = {
       return match[3] + ' de ' + map[match[2]] + ' de ' + match[1];
     },
     fromURL: function fromURL(photo) {
-      return photo ? '/upload/' + photo : '/images/placeholders/128x128.png';
+      return photo ? '/upload/' + photo : '/images/placeholders/96x96.png';
     },
     toSize: function toSize(url, size) {
       if (/facebook\.[\w\/.?]*width=([0-9]+)/i.test(url)) {
@@ -7116,7 +7116,7 @@ function load() {
   });
 }
 exports.default = {
-  mounted: load,
+  created: load,
   methods: {
     complete: function complete() {
       var _this2 = this;
@@ -7158,7 +7158,7 @@ exports.default = {
 
   computed: {
     user: function user() {
-      return this.$store.user;
+      return this.$store.getters.user;
     }
   }
 };
@@ -73279,6 +73279,20 @@ exports.default = {
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /***/ }),
 /* 327 */
@@ -73506,15 +73520,15 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       directives: [{
         name: "tooltip",
         rawName: "v-tooltip.top",
-        value: (_vm.lessons[0].name),
-        expression: "lessons[0].name",
+        value: (lesson.name),
+        expression: "lesson.name",
         modifiers: {
           "top": true
         }
       }],
       key: lesson.id,
       attrs: {
-        "to": '/material/game/' + _vm.lessons[0].id
+        "to": '/material/game/' + lesson.id
       }
     }, [_c('figure', {
       staticClass: "image"
@@ -73528,9 +73542,34 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "empty"
   }, [_vm._v("\n      Você não criou nenhuma atividade até o momento\n    ")]), _vm._v(" "), _c('h4', {
     staticClass: "subtitle text-medium"
-  }, [_vm._v("Meus cursos")]), _vm._v(" "), (!_vm.courses.length) ? _c('div', {
+  }, [_vm._v("Meus cursos")]), _vm._v(" "), (_vm.courses.length) ? _c('div', {
+    staticClass: "list"
+  }, _vm._l((_vm.courses), function(course) {
+    return _c('router-link', {
+      directives: [{
+        name: "tooltip",
+        rawName: "v-tooltip.top",
+        value: (course.name),
+        expression: "course.name",
+        modifiers: {
+          "top": true
+        }
+      }],
+      key: course.id,
+      attrs: {
+        "to": '/material/game/' + course.id
+      }
+    }, [_c('figure', {
+      staticClass: "image"
+    }, [_c('img', {
+      attrs: {
+        "src": _vm.fromURL(course.photo),
+        "alt": ""
+      }
+    })])])
+  })) : _c('div', {
     staticClass: "empty"
-  }, [_vm._v("\n      Você não criou nenhum curso até o momento\n    ")]) : _vm._e()])])
+  }, [_vm._v("\n      Você não criou nenhum curso até o momento\n    ")])])])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
