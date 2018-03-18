@@ -43,6 +43,11 @@ class Course extends Model
       ->withPivot('level');
   }
 
+  public static function me ($user) {
+    return self::where('user_id', $user)
+      ->get();
+  }
+
   public static function show ($params, $max) {
     // $relations = [];
     $page = isset($params['page']) ? intval($params['page']) : 0;

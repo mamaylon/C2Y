@@ -23,8 +23,8 @@ Route::post('course/sync', 'API\CourseController@sync');
 Route::post('course/registry', 'API\CourseController@registry');
 
 // Lesson routes
-Route::resource('lesson', 'API\LessonController');
 Route::post('lesson/complete/{id}', 'API\LessonController@complete');
+Route::resource('lesson', 'API\LessonController');
 
 // Like route
 Route::resource('like', 'API\LikeController');
@@ -43,3 +43,6 @@ Route::post('classroom/sync', 'API\ClassController@sync');
 
 // Post route
 Route::resource('post', 'API\PostController');
+
+// Custom api routes
+Route::get('me/{user}', 'API\CustomController@me');

@@ -14,10 +14,18 @@
             <section class="column is-8 items">
               <article class="box" id="box">
                 <loading-component :message="false" v-if="loading">
-                  <item-component :example="true" v-for="i in Math.max(lessons.length, 1)"></item-component>
+                  <item-component
+                    :example="true"
+                    v-for="i in Math.max(lessons.length, 1)"
+                    :key="i"></item-component>
                 </loading-component>
                 <empty-component v-show="!lessons.length && !loading" :message="'Nenhuma atividade encontrada'"></empty-component>
-                <item-component v-show="!loading && lessons.length > 0" @drop="remove" @error="err" v-for="item in lessons" :item="item"></item-component>
+                <item-component
+                  v-show="!loading && lessons.length > 0"
+                  @drop="remove" @error="err"
+                  v-for="item in lessons"
+                  :key="item.id"
+                  :item="item"></item-component>
                 <paginator-component v-if="pages>1" @paginate="atualize" :form="form" :pages="pages" :page="page"></paginator-component>
               </article>
             </section>
@@ -31,7 +39,7 @@
 <script>
   import ItemComponent from './Material/Item.vue'
   import LoadingComponent from './LoadingComponent.vue'
-  import EmptyComponent from './EmptyComponent.vue'
+  import EmptyComponent from './commons/EmptyComponent.vue'
   import FilterComponent from './Material/FilterComponent.vue'
   import PaginatorComponent from './Paginator/PaginatorComponent.vue'
 

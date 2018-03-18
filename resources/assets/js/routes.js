@@ -13,7 +13,7 @@ module.exports = [
   { path: '/classroom/:id', component: require('./components/Classroom/Index') },
   { path: '/learn/', component: require('./components/LearnComponent.vue') },
   { path: '/blockly/', component: require('./components/BlocklyComponent.vue') },
-  { path: '/me/', component: require('./components/Personal/MeComponent.vue') },
+  { path: '/me/', component: require('./components/Me.vue') },
   { path: '/material/create', component: require('./components/Form/CreateLesson.vue') },
   { path: '/material/topic', component: require('./components/Form/CreateTopic.vue') },
   { path: '/material/concept', component: require('./components/Form/CreateConcept.vue') },

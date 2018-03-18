@@ -12,6 +12,11 @@ class Lesson extends Model
   protected $fillable = ['name', 'description', 'link', 'age', 'user_id', 'photo'];
   protected static $integer = ['age'];
 
+  public static function me ($user) {
+    return self::where('user_id', $user)
+      ->get();
+  }
+
   public static function getComplete ($builder, $user) {
     return $builder->with(['completeds' => function ($q) use ($user) {
       $q->select('id')->where('id', $user);
@@ -99,9 +104,8 @@ class Lesson extends Model
   /**
   * Get all of the lesson's courses.
   */
-  public function courses()
-  {
-      return $this->belongsToMany('C2Y\Course', 'lessons_courses')
-        ->withPivot('level');
+  public function courses() {
+    return $this->belongsToMany('C2Y\Course', 'lessons_courses')
+      ->withPivot('level');
   }
 }

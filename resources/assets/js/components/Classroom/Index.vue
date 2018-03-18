@@ -24,6 +24,7 @@
   import SideUsers from './SideUsers.vue'
   import SideMenuClassroom from './SideMenuClassroom.vue'
   import MainBoard from './MainBoard.vue'
+  import mixin from '../../mixins/index'
 
   let fromStore = name => {
     return function () {
@@ -52,9 +53,10 @@
       })
   }
 
-  export default {
+export default {
     name: 'Classroom',
     created,
+    mixins: [mixin],
     components: {
       Navigator,
       SideUsers,
@@ -102,7 +104,7 @@
         if (!this.classroom.users) {
           return []
         }
-        return this.classroom.users.filter(user => /master|assistant|monitor/ig.test(user.role))
+        return this.classroom.users.filter(user => this.regexMaster.test(user.role))
       }
     }
   }
