@@ -9,7 +9,9 @@
       </div>
     </div>
     <article class="columns" style="margin-bottom: 5px">
-      <div class="column is-2 relative" v-for="item in level">
+      <div class="column is-2 relative"
+        v-for="(item, $index) in level"
+        :key="$index">
         <router-link :to="getLink + item.id" v-if="link && !item.lock">
           <course-item-component :item="item" :lock="item.lock" :size="'is-128x128'" :hide="true"></course-item-component>
         </router-link>

@@ -35,11 +35,11 @@
     justify-content: center
     align-items: center
     background-color: rgba(255, 255, 255, 0.8)
-    height: calc(100% + 1px)
+    height: calc(100% + 2px)
     position: absolute
     top: 0
     left: 0
-    width: 100%w
+    width: 100%
   .card
     background: transparent
     box-shadow: none

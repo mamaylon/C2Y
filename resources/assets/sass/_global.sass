@@ -27,6 +27,9 @@ textarea.autosize
     margin-left: calc((var(--size) * -1) - var(--margin))
 .capitalize
   text-transform: capitalize
+.flex
+  display: flex
+  align-items: center
 .no-select
   user-select: none
 .file-icon
@@ -158,6 +161,8 @@ body
   font-family: $login-font !important
 
 /* Ajuste para custom property */
+.tag.is-primary
+  background-color: var(--primary)
 .button.is-primary
   &, &[disabled]
     border-color: var(--primary, $primary)

@@ -137,7 +137,6 @@ class PostController extends Controller
         $file = $request->file('archive');
         $filename = $file->getClientOriginalName();
         $path = Storage::putFile('files', $file);
-        dd($path);
         return APIController::success([
             'path' => $path,
             'filename' => $filename

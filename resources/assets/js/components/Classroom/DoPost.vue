@@ -19,9 +19,9 @@
     </div>
     <footer class="card-footer">
       <div class="action">
-        <a @click="upload">
+        <!-- <a @click="upload">
           <i class="fa fa-link" aria-hidden="true"></i> Adicionar anexo
-        </a>
+        </a> -->
       </div>
       <button class="button is-primary"
         :class="{'is-outlined': !wait}"
@@ -41,7 +41,7 @@ export default {
   mixins: [mixin],
   mounted () {
     autosize(this.$refs.textarea)
-    this.$nextTick(_ => this.upload())
+    // this.$nextTick(_ => this.upload())
   },
   computed: {
     user () {

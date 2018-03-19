@@ -1,5 +1,6 @@
 <template>
   <section id="teach-component" style="flex: 1">
+    <white-component></white-component>
     <section class="columns no-margin">
       <article class="column is-8 is-offset-2 z-index levels" v-if="course">
         <course-header :course="course" @like="like()" @unlike="unlike()" :likable="true"></course-header>

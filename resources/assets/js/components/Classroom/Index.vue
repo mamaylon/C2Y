@@ -12,7 +12,8 @@
       <article class="container main">
         <side-users :masters="masters" class="aside"></side-users>
         <main-board :admin="admin" class="main"></main-board>
-        <side-menu-classroom></side-menu-classroom>
+        <side-menu-classroom
+          :users="classroom.users || []"/>
       </article>
     </div>
   </section>

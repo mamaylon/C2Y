@@ -1,40 +1,81 @@
 <template>
   <section>
-    <div class="card" v-for="i in 3" :key="i">
+    <div class="card">
       <header class="card-header">
         <p class="card-header-title">
-          Component
+          Alunos da turma
         </p>
-        <a href="#" class="card-header-icon" aria-label="more options">
-          <span class="icon">
-            <i class="fa fa-angle-down" aria-hidden="true"></i>
-          </span>
-        </a>
       </header>
-      <div class="card-content">
-        <div class="content">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris.
-          <a href="#">@bulmaio</a>. <a href="#">#css</a> <a href="#">#responsive</a>
-          <br>
-          <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
+      <template v-if="students.length">
+        <div class="card-content grid">
+          <figure
+            class="image is-48x48"
+            v-for="user in students"
+            :key="user.id">
+            <img :src="toSize(user.photo, 48)" alt="">
+          </figure>
         </div>
-      </div>
-      <footer class="card-footer">
-        <a href="#" class="card-footer-item">Save</a>
-        <a href="#" class="card-footer-item">Edit</a>
-        <a href="#" class="card-footer-item">Delete</a>
-      </footer>
+      </template>
+      <template v-else>
+        <div class="card-content">
+          Não há alunos nesta turma
+        </div>
+      </template>
+    </div>
+    <div class="card">
+      <header class="card-header">
+        <p class="card-header-title">
+          Aplicar curso
+        </p>
+        <!-- <i class="fa fa-question-circle" aria-hidden="true"></i> -->
+      </header>
+      <template v-if="false">
+        <div class="card-content grid">
+          <figure
+            class="image is-48x48"
+            v-for="user in students"
+            :key="user.id">
+            <img :src="toSize(user.photo, 48)" alt="">
+          </figure>
+        </div>
+      </template>
+      <template v-else>
+        <div class="card-content">
+          <a class="flex">
+            <i class="fa fa-link" aria-hidden="true"></i> Escolher curso
+          </a>
+        </div>
+      </template>
     </div>
   </section>
 </template>
 
 <script>
+import mixin from '../../mixins/index'
 export default {
-  name: 'SideMenuClassroom'
+  name: 'SideMenuClassroom',
+  mixins: [mixin],
+  props: {
+    users: Array
+  },
+  computed: {
+    students () {
+      return this.users.filter(user => /student/i.test(user.role))
+    }
+  }
 }
 </script>
 
 <style lang="sass" scoped>
+  .card
+    margin-bottom: 1rem
+  .grid
+    padding: 1rem
+    display: grid
+    grid-template-columns: repeat(4, 1fr)
+  figure.image
+    overflow: hidden
+    border-radius: 3px !important
   .square
     background-color: tomato
     --c: 8rem

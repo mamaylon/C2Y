@@ -1,7 +1,7 @@
 <template>
   <section :class="{ 'padd' : !hide }">
     <i class="icon-c2y" :style="'--size: ' + (size || '5rem')" v-show="!hide"></i>
-    <span class="thin-font">{{ message }}</span>
+    <span class="">{{ message }}</span>
   </section>
 </template>
 
@@ -32,5 +32,5 @@
   i:before
     color: #aaa
   span
-    font-size: 1.3rem
+    font-size: 1rem
 </style>
