@@ -161,10 +161,12 @@ body
   font-family: $login-font !important
 
 /* Ajuste para custom property */
+.input:focus
+  border-color: var(--primary, $primary)
 .tag.is-primary
-  background-color: var(--primary)
+  background-color: var(--primary, $primary)
 .button.is-primary
-  &, &[disabled]
+  &, &[disabled], &:hover, &:active
     border-color: var(--primary, $primary)
     color: white
     background-color: var(--primary, $primary)

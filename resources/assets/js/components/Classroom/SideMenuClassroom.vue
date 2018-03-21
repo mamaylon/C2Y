@@ -41,7 +41,9 @@
       </template>
       <template v-else>
         <div class="card-content">
-          <a class="flex">
+          <a
+            @click="finder()"
+            class="flex">
             <i class="fa fa-link" aria-hidden="true"></i> Escolher curso
           </a>
         </div>
@@ -52,11 +54,24 @@
 
 <script>
 import mixin from '../../mixins/index'
+import Finder from './Modal/Finder.vue'
 export default {
   name: 'SideMenuClassroom',
   mixins: [mixin],
   props: {
     users: Array
+  },
+  methods: {
+    finder () {
+      this.$modal({
+        component: Finder,
+        onClose: true,
+        headerFooter: true
+      })
+    }
+  },
+  mounted () {
+    this.$nextTick(_ => this.finder())
   },
   computed: {
     students () {

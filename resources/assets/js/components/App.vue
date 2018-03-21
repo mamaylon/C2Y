@@ -1,6 +1,5 @@
 <template>
-  <section class="todo"
-    :style="classroom.code ? `--primary: ${classroom.color || 'var(--default)'}` : ''">
+  <section class="todo">
     <hero-component></hero-component>
     <nav-component></nav-component>
     <section id="router-view" class="relative">
@@ -29,6 +28,15 @@
       FooterComponent,
       BottomComponent,
       ModalComponent
+    },
+    watch: {
+      'classroom.code': function (val, old) {
+        let color = this.classroom.color
+        if (!val) {
+          return document.body.style = ''
+        }
+        document.body.style = `--primary: ${color || 'var(--default)'}`
+      }
     },
     methods: {
       err (data) {
