@@ -26,12 +26,12 @@
   import SideMenuClassroom from './SideMenuClassroom.vue'
   import MainBoard from './MainBoard.vue'
   import mixin from '../../mixins/index'
-
   let fromStore = name => {
     return function () {
       return this.$store.getters[name]
     }
   }
+
   let created = async function () {
     let id = this.$route.params.id
     let classroom = this.user.classrooms.find(it => it.id === id)
@@ -54,7 +54,7 @@
       })
   }
 
-export default {
+  export default {
     name: 'Classroom',
     created,
     mixins: [mixin],
@@ -139,7 +139,7 @@ export default {
     --s: 2rem
     background-color: var(--default)
     border-radius: 50%
-    box-shadow: 0 0 3px #ccc 
+    box-shadow: 0 0 3px #ccc
     height: var(--s)
     width: var(--s)
 </style>

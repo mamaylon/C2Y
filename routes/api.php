@@ -40,6 +40,7 @@ Route::resource('comment', 'API\CommentController');
 Route::resource('classroom', 'API\ClassController');
 Route::post('classroom/{code}/color/{color?}', 'API\ClassController@color');
 Route::post('classroom/sync', 'API\ClassController@sync');
+Route::post('classroom/associate', 'API\ClassController@associate');
 
 // Post route
 Route::post('post/upload', 'API\PostController@upload');

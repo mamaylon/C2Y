@@ -20,9 +20,20 @@ class Classroom extends Model
     	->withPivot('role');
   }
 
+  /**
+  * Get the courses that owns the classroom.
+  */
+  public function courses() {
+    return $this->belongsToMany('C2Y\Course', 'classes_courses', 'class_id', 'course_id');
+  }
+
+
   public static function getBuilder ($all) {
     if ($all) {
-      return self::with(['users']);
+      return self::with(['users'])
+        ->with(['courses' => function ($q) {
+          $q->select(['name', 'photo', 'id', 'level', 'lesson']);
+        }]);
     }
     return self::with(['users' => function ($q) {
       $q->where('role', 'master');

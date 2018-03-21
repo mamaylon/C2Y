@@ -14849,6 +14849,7 @@ var fromStore = function fromStore(name) {
     return this.$store.getters[name];
   };
 };
+
 var created = async function created() {
   var _this = this;
 
@@ -15238,9 +15239,27 @@ exports.default = {
       }).then(function (_) {
         return _this2.wait = false;
       });
+    },
+    sync: function sync() {
+      var _this3 = this;
+
+      var params = {
+        classroom: this.$store.getters.classroom.id,
+        course: this.active.id
+      };
+      this.$http.post('/api/classroom/associate', params).then(function (data) {
+        var body = data.body;
+        if (body.error) {
+          throw new Error(body.error);
+        }
+        _this3.$modal('close');
+      }).catch(function (err) {
+        return _this3.$toastr.e('Erro ao associar curso');
+      });
     }
   }
 }; //
+//
 //
 //
 //
@@ -15676,6 +15695,35 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 exports.default = {
   name: 'SideMenuClassroom',
@@ -15693,17 +15741,24 @@ exports.default = {
     }
   },
   mounted: function mounted() {
-    var _this = this;
-
-    this.$nextTick(function (_) {
-      return _this.finder();
-    });
+    // this.$nextTick(_ => this.finder())
   },
 
   computed: {
+    classroom: function classroom() {
+      return this.$store.getters.classroom;
+    },
     students: function students() {
       return this.users.filter(function (user) {
         return (/student/i.test(user.role)
+        );
+      });
+    },
+    master: function master() {
+      var _this = this;
+
+      return this.users.some(function (item) {
+        return (/master/i.test(item.role) && item.id === _this.$store.getters.user.id
         );
       });
     }
@@ -20761,7 +20816,7 @@ exports.push([module.i, "\n.list[data-v-3b4433c6] {\n  display: -ms-grid;\n  dis
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)();
-exports.push([module.i, "\n.card[data-v-4109fd9f] {\n  margin-bottom: 1rem;\n}\n.grid[data-v-4109fd9f] {\n  padding: 1rem;\n  display: -ms-grid;\n  display: grid;\n  -ms-grid-columns: (1fr)[4];\n      grid-template-columns: repeat(4, 1fr);\n}\nfigure.image[data-v-4109fd9f] {\n  overflow: hidden;\n  border-radius: 3px !important;\n}\n.square[data-v-4109fd9f] {\n  background-color: tomato;\n  --c: 8rem;\n  width: var(--c);\n  height: var(--c);\n  margin-bottom: 1rem;\n}\n", ""]);
+exports.push([module.i, "\n.media-content a[data-v-4109fd9f] {\n  -webkit-box-flex: 1;\n      -ms-flex: 1;\n          flex: 1;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.media[data-v-4109fd9f] {\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  padding: 1rem;\n}\nfigure[data-v-4109fd9f] {\n  border-radius: 3px;\n  overflow: hidden;\n}\n.card[data-v-4109fd9f] {\n  margin-bottom: 1rem;\n}\n.grid[data-v-4109fd9f] {\n  padding: 1rem;\n  display: -ms-grid;\n  display: grid;\n  -ms-grid-columns: (1fr)[4];\n      grid-template-columns: repeat(4, 1fr);\n}\nfigure.image[data-v-4109fd9f] {\n  overflow: hidden;\n  border-radius: 3px !important;\n}\n.square[data-v-4109fd9f] {\n  background-color: tomato;\n  --c: 8rem;\n  width: var(--c);\n  height: var(--c);\n  margin-bottom: 1rem;\n}\n", ""]);
 
 /***/ }),
 /* 135 */
@@ -65696,19 +65751,35 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "card-content"
   }, [_vm._v("\n        Não há alunos nesta turma\n      ")])]], 2), _vm._v(" "), _c('div', {
     staticClass: "card"
-  }, [_vm._m(1), _vm._v(" "), (false) ? [_c('div', {
-    staticClass: "card-content grid"
-  }, _vm._l((_vm.students), function(user) {
-    return _c('figure', {
-      key: user.id,
-      staticClass: "image is-48x48"
-    }, [_c('img', {
-      attrs: {
-        "src": _vm.toSize(user.photo, 48),
-        "alt": ""
-      }
-    })])
-  }))] : [_c('div', {
+  }, [_c('header', {
+    staticClass: "card-header"
+  }, [(_vm.classroom.course) ? _c('p', {
+    staticClass: "card-header-title"
+  }, [_vm._v("\n        " + _vm._s(_vm.classroom.course.name) + "\n      ")]) : _c('p', {
+    staticClass: "card-header-title"
+  }, [_vm._v("\n        " + _vm._s(_vm.master ? 'Aplicar curso' : 'Nenhum curso associado à classe') + "\n      ")])]), _vm._v(" "), (_vm.classroom.course) ? [_c('article', {
+    staticClass: "media"
+  }, [_c('figure', {
+    staticClass: "media-left"
+  }, [_c('p', {
+    staticClass: "image is-48x48"
+  }, [_c('img', {
+    attrs: {
+      "src": _vm.fromURL(_vm.classroom.course.photo)
+    }
+  })])]), _vm._v(" "), _c('div', {
+    staticClass: "media-content"
+  }, [(_vm.master) ? _c('a', [_c('i', {
+    staticClass: "fa fa-cog",
+    attrs: {
+      "aria-hidden": "true"
+    }
+  }), _vm._v(" Configurar curso para a classe\n          ")]) : _c('a', [_c('i', {
+    staticClass: "fa fa-link",
+    attrs: {
+      "aria-hidden": "true"
+    }
+  }), _vm._v(" Realizar atividade planejada\n          ")])])])] : [(_vm.master) ? _c('div', {
     staticClass: "card-content"
   }, [_c('a', {
     staticClass: "flex",
@@ -65722,19 +65793,17 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "aria-hidden": "true"
     }
-  }), _vm._v(" Escolher curso\n        ")])])]], 2)])
+  }), _vm._v(" Escolher curso\n        ")])]) : _c('div', {
+    staticStyle: {
+      "padding": "1rem"
+    }
+  }, [_vm._v("\n        Seu professor não associou nenhum curso a esta sala de aula ainda.\n      ")])]], 2)])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('header', {
     staticClass: "card-header"
   }, [_c('p', {
     staticClass: "card-header-title"
   }, [_vm._v("\n        Alunos da turma\n      ")])])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('header', {
-    staticClass: "card-header"
-  }, [_c('p', {
-    staticClass: "card-header-title"
-  }, [_vm._v("\n        Aplicar curso\n      ")])])
 }]}
 module.exports.render._withStripped = true
 if (false) {
@@ -66030,6 +66099,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "button is-primary is-outlined",
     attrs: {
       "disabled": !_vm.active
+    },
+    on: {
+      "click": function($event) {
+        _vm.sync()
+      }
     }
   }, [_vm._v("Associar")])])])
 },staticRenderFns: []}

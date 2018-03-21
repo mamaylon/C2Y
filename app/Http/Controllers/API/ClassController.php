@@ -103,6 +103,11 @@ class ClassController extends Controller
     if (!$class) {
       return APIController::error('Classroom not found');
     }
+    if (count($class->courses)) {
+      $class->course = $class->courses[0];
+      unset($class->courses);
+      unset($class->course->pivot);
+    }
     return APIController::success(['classroom' => $class]);
   }
 
@@ -115,6 +120,26 @@ class ClassController extends Controller
   public function edit($id)
   {
     //
+  }
+
+  // Associate a course whith the classroom
+  public function associate (Request $request) {
+    $required = ['classroom', 'course'];
+    $arr = APIController::verify($required, $request->all());
+    if (!$arr) {
+      return APIController::errorRequired($required);
+    }
+    $classroom = Classroom::find($request->classroom);
+    if (!$classroom) {
+      return APIController::error('Classroom not found');
+    }
+    try {
+      $classroom->courses()->sync($request->course);
+      return APIController::success(['classroom' => $classroom]);
+    }
+    catch (Exception $e) {
+      return APIController::error($e->getMessage());
+    }
   }
 
   /**

@@ -56,6 +56,7 @@
         @click="$modal('close')"
         class="button is-outlined">Cancelar</button>
       <button
+        @click="sync()"
         class="button is-primary is-outlined"
         :disabled="!active">Associar</button>
     </footer>
@@ -99,6 +100,21 @@
             this.$toastr.e('Erro ao buscar cursos')
           })
           .then(_ => (this.wait = false))
+      },
+      sync () {
+        let params = {
+          classroom: this.$store.getters.classroom.id,
+          course: this.active.id
+        }
+        this.$http.post('/api/classroom/associate', params)
+          .then(data => {
+            let body = data.body
+            if (body.error) {
+              throw new Error(body.error)
+            }
+            this.$modal('close')
+          })
+          .catch(err => this.$toastr.e('Erro ao associar curso'))
       }
     }
 	}
