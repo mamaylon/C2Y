@@ -60,4 +60,9 @@ class User extends Authenticatable
     return $attributes;
   }
 
+  public static function get ($id) {
+    return self::where('id', $id)
+      ->with('classrooms')
+      ->first();
+  }
 }

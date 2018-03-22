@@ -83,7 +83,8 @@ class ClassController extends Controller
     unset($class->master->pivot);
 
     try {
-      $class->users()->sync($request->user, false);
+      $role = $request->role ? $request->role : 'student';
+      $class->users()->sync([$request->user => ['role' => $role]], false);
       return APIController::success([ 'classroom' => $class ]);
     }
     catch (Exception $e) {

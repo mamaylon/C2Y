@@ -19,15 +19,12 @@
     <section class="container">
       <div class="columns">
         <div class="column is-10 is-offset-1">
-          <div class="columns"
-            v-for="(j, index) in range(0, Math.ceil(courses.length/4))"
-            :key="index">
-            <!-- to="'/courses/graph/' + courses[i].id" -->
-            <article @click="modal(courses[i])"
-              class="column is-3"
-              v-for="(i, key) in range(j*4, Math.min((j*4)+4, courses.length) )"
-              :key="key">
-              <course-item-component :item="courses[i]"></course-item-component>
+          <div class="grid">
+            <article
+              v-for="course in courses"
+              :key="course.id"
+              @click="modal(course)">
+              <course-item-component :item="course"></course-item-component>
             </article>
           </div>
         </div>
@@ -108,7 +105,7 @@
         let self = this
         let data = {}
         for (let i in self.form)
-          if (self.form[i] != '' && self.form[i] != 0)        
+          if (self.form[i] != '' && self.form[i] != 0)
             data[i] = self.form[i]
         data = _data || data
         data.page = self.page
@@ -121,6 +118,10 @@
 </script>
 
 <style lang="sass" scoped>
+  .grid
+    display: grid
+    grid-template-columns: repeat(6, 1fr)
+    grid-gap: .3rem
   section.container
     margin-bottom: 30px
   nav

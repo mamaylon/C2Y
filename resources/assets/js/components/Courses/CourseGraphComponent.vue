@@ -22,8 +22,8 @@
 
   function init () {
     let self = this
-    let data = { lessons: true, user: window.User.id }
-    self.$http.get('/api/course/' + self.$route.params.id, { params: data })
+    let params = { lessons: true, user: this.user.id }
+    self.$http.get('/api/course/' + self.$route.params.id, { params })
       .then(resp => {
         let course = resp.body.data.course
         self.course = course
@@ -49,7 +49,7 @@
         this.course.likes += 1
         let data = {
           type: 'course',
-          user: window.User.id,
+          user: this.user.id,
           to: this.course.id
         }
         this.$like(true, data)
@@ -78,7 +78,7 @@
           self.err = false
           self.init()
         }
-        let data = { course: self.$route.params.id, user: window.User.id }
+        let data = { course: self.$route.params.id, user: this.user.id }
         self.$http.post('/api/course/registry', data).then(after)
       }
     },
@@ -91,6 +91,9 @@
     },
     mounted: init,
     computed: {
+      user () {
+        return this.$store.getters.user
+      },
       levels () {
         if (!this.course || this.course.lessons.length === 0) return []
         let block = false
@@ -100,7 +103,6 @@
           prev[ curr.pivot.level ].push(curr)
           return prev
         }, {})
-
         obj[0].length ? obj[0][0].lock = false : false
         let arr = []
         let prev = null

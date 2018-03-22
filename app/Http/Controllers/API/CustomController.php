@@ -3,6 +3,7 @@
 namespace C2Y\Http\Controllers\API;
 
 use C2Y\Http\Controllers\API\APIController;
+use C2Y\User;
 use C2Y\Lesson;
 use C2Y\Course;
 use Illuminate\Http\Request;
@@ -20,5 +21,12 @@ class CustomController extends Controller {
         } catch (Exception $e) {
             return APIController::error($e->getMessage());
         }
+    }
+
+    public function user ($id) {
+        $user = User::get($id);
+        $arr = $user->toArray();
+        $arr['classrooms'] = $user->classrooms->toArray();
+        return APIController::success(['user' => $user]);
     }
 }

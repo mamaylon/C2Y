@@ -9,6 +9,9 @@ export default {
     regexMaster: /master|assistant|monitor/ig
   }),
   methods: {
+    firstName (name) {
+      return name.replace(/(\w+) [\w\d ]*/i, '$1')
+    },
     dateToLegible (date) {
       let regex = /([0-9]{4})-([0-9]{2})-([0-9]{2}) ([0-9]{2}):([0-9]{2})/i
       let match = regex.exec(date)
@@ -29,16 +32,14 @@ export default {
         return url.replace(/width=[0-9]+/i, `width=${size}`)
       }
       return `${url}?sz=${size}`
-    }
-  },
-  computed: {
-    birthday () {
+    },
+    birthday (_birthday) {
       let googleRegex = /[0-9]{4}-([0-9]{2})-([0-9]{2})/i
       let faceRegex = /([0-9]{2})\/([0-9]{2})\/([0-9]{4})/i
-      let day = this.$store.getters.user.birthday
+      let day = _birthday
         .replace(googleRegex, '$2')
         .replace(faceRegex, '$2')
-      let mounth = this.$store.getters.user.birthday
+      let mounth = _birthday
         .replace(googleRegex, '$1')
         .replace(faceRegex, '$1')
       if (day === '--') {

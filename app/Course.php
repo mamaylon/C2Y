@@ -43,6 +43,14 @@ class Course extends Model
       ->withPivot('level');
   }
 
+  /**
+  * The classrooms that belong to the course.
+  */
+  public function classrooms()
+  {
+    return $this->belongsToMany('C2Y\Classroom', 'classes_courses', 'course_id', 'class_id');
+  }
+
   public static function me ($user) {
     return self::where('user_id', $user)
       ->get();
@@ -120,5 +128,14 @@ class Course extends Model
       return null;
     $result[0]->likes_count = $result[0]->likes()->count();
     return $result[0];
+  }
+
+  // Find course to given user in a classroom
+  public static function findForClassroom ($id, $user) {
+    return Course::where('id', $id)
+      ->whereHas('classrooms.users', function ($q) use ($user) {
+        $q->where('id', $user);
+      })
+      ->first();
   }
 }

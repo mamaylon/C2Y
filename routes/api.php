@@ -14,7 +14,7 @@ use Illuminate\Http\Request;
 */
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+  return $request->user();
 });
 
 // Courses routes
@@ -48,3 +48,4 @@ Route::resource('post', 'API\PostController');
 
 // Custom api routes
 Route::get('me/{user}', 'API\CustomController@me');
+Route::get('/user/{id}', 'API\CustomController@user');

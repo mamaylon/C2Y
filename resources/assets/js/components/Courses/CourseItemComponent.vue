@@ -2,7 +2,7 @@
   <div class="card">
     <a class="card-image">
       <figure class="is-square" :class="size || ''">
-        <img :src="item && item.photo ? '/upload/' + item.photo : '/images/placeholders/256x256.png'" alt="Image" v-tooltip.auto="item ? item.name : 'O que são algoritmos?'">
+        <img :src="item && item.photo ? '/upload/' + item.photo : '/images/placeholders/256x256.png'" alt="Image" v-tooltip.auto="hide ? item.name : ''">
         <div class="lock" v-if="lock">
           <i class="fa fa-lock fa-2x fa-fw" aria-hidden="true"></i>
         </div>

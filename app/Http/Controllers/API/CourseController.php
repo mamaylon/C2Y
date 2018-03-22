@@ -13,7 +13,7 @@ use C2Y\Http\Controllers\API\APIController;
 class CourseController extends Controller
 {
     private $results_per_page = 16;
-    
+
     function __construct() {
         // $this->middleware('auth:api', ['except' => ['index','show']]);
     }
@@ -137,9 +137,12 @@ class CourseController extends Controller
     public function show(Request $request, $id)
     {
         $course = Course::findForUser($id, $request->user);
-        if (!$course)
+        if (!$course) {
+            $course = Course::findForClassroom($id, $request->user);
+        }
+        if (!$course) {
             return APIController::error('Course not found to given user', 403);
-
+        }
         $arr = $course->toArray();
         $arr['liked'] = count($course->likes) ? $course->likes[0] : null;
         $arr['likes'] = $course->likes_count;

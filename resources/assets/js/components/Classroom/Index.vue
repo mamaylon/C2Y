@@ -10,9 +10,13 @@
     </navigator>
     <div class="scroll">
       <article class="container main">
-        <side-users :masters="masters" class="aside"></side-users>
+        <side-users
+          :masters="masters"
+          :users="classroom.users"
+          class="aside" />
         <main-board :admin="admin" class="main"></main-board>
         <side-menu-classroom
+          :masters="masters"
           :users="classroom.users || []"/>
       </article>
     </div>
@@ -26,6 +30,7 @@
   import SideMenuClassroom from './SideMenuClassroom.vue'
   import MainBoard from './MainBoard.vue'
   import mixin from '../../mixins/index'
+  import { EventBus } from '../../modules/bus'
   let fromStore = name => {
     return function () {
       return this.$store.getters[name]
@@ -52,6 +57,9 @@
       .catch(err => {
         this.err = err
       })
+    EventBus.$on('user:assign', ({ user, role }) => {
+      this.classroom.users.find(it => it.id === user).role = role
+    })
   }
 
   export default {
@@ -105,7 +113,7 @@
         if (!this.classroom.users) {
           return []
         }
-        return this.classroom.users.filter(user => this.regexMaster.test(user.role))
+        return this.classroom.users.filter(user => !!user.role.match(this.regexMaster))
       }
     }
   }

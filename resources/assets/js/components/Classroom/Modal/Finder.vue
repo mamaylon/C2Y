@@ -16,12 +16,13 @@
               placeholder="Buscar curso">
           </div>
           <div class="control">
-            <a
+            <button
+              type="submit"
               :disabled="wait"
               class="button is-primary">
               <i class="fa fa-circle-o-notch fa-spin fa-fw" v-if="wait"></i>
               Buscar
-            </a>
+            </button>
           </div>
         </div>
       </form>
@@ -65,16 +66,26 @@
 
 <script>
   import mixin from '../../../mixins/index'
+  import { EventBus } from '../../../modules/bus'
 	export default {
 		name: 'Finder',
     mixins: [mixin],
-    data: _ => ({
-      text: '',
-      wait: false,
-      empty: false,
-      active: null,
-      courses: []
-    }),
+    props: {
+      data: Object
+    },
+    data () {
+      let courses = []
+      if (this.data) {
+        courses.push(this.data)
+      }
+      return {
+        text: '',
+        wait: false,
+        empty: false,
+        active: this.data,
+        courses
+      }
+    },
     mounted () {
       this.$nextTick(_ => this.$refs.input.focus())
     },
@@ -92,7 +103,11 @@
               throw new Error(body.error)
             }
             this.empty = !body.data.courses.length
-            this.courses = body.data.courses
+            let courses = body.data.courses
+            if (this.data) {
+              courses = [this.data, ...courses.filter(item => item.id !== this.data.id)]
+            }
+            this.courses = courses
           })
           .catch(e => {
             this.empty = true
@@ -112,6 +127,7 @@
             if (body.error) {
               throw new Error(body.error)
             }
+            EventBus.$emit('course:active', this.active)
             this.$modal('close')
           })
           .catch(err => this.$toastr.e('Erro ao associar curso'))

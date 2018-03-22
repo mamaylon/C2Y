@@ -4,8 +4,8 @@
       <section class="about">
         <span class="text-medium">Nome:</span> {{ user.name }}<br>
         <div class="text">
-          <span class="text-medium">Aniversário:</span> {{ birthday || 'Desconhecido' }}
-          <i v-if="!birthday"
+          <span class="text-medium">Aniversário:</span> {{ birthday(user.birthday) || 'Desconhecido' }}
+          <i v-if="!birthday && !diff"
             class="fa fa-question-circle question"
             v-tooltip.top="'Verifique as configurações do Google+'"
             aria-hidden="true"></i>
@@ -13,7 +13,8 @@
         <span class="text-medium">Instituição:</span> UFSCar Sorocaba<br>
         <span class="text-medium">Usuário desde:</span> {{ dateToText(user.created_at) }}<br>
       </section>
-      <h4 class="subtitle text-medium">Minhas atividades</h4>
+      <h4 class="subtitle text-medium" v-if="diff">Atividade de {{ firstName(user.name) }}</h4>
+      <h4 class="subtitle text-medium" v-else>Minhas atividades</h4>
       <div
         class="list"
         v-if="lessons.length">
@@ -32,7 +33,8 @@
         v-else>
         Você não criou nenhuma atividade até o momento
       </div>
-      <h4 class="subtitle text-medium">Meus cursos</h4>
+      <h4 class="subtitle text-medium" v-if="diff">Cursos de {{ firstName(user.name) }}</h4>
+      <h4 class="subtitle text-medium" v-else>Meus cursos</h4>
       <div
         class="list"
         v-if="courses.length">
@@ -91,6 +93,11 @@
         this.$toastr.e('Erro ao carregar informações')
       }
     },
+    computed: {
+      diff () {
+        return this.user !== this.$store.getters.user
+      },
+    }
   }
 </script>
 
