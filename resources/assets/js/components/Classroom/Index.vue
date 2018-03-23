@@ -37,7 +37,7 @@
     }
   }
 
-  let created = async function () {
+  let created = function () {
     let id = this.$route.params.id
     let classroom = this.user.classrooms.find(it => it.id === id)
     this.$store.dispatch('classroom', classroom)

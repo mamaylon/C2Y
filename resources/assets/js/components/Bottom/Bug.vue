@@ -54,7 +54,7 @@
     },
     data () {
       return {
-        waiting: true,
+        waiting: false,
         form: {
           path: '',
           message: '',
