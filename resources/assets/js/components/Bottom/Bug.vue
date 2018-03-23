@@ -41,15 +41,15 @@
         `
         let data = { _subject: 'C2Y! Bug Report', message }
         self.waiting = true
-        self.$http.post('https://formspree.io/felipelopesrita@gmail.com', data)
+        self.$http.post('/api/bug', data)
           .then(ret => {
-            self.waiting = false
-            if (!ret.body.success)
+            if (ret.body.error)
               throw new Error()
             this.$toastr.s('Bug Reportado!')
             this.$modal('close')
           })
           .catch(err => this.$toastr.e('Erro ao reportar o bug. Tente mais tarde ou entre em contato com os desenvolvedores.'))
+          .then(_ => (self.waiting = false))
       }
     },
     data () {

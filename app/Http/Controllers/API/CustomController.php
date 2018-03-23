@@ -4,6 +4,7 @@ namespace C2Y\Http\Controllers\API;
 
 use C2Y\Http\Controllers\API\APIController;
 use C2Y\User;
+use C2Y\Bug;
 use C2Y\Lesson;
 use C2Y\Course;
 use C2Y\Comment;
@@ -40,5 +41,12 @@ class CustomController extends Controller {
         } catch (Exception $e) {
             return APIController::error($e->getMessage(), 403);
         }
+    }
+
+    public function bug (Request $request) {
+        $json = json_encode($request->all());
+        return APIController::success(['bug' => Bug::create([
+            'bug' => $json
+        ])]);
     }
 }

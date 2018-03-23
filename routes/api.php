@@ -50,3 +50,4 @@ Route::resource('post', 'API\PostController');
 Route::get('me/{user}', 'API\CustomController@me');
 Route::get('/user/{id}', 'API\CustomController@user');
 Route::get('/notification/{user}', 'API\CustomController@notification');
+Route::post('/bug', 'API\CustomController@bug');
