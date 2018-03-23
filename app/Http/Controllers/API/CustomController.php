@@ -6,6 +6,7 @@ use C2Y\Http\Controllers\API\APIController;
 use C2Y\User;
 use C2Y\Lesson;
 use C2Y\Course;
+use C2Y\Comment;
 use Illuminate\Http\Request;
 use C2Y\Http\Controllers\Controller;
 
@@ -28,5 +29,16 @@ class CustomController extends Controller {
         $arr = $user->toArray();
         $arr['classrooms'] = $user->classrooms->toArray();
         return APIController::success(['user' => $user]);
+    }
+
+    public function notification ($user) {
+        try {
+            $comments = Comment::getComments($user);
+            return APIController::success([
+                'comments' => $comments
+            ]);
+        } catch (Exception $e) {
+            return APIController::error($e->getMessage(), 403);
+        }
     }
 }

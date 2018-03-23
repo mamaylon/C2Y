@@ -41,4 +41,10 @@ class Comment extends Model
             ->orderBy('created_at', 'desc')
             ->get();
     }
+
+    public static function getComments ($user, $visualized = false) {
+        return self::where('visualized', $visualized)
+            ->where('receiver', $user)
+            ->get();
+    }
 }

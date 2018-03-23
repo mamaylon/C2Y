@@ -19,7 +19,7 @@
         </template>
         <textarea
           :disabled="commenting"
-          @keydown.enter.prevent="() => false"
+          @keydown.enter.prevent="() => { return false }"
           @keydown.ctrle="ctrl = true"
           @keyup.ctrle="ctrl = false"
           @keyup.enter="submit()"
@@ -63,7 +63,7 @@ export default {
     comment: Object,
     owner: Object,
     insert: Boolean,
-    post: String
+    post: Object
   },
   mounted () {
     this.$nextTick(_ => autosize(this.$refs.textarea))
@@ -98,7 +98,8 @@ export default {
       let data = {
         user: this.user.id,
         type: 'post',
-        id: this.post,
+        id: this.post.id,
+        receiver: this.post.user.id,
         body: text
       }
       let route = '/api/comment' + (this.editing ? '/' + this.comment.id : '')

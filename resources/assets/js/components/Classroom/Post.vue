@@ -71,12 +71,12 @@
         <template v-else>
           <comments
             @comment="insert"
-            :post="post.id"
+            :post="post"
             :insert="true" />
           <comments
             v-for="comment in arr"
             @drop="dropComment"
-            :post="post.id"
+            :post="post"
             :comment="comment"
             :admin="admin"
             :owner="post.user"
@@ -227,7 +227,7 @@ export default {
   .card
     margin-bottom: .8rem
   .image
-    border-radius: 50%
+    border-radius: 3px
   .media-content
     height: 100%
     display: flex

@@ -46,11 +46,22 @@
     computed: {
       classroom () {
         return this.$store.getters.classroom
+      },
+      user () {
+        return this.$store.getters.user
       }
     },
     created () {
       this.$toastr.defaultProgressBar = false
       this.$toastr.defaultPosition = 'toast-bottom-right'
+    },
+    mounted () {
+      this.$http.get('/api/notification/' + this.user.id)
+        .then(data => {
+          this.$store.dispatch('setComments', data.body.data.comments)
+          // this.$store.dispatch('setNotifications', data.body.data.notifications)
+        })
+        .catch(err => this.$toastr.e('Erro ao carregar notificações'))
     }
   }
 </script>

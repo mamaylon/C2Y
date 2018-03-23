@@ -14322,11 +14322,24 @@ exports.default = {
   computed: {
     classroom: function classroom() {
       return this.$store.getters.classroom;
+    },
+    user: function user() {
+      return this.$store.getters.user;
     }
   },
   created: function created() {
     this.$toastr.defaultProgressBar = false;
     this.$toastr.defaultPosition = 'toast-bottom-right';
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    this.$http.get('/api/notification/' + this.user.id).then(function (data) {
+      _this.$store.dispatch('setComments', data.body.data.comments);
+      // this.$store.dispatch('setNotifications', data.body.data.notifications)
+    }).catch(function (err) {
+      return _this.$toastr.e('Erro ao carregar notificações');
+    });
   }
 }; //
 //
@@ -14415,11 +14428,20 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
+//
 
 exports.default = {
   components: {
     BugComponent: _Bug2.default,
     LinkComponent: _Link2.default
+  },
+  methods: {
+    bug: function bug() {
+      this.$modal({
+        component: _Bug2.default,
+        onClose: true
+      });
+    }
   }
 };
 
@@ -14462,64 +14484,34 @@ Object.defineProperty(exports, "__esModule", {
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 exports.default = {
   methods: {
-    clear: function clear() {
-      this.error = this.success = false;
-      this.form.path = '';
-      this.form.explication = '';
-      this.form.message = '';
-      this.modal = false;
-    },
     submit: function submit() {
+      var _this = this;
+
       var self = this;
       var message = '\n        O usu\xE1rio ' + self.form.user + ' reportou um bug na p\xE1gina: ' + self.form.path + '\n        Passo a passo para o erro:\n        ' + self.form.explication + '\n        Explica\xE7\xE3o para o erro:\n        ' + self.form.message + '\n      ';
       var data = { _subject: 'C2Y! Bug Report', message: message };
       self.waiting = true;
       self.$http.post('https://formspree.io/felipelopesrita@gmail.com', data).then(function (ret) {
         self.waiting = false;
-        if (ret.body.success) self.success = true;else self.error = true;
+        if (!ret.body.success) throw new Error();
+        _this.$toastr.s('Bug Reportado!');
+        _this.$modal('close');
       }).catch(function (err) {
-        return self.waiting = false, self.error = true;
+        return _this.$toastr.e('Erro ao reportar o bug. Tente mais tarde ou entre em contato com os desenvolvedores.');
       });
     }
   },
   data: function data() {
     return {
-      success: false,
-      error: false,
-      modal: false,
-      waiting: false,
+      waiting: true,
       form: {
         path: '',
         message: '',
         explication: '',
-        user: window.User.name
+        user: this.$store.getters.user.name
       }
     };
   }
@@ -14543,9 +14535,20 @@ Object.defineProperty(exports, "__esModule", {
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 exports.default = {
-  props: ['route', 'color', 'text', 'icon']
+  props: ['route', 'color', 'text', 'icon', 'click']
 };
 
 /***/ }),
@@ -17871,9 +17874,14 @@ exports.default = {
   computed: {
     user: function user() {
       return this.$store.getters.user;
+    },
+    comments: function comments() {
+      return this.$store.getters.comments;
     }
   }
 }; //
+//
+//
 //
 //
 //
@@ -18883,7 +18891,7 @@ exports.default = {
     comment: Object,
     owner: Object,
     insert: Boolean,
-    post: String
+    post: Object
   },
   mounted: function mounted() {
     var _this = this;
@@ -18927,7 +18935,8 @@ exports.default = {
       var data = {
         user: this.user.id,
         type: 'post',
-        id: this.post,
+        id: this.post.id,
+        receiver: this.post.user.id,
         body: text
       };
       var route = '/api/comment' + (this.editing ? '/' + this.comment.id : '');
@@ -19300,9 +19309,11 @@ module.exports = [
 
 var user = __webpack_require__(116);
 var classroom = __webpack_require__(115);
+var notification = __webpack_require__(359);
 module.exports = {
   user: user,
-  classroom: classroom
+  classroom: classroom,
+  notification: notification
 };
 
 /***/ }),
@@ -21229,7 +21240,7 @@ exports.push([module.i, "\n.grid[data-v-68b3b89f] {\n  display: -ms-grid;\n  dis
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)();
-exports.push([module.i, "\n.bottom[data-v-6ec8dde4] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.attachs[data-v-6ec8dde4] {\n  -webkit-box-flex: 1;\n      -ms-flex: 1;\n          flex: 1;\n}\na.edit-link[data-v-6ec8dde4] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: end;\n      -ms-flex-pack: end;\n          justify-content: flex-end;\n  font-size: .8rem;\n}\na.edit-link[data-v-6ec8dde4]:hover {\n    color: var(--primary);\n    text-decoration: underline;\n}\nfooter.comments[data-v-6ec8dde4] {\n  --comments: #f5f5f5;\n  background-color: var(--comments);\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  padding-left: 1rem;\n}\nfooter.comments .loading[data-v-6ec8dde4] {\n    -ms-flex-item-align: center;\n        -ms-grid-row-align: center;\n        align-self: center;\n    padding: 1rem 0;\n}\nfooter[data-v-6ec8dde4] {\n  padding: .5rem;\n}\nfooter button[data-v-6ec8dde4] {\n    margin-left: .3rem;\n}\n.options[data-v-6ec8dde4] {\n  display: inline-block;\n}\n.menu[data-v-6ec8dde4] {\n  position: relative;\n}\n.menu a[data-v-6ec8dde4] {\n    font-size: 1.4rem;\n}\n.menu a i[data-v-6ec8dde4] {\n      -webkit-text-fill-color: black;\n      -webkit-text-stroke-width: 3px;\n      -webkit-text-stroke-color: white;\n}\n.menu a i.fa-pencil[data-v-6ec8dde4] {\n        padding: .2rem;\n        font-size: 1rem;\n        -webkit-text-stroke-width: 0px;\n}\n.card[data-v-6ec8dde4] {\n  margin-bottom: .8rem;\n}\n.image[data-v-6ec8dde4] {\n  border-radius: 50%;\n}\n.media-content[data-v-6ec8dde4] {\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.media-content p[data-v-6ec8dde4] {\n    line-height: .9rem;\n}\nsmall[data-v-6ec8dde4] {\n  color: #666;\n  font-size: .8rem;\n}\n.media[data-v-6ec8dde4] {\n  -webkit-box-flex: 1;\n      -ms-flex: 1;\n          flex: 1;\n  margin: 0 !important;\n  padding: .8rem;\n}\n.content[data-v-6ec8dde4] {\n  margin-bottom: .5rem;\n  padding: 0;\n}\n", ""]);
+exports.push([module.i, "\n.bottom[data-v-6ec8dde4] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.attachs[data-v-6ec8dde4] {\n  -webkit-box-flex: 1;\n      -ms-flex: 1;\n          flex: 1;\n}\na.edit-link[data-v-6ec8dde4] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: end;\n      -ms-flex-pack: end;\n          justify-content: flex-end;\n  font-size: .8rem;\n}\na.edit-link[data-v-6ec8dde4]:hover {\n    color: var(--primary);\n    text-decoration: underline;\n}\nfooter.comments[data-v-6ec8dde4] {\n  --comments: #f5f5f5;\n  background-color: var(--comments);\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  padding-left: 1rem;\n}\nfooter.comments .loading[data-v-6ec8dde4] {\n    -ms-flex-item-align: center;\n        -ms-grid-row-align: center;\n        align-self: center;\n    padding: 1rem 0;\n}\nfooter[data-v-6ec8dde4] {\n  padding: .5rem;\n}\nfooter button[data-v-6ec8dde4] {\n    margin-left: .3rem;\n}\n.options[data-v-6ec8dde4] {\n  display: inline-block;\n}\n.menu[data-v-6ec8dde4] {\n  position: relative;\n}\n.menu a[data-v-6ec8dde4] {\n    font-size: 1.4rem;\n}\n.menu a i[data-v-6ec8dde4] {\n      -webkit-text-fill-color: black;\n      -webkit-text-stroke-width: 3px;\n      -webkit-text-stroke-color: white;\n}\n.menu a i.fa-pencil[data-v-6ec8dde4] {\n        padding: .2rem;\n        font-size: 1rem;\n        -webkit-text-stroke-width: 0px;\n}\n.card[data-v-6ec8dde4] {\n  margin-bottom: .8rem;\n}\n.image[data-v-6ec8dde4] {\n  border-radius: 3px;\n}\n.media-content[data-v-6ec8dde4] {\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.media-content p[data-v-6ec8dde4] {\n    line-height: .9rem;\n}\nsmall[data-v-6ec8dde4] {\n  color: #666;\n  font-size: .8rem;\n}\n.media[data-v-6ec8dde4] {\n  -webkit-box-flex: 1;\n      -ms-flex: 1;\n          flex: 1;\n  margin: 0 !important;\n  padding: .8rem;\n}\n.content[data-v-6ec8dde4] {\n  margin-bottom: .5rem;\n  padding: 0;\n}\n", ""]);
 
 /***/ }),
 /* 151 */
@@ -65651,7 +65662,21 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "container logo"
   }, [_c('div', {
     staticClass: "columns"
-  }, [_vm._m(0), _vm._v(" "), _vm._m(1), _vm._v(" "), _c('div', {
+  }, [_vm._m(0), _vm._v(" "), _c('div', {
+    staticClass: "column is-offset-5 is-4",
+    attrs: {
+      "id": "notification-bar"
+    }
+  }, [_c('ul', {
+    staticClass: "nav-list"
+  }, [_c('li', [_c('i', {
+    staticClass: "fa fa-comments",
+    attrs: {
+      "aria-hidden": "true"
+    }
+  }), _vm._v(" "), (_vm.comments.length) ? _c('span', {
+    staticClass: "tag is-primary"
+  }, [_vm._v("\n              " + _vm._s(_vm.comments.length) + "\n            ")]) : _vm._e()]), _vm._v(" "), _vm._m(1)])]), _vm._v(" "), _c('div', {
     staticClass: "column is-1 is-hidden-mobile"
   }, [_c('router-link', {
     attrs: {
@@ -65674,38 +65699,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   })])
 },function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: "column is-offset-5 is-4",
-    attrs: {
-      "id": "notification-bar"
-    }
-  }, [_c('ul', {
-    staticClass: "nav-list"
-  }, [_c('li', [_c('i', {
-    staticClass: "fa fa-bell",
+  return _c('li', [_c('i', {
+    staticClass: "fa fa-globe",
     attrs: {
       "aria-hidden": "true"
     }
-  }), _vm._v(" "), _c('span', {
-    staticClass: "tag is-primary"
-  }, [_vm._v("4")])]), _vm._v(" "), _c('li', [_c('i', {
-    staticClass: "fa fa-graduation-cap",
-    attrs: {
-      "aria-hidden": "true"
-    }
-  })]), _vm._v(" "), _c('li', [_c('i', {
-    staticClass: "fa fa-puzzle-piece",
-    attrs: {
-      "aria-hidden": "true"
-    }
-  }), _vm._v(" "), _c('span', {
-    staticClass: "tag is-primary"
-  }, [_vm._v("48")])]), _vm._v(" "), _c('li', [_c('i', {
-    staticClass: "fa fa-star",
-    attrs: {
-      "aria-hidden": "true"
-    }
-  })])])])
+  })])
 }]}
 module.exports.render._withStripped = true
 if (false) {
@@ -65721,66 +65720,7 @@ if (false) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
-    staticClass: "inline"
-  }, [_c('section', {
-    staticClass: "pointer notification is-danger",
-    on: {
-      "click": function($event) {
-        _vm.modal = true
-      }
-    }
-  }, [_c('i', {
-    staticClass: "fa fa-bug fa-2x fa-fw",
-    attrs: {
-      "aria-hidden": "true"
-    }
-  })]), _vm._v(" "), _c('div', {
-    staticClass: "modal",
-    class: {
-      'is-active': _vm.modal
-    }
-  }, [_c('div', {
-    staticClass: "modal-background"
-  }), _vm._v(" "), _c('div', {
-    directives: [{
-      name: "show",
-      rawName: "v-show",
-      value: (_vm.waiting),
-      expression: "waiting"
-    }],
-    staticClass: "modal-content content success box"
-  }, [_c('i', {
-    staticClass: "fa fa-circle-o-notch fa-spin fa-5x"
-  }), _vm._v(" "), _c('h1', {
-    staticClass: "thin-font"
-  }, [_vm._v("\n        Enviando...\n      ")])]), _vm._v(" "), _c('div', {
-    directives: [{
-      name: "show",
-      rawName: "v-show",
-      value: (_vm.error),
-      expression: "error"
-    }],
-    staticClass: "modal-content content success box"
-  }, [_c('i', {
-    staticClass: "fa fa-times-circle fa-5x"
-  }), _vm._v(" "), _vm._m(0)]), _vm._v(" "), _c('div', {
-    directives: [{
-      name: "show",
-      rawName: "v-show",
-      value: (_vm.success),
-      expression: "success"
-    }],
-    staticClass: "modal-content content success box"
-  }, [_c('i', {
-    staticClass: "fa fa-check-circle fa-5x"
-  }), _vm._v(" "), _vm._m(1)]), _vm._v(" "), _c('div', {
-    directives: [{
-      name: "show",
-      rawName: "v-show",
-      value: (!_vm.waiting && !_vm.success && !_vm.error),
-      expression: "!waiting && !success && !error"
-    }],
-    staticClass: "modal-content content box",
+    staticClass: "box",
     staticStyle: {
       "padding": "1.5rem"
     }
@@ -65864,28 +65804,16 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('button', {
     staticClass: "button is-primary",
     attrs: {
-      "type": "button"
+      "type": "button",
+      "disabled": _vm.waiting
     },
     on: {
       "click": _vm.submit
     }
-  }, [_vm._v("Enviar")])])])]), _vm._v(" "), _c('button', {
-    staticClass: "modal-close is-large",
-    on: {
-      "click": function($event) {
-        _vm.clear()
-      }
-    }
-  })])])
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('h1', {
-    staticClass: "thin-font"
-  }, [_vm._v("\n        BUG não reportado."), _c('br'), _vm._v("O servidor de emails está com problemas, tente mais tarde :(\n      ")])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('h1', {
-    staticClass: "thin-font"
-  }, [_vm._v("\n        BUG reportado."), _c('br'), _vm._v("Obrigado por ajudar :)\n      ")])
-}]}
+  }, [(_vm.waiting) ? _c('i', {
+    staticClass: "fa fa-fw fa-circle-o-notch fa-spin"
+  }) : _vm._e(), _vm._v("\n        Enviar\n      ")])])])])
+},staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
@@ -67214,7 +67142,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "loading fa fa-circle-o-notch fa-2x fa-fw fa-spin"
   })] : [_c('comments', {
     attrs: {
-      "post": _vm.post.id,
+      "post": _vm.post,
       "insert": true
     },
     on: {
@@ -67224,7 +67152,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     return _c('comments', {
       key: comment.id,
       attrs: {
-        "post": _vm.post.id,
+        "post": _vm.post,
         "comment": comment,
         "admin": _vm.admin,
         "owner": _vm.post.user
@@ -67614,6 +67542,13 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "menu"
   }, [_c('link-component', {
     attrs: {
+      "color": 'var(--danger)',
+      "text": "Reportar bug",
+      "icon": "bug",
+      "click": _vm.bug
+    }
+  }), _vm._v(" "), _c('link-component', {
+    attrs: {
       "route": '/material/create',
       "color": '#22A7F0',
       "text": 'Cadastrar atividade',
@@ -67707,7 +67642,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "keydown": [function($event) {
         if (!('button' in $event) && _vm._k($event.keyCode, "enter", 13)) { return null; }
         $event.preventDefault();
-        (function () { return false; })($event)
+        (function () {
+          return false
+        })($event)
       }, function($event) {
         if (!('button' in $event) && _vm._k($event.keyCode, "ctrle")) { return null; }
         _vm.ctrl = true
@@ -68745,16 +68682,23 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       }
     }],
     staticClass: "inline"
-  }, [_c('router-link', {
+  }, [(_vm.route) ? _c('router-link', {
     staticClass: "pointer shadow notification",
     style: ('--color: ' + _vm.color),
     attrs: {
       "to": _vm.route
-    },
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-fw",
+    class: 'fa-' + _vm.icon,
+    attrs: {
+      "aria-hidden": "true"
+    }
+  })]) : _c('a', {
+    staticClass: "pointer shadow notification",
+    style: ('--color: ' + _vm.color),
     on: {
-      "click": function($event) {
-        _vm.modal = true
-      }
+      "click": _vm.click
     }
   }, [_c('i', {
     staticClass: "fa fa-fw",
@@ -75081,6 +75025,42 @@ module.exports = function(module) {
 __webpack_require__(34);
 module.exports = __webpack_require__(35);
 
+
+/***/ }),
+/* 353 */,
+/* 354 */,
+/* 355 */,
+/* 356 */,
+/* 357 */,
+/* 358 */,
+/* 359 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = {
+  state: {
+    comments: []
+  },
+  mutations: {
+    SET_COMMENTS: function SET_COMMENTS(state, payload) {
+      return state.comments = payload;
+    }
+  },
+  actions: {
+    setComments: function setComments(_ref, payload) {
+      var commit = _ref.commit;
+
+      commit('SET_COMMENTS', payload);
+    }
+  },
+  getters: {
+    comments: function comments(state) {
+      return state.comments;
+    }
+  }
+};
 
 /***/ })
 /******/ ]);

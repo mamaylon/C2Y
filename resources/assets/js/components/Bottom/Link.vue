@@ -1,14 +1,25 @@
 <template>
   <div class="inline" v-tooltip.left-end="text">
-    <router-link :to="route" class="pointer shadow notification" :style="'--color: ' + color" @click="modal = true">
+    <router-link
+      v-if="route"
+      :to="route"
+      class="pointer shadow notification"
+      :style="'--color: ' + color">
       <i class="fa fa-fw" :class="'fa-' + icon" aria-hidden="true"></i>
     </router-link>
+    <a
+      class="pointer shadow notification"
+      :style="'--color: ' + color"
+      @click="click"
+      v-else>
+      <i class="fa fa-fw" :class="'fa-' + icon" aria-hidden="true"></i>
+    </a>
   </div>
 </template>
 
 <script>
   export default {
-    props: ['route', 'color', 'text', 'icon']
+    props: ['route', 'color', 'text', 'icon', 'click']
   }
 </script>
 

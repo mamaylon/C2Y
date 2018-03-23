@@ -1,7 +1,8 @@
 <template>
   <div class="bottom">
     <div class="menu">
-      <!-- <bug-component></bug-component>  -->
+      <!-- <bug-component></bug-component> -->
+      <link-component :color="'var(--danger)'" text="Reportar bug" icon="bug" :click="bug"></link-component>
       <link-component :route="'/material/create'" :color="'#22A7F0'" :text="'Cadastrar atividade'" :icon="'puzzle-piece'"></link-component>
       <link-component :route="'/courses/create'" :color="'#3BCEAC'" :text="'Cadastrar curso'" :icon="'graduation-cap'"></link-component>
       <link-component :route="'/material/topic'" :color="'#2C3E50'" :text="'Cadastrar Tema/Assunto'" :icon="'list'"></link-component>
@@ -20,6 +21,14 @@
     components: {
       BugComponent,
       LinkComponent
+    },
+    methods: {
+      bug () {
+        this.$modal({
+          component: BugComponent,
+          onClose: true
+        })
+      }
     }
   }
 </script>

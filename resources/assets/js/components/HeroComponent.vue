@@ -22,15 +22,17 @@
         <div class="column is-offset-5 is-4" id="notification-bar">
           <ul class="nav-list">
             <li>
-              <i class="fa fa-bell" aria-hidden="true"></i>
-              <span class="tag is-primary">4</span>
+              <i class="fa fa-comments" aria-hidden="true"></i>
+              <span v-if="comments.length" class="tag is-primary">
+                {{ comments.length }}
+              </span>
             </li>
-            <li><i class="fa fa-graduation-cap" aria-hidden="true"></i></li>
-            <li>
+            <li><i class="fa fa-globe" aria-hidden="true"></i></li>
+            <!-- <li>
               <i class="fa fa-puzzle-piece" aria-hidden="true"></i>
               <span class="tag is-primary">48</span>
             </li>
-            <li><i class="fa fa-star" aria-hidden="true"></i></li>
+            <li><i class="fa fa-star" aria-hidden="true"></i></li> -->
           </ul>
         </div>
         <div class="column is-1 is-hidden-mobile">
@@ -50,6 +52,9 @@
     computed: {
       user: function () {
         return this.$store.getters.user
+      },
+      comments: function () {
+        return this.$store.getters.comments
       }
     }
   }
