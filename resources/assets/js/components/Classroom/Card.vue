@@ -4,7 +4,7 @@
 	    <span class="text-bold">{{ item.name }}</span>
 	    <small v-if="item.master.id !== user.id">{{ item.master.name }}</small>
 	    <small v-else>Criada por mim</small>
-      <img v-if="item.master.id !== user.id" :src="item.master.photo" alt="Image">
+      <img v-if="item.master.id !== user.id" :src="toSize(item.master.photo, 48)" alt="Image">
 	  </header>
 	  <div class="card-content">
 	    <div class="content">
@@ -18,8 +18,10 @@
 </template>
 
 <script>
+	import mixin from '../../mixins/index'
 	export default {
 		name: 'ClassCard',
+		mixins: [mixin],
 		props: {
 			name: String,
 			fake: Boolean,
