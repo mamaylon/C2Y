@@ -35,6 +35,7 @@ Route::resource('topic', 'API\TopicController');
 
 // Comments route
 Route::resource('comment', 'API\CommentController');
+Route::put('comment/visualized/{id}', 'API\CommentController@visualized');
 
 // Class route
 Route::resource('classroom', 'API\ClassController');

@@ -93,7 +93,17 @@ class CommentController extends Controller
    */
   public function edit($id)
   {
-      //
+    //
+  }
+
+  public function visualized (Request $request, $id) {
+    try {
+      $r = Comment::where('id', $id)
+        ->update(['visualized' => true]);
+      return APIController::success(['comments' => $r]);
+    } catch (Exception $e) {
+      return APIController::error($e->getMessage(), 403);
+    }
   }
 
   /**

@@ -70,6 +70,10 @@
       self.$http.get('/api/course', { params: { user: this.user.id } })
         .then(resp => (self.courses = resp.body.data.courses))
         .catch(err => console.log(err))
+      this.$on('drop:course', id => {
+        let index = this.courses.findIndex(item => item.id === id)
+        this.courses.splice(index, 1)
+      })
     },
     methods: {
       advanced () {

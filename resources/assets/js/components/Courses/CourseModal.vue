@@ -58,9 +58,16 @@
         self.wait = true
         self.$http.delete('/api/course/' + self.course.id, { params: { user: self.user.id } })
           .then(data => {
-            if (data.error) return;
+            if (data.body.error) {
+              throw new Error(data.error)
+            }
             self.close({ id: self.course.id })
             self.wait = false
+            self.origin.$emit('drop:course', self.course.id)
+          })
+          .catch(e => {
+            this.wait = false
+            this.$toastr.e('Erro ao excluir curso')
           })
       },
       submit () {

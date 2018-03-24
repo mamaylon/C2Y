@@ -22,7 +22,7 @@
         <div class="column is-offset-5 is-4" id="notification-bar">
           <ul class="nav-list">
             <li>
-              <i class="fa fa-comments" aria-hidden="true"></i>
+              <i class="fa fa-comments" aria-hidden="true" @click="modal()"></i>
               <span v-if="comments.length" class="tag is-primary">
                 {{ comments.length }}
               </span>
@@ -47,8 +47,19 @@
 
 <script>
   import mixin from '../mixins/index'
+  import CommentsModal from './commons/CommentsModal'
   export default {
     mixins: [mixin],
+    methods: {
+      modal () {
+        this.$modal({
+          class: 'max',
+          component: CommentsModal,
+          onClose: true,
+          data: this.comments
+        })
+      }
+    },
     computed: {
       user: function () {
         return this.$store.getters.user
