@@ -10,7 +10,12 @@ module.exports = [
   { path: '/courses/graph/:id', component: require('./components/Courses/CourseGraphComponent.vue') },
   // { path: '/teach/', component: require('./components/Test.vue') },
   { path: '/classroom/', component: require('./components/Classroom.vue') },
-  { path: '/classroom/:id', component: require('./components/Classroom/Index') },
+  { path: '/classroom/:id', component: require('./components/Router.vue'),
+    children: [
+      {path: '', component: require('./components/Classroom/Index')},
+      {path: ':post', component: require('./components/Classroom/PostView')}
+    ]
+  },
   { path: '/learn/', component: require('./components/LearnComponent.vue') },
   { path: '/blockly/', component: require('./components/BlocklyComponent.vue') },
   { path: '/me/', component: require('./components/Me.vue') },

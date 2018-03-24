@@ -1,12 +1,14 @@
 <template>
   <section class="root">
     <do-post
+      v-if="!postable"
       @add="add"></do-post>
     <post
       v-for="(post, index) in posts"
       @delete="remove(index)"
       :post="post"
       :admin="admin"
+      :showComments="!!postable"
       :key="index" />
     <div
       class="empty"
@@ -38,6 +40,9 @@ export default {
   computed: {
     classroom () {
       return this.$store.getters.classroom
+    },
+    postable () {
+      return this.$route.params.post
     }
   },
   methods: {
@@ -50,12 +55,13 @@ export default {
   },
   mounted () {
     let params = {}
-    params.id = this.classroom.id
+    params.id = this.$route.params.id
     params.type = 'classroom'
-    this.$http.get('/api/post', { params })
+    this.$http.get('/api/post' + (this.postable ? '/' + this.postable : ''), { params })
       .then(data => {
         this.posts = data.body.data.posts
       })
+      .catch(e => this.$toastr.e('Erro ao carregar publicações'))
   }
 }
 </script>

@@ -26,8 +26,8 @@
             </div>
         </article>
         <div
-          v-for="(f, i) in levels"
-          :key="f">
+          v-for="let (f, i) in levels"
+          :key="i">
           <level class="item-level" :level="f" @add="addLesson" @push="push" :index="i" @remove="remove" @drop="drop"></level>
         </div>
         <add-level class="add-level" @add="add"></add-level>

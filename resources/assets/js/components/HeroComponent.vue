@@ -27,7 +27,7 @@
                 {{ comments.length }}
               </span>
             </li>
-            <li><i class="fa fa-globe" aria-hidden="true"></i></li>
+            <!-- <li><i class="fa fa-globe" aria-hidden="true"></i></li> -->
             <!-- <li>
               <i class="fa fa-puzzle-piece" aria-hidden="true"></i>
               <span class="tag is-primary">48</span>

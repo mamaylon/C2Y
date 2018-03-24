@@ -86,7 +86,10 @@ class PostController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(Request $request, $id) {
-        //
+        $post = Post::findById($id);
+        return APIController::success([
+            'posts' => [$post]
+        ]);
     }
 
     /**

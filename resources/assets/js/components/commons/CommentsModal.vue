@@ -21,9 +21,11 @@
           </div>
         </div>
         <div class="media-right">
-          <a v-tooltip="'Ir para origem'">
-            <i class="fa fa-link" aria-hidden="true"></i>
-          </a>
+          <span @click="$modal('close')">
+            <router-link :to="route(comment)" v-tooltip="'Ir para origem'">
+              <i class="fa fa-link" aria-hidden="true"></i>
+            </router-link>
+          </span>
           <a
             :class="{'disabled': comment.visualized}"
             :disabled="!comment.visualized"
@@ -53,6 +55,13 @@
             comment.visualized = true
           })
           .catch(() => this.$toastr.e('Erro ao marcar como visualizado'))
+      },
+      route (comment) {
+        let r = '/'
+        r += comment.commentable_type === 'lesson'
+          ? 'material/game/' + comment.commentable_id
+          : 'classroom/' + comment.commentable.postable_id + '/' + comment.commentable_id
+        return r
       }
     }
   }

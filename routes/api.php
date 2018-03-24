@@ -49,6 +49,7 @@ Route::resource('post', 'API\PostController');
 
 // Custom api routes
 Route::get('me/{user}', 'API\CustomController@me');
+Route::put('user/{id}', 'API\CustomController@updateUser');
 Route::get('/user/{id}', 'API\CustomController@user');
 Route::get('/notification/{user}', 'API\CustomController@notification');
 Route::post('/bug', 'API\CustomController@bug');

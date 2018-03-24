@@ -41,6 +41,7 @@
     let id = this.$route.params.id
     let classroom = this.user.classrooms.find(it => it.id === id)
     this.$store.dispatch('classroom', classroom)
+    this.routes = []
     this.routes.push({
       icon: 'home',
       text: classroom.name,
@@ -59,6 +60,16 @@
       })
     EventBus.$on('user:assign', ({ user, role }) => {
       this.classroom.users.find(it => it.id === user).role = role
+    })
+    if (this.postable) {
+      this.routes.push({
+        icon: 'file-text',
+        text: 'Publicação',
+        route: `/classroom/${classroom.id}/${this.postable}`
+      })
+    }
+    EventBus.$on('route:push', route => {
+      this.routes.push(route)
     })
   }
 
@@ -114,6 +125,9 @@
           return []
         }
         return this.classroom.users.filter(user => !!user.role.match(this.regexMaster))
+      },
+      postable () {
+        return this.$route.params.post
       }
     }
   }

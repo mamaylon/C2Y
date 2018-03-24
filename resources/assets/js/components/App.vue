@@ -20,7 +20,13 @@
   import FooterComponent from './FooterComponent.vue'
   import BottomComponent from './Bottom/Bottom.vue'
   import ModalComponent from './ModalComponent.vue'
-
+  function color (val, old) {
+    let color = this.classroom.color
+    if (!val) {
+      return document.body.style = ''
+    }
+    document.body.style = `--primary: ${color || 'var(--default)'}`
+  }
   export default {
     components: {
       NavComponent,
@@ -30,13 +36,8 @@
       ModalComponent
     },
     watch: {
-      'classroom.code': function (val, old) {
-        let color = this.classroom.color
-        if (!val) {
-          return document.body.style = ''
-        }
-        document.body.style = `--primary: ${color || 'var(--default)'}`
-      }
+      'classroom.code': color,
+      'classroom.color': color
     },
     methods: {
       err (data) {

@@ -10,7 +10,9 @@
           </div>
           <div class="media-content">
             <p class="">{{ post.user.name }}</p>
-            <small><time :datetime="post.created_at.date">{{ dateToLegible(post.created_at.date || post.created_at) }}</time></small>
+            <router-link :to="`/classroom/${this.classroom.id}/${this.post.id}`">
+              <small><time :datetime="post.created_at.date">{{ dateToLegible(post.created_at.date || post.created_at) }}</time></small>
+            </router-link>
           </div>
         </div>
         <!-- Só o dono pode editar, mas os professores e monitores podem excluir se acharem desnecessaria -->
@@ -40,9 +42,9 @@
             class="edit-link"
             @click="toggle()"
             v-if="!editing">
-            <template v-if="post.comments_count">
+            <template v-if="comments_count">
               <i class="fa fa-comments" aria-hidden="true"></i>
-              {{ post.comments_count }} comentário{{ post.comments_count > 1 ? 's' : '' }}
+              {{ comments_count }} comentário{{ comments_count > 1 ? 's' : '' }}
             </template>
             <template v-else>
               <i class="fa fa-comments" aria-hidden="true"></i> Seja o primeiro a comentar
@@ -95,22 +97,31 @@ export default {
   name: 'Post',
   props: {
     post: Object,
+    showComments: Boolean,
     admin: Boolean
   },
   components: {
     Comments
   },
   mixins: [mixin],
-  data: _ => ({
-    editing: false,
-    text: '',
-    comments: false,
-    loaded: false,
-    arr: []
-  }),
+  data () {
+    return {
+      editing: false,
+      text: '',
+      comments: this.showComments,
+      loaded: this.showComments,
+      arr: this.post.comments || []
+    }
+  },
   computed: {
     user: function () {
       return this.$store.getters.user
+    },
+    classroom: function () {
+      return this.$store.getters.classroom
+    },
+    comments_count: function () {
+      return this.post.comments_count || this.post.comments && this.post.comments.length
     }
   },
   methods: {

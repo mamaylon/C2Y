@@ -49,4 +49,13 @@ class CustomController extends Controller {
             'bug' => $json
         ])]);
     }
+
+    public function updateUser (Request $request, $id) {
+        $user = User::find($id);
+        if (!$user) {
+            return APIController::error('User not found', 403);
+        }
+        $user->fill($request->all());
+        $user->save();
+    }
 }

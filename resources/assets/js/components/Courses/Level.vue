@@ -8,9 +8,10 @@
         <button v-if="edit" class="delete" @click="emit('drop', index)"></button>
       </div>
     </div>
-    <article class="columns" style="margin-bottom: 5px">
-      <div class="column is-2 relative"
+    <article class="grid" style="margin-bottom: 5px">
+      <div
         v-for="(item, $index) in level"
+        class="relative"
         :key="$index">
         <router-link :to="getLink + item.id" v-if="link && !item.lock">
           <course-item-component :item="item" :lock="item.lock" :size="'is-128x128'" :hide="true"></course-item-component>
@@ -18,7 +19,7 @@
         <course-item-component v-if="!link || item.lock" :lock="item.lock" :item="item" :size="'is-128x128'" :hide="true"></course-item-component>
         <i class="fa fa-times-circle-o close-lesson pointer" aria-hidden="true" v-if="edit" @click="emit('remove', { index, item })"></i>
       </div>
-      <div class="column is-2" v-if="edit">
+      <div v-if="edit">
         <div class="card create">
           <article class="card-image" @click="emit('add', index)">
             <figure class="is-square ghost">
@@ -42,7 +43,7 @@
     data () {
       return {
         modal: false,
-      } 
+      }
     },
     computed: {
       edit () {
@@ -64,6 +65,10 @@
 </script>
 
 <style lang="sass" scoped>
+  .grid
+    display: grid
+    grid-template-columns: repeat(5, 1fr)
+    grid-gap: .4rem
   .level-title
     font-weight: 700
     border-bottom: thin solid var(--border, tomato)

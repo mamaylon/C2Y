@@ -3,9 +3,19 @@
     <white-component></white-component>
     <section class="columns no-margin">
       <article class="column is-8 is-offset-2 z-index levels" v-if="course">
-        <course-header :course="course" @like="like()" @unlike="unlike()" :likable="true"></course-header>
+        <course-header
+          @unlike="unlike()"
+          @like="like()"
+          :course="course"
+          :likable="true" />
         <div v-for="(f, i) in levels" :key="i">
-          <level :editable="false" :course="course.id" :link="true" class="item-level" :level="f" :index="i"></level>
+          <level
+            class="item-level"
+            :editable="false"
+            :course="course.id"
+            :link="true"
+            :level="f"
+            :index="i" />
         </div>
       </article>
     </section>
@@ -16,7 +26,6 @@
   import CourseItemComponent from './CourseItemComponent.vue'
   import CourseHeader from './CourseHeader.vue'
   import WhiteComponent from '../WhiteComponent.vue'
-  import ModalComponent from '../ModalComponent.vue'
   import Registry from './Messages/Registry.vue'
   import Level from './Level.vue'
 
@@ -36,7 +45,6 @@
   export default {
     components: {
       CourseItemComponent,
-      ModalComponent,
       WhiteComponent,
       CourseHeader,
       Level

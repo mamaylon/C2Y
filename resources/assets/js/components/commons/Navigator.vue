@@ -1,4 +1,4 @@
-<template>  
+<template>
   <nav-component>
     <div class="container">
       <div class="navbar-menu">
@@ -55,4 +55,8 @@
       color: var(--default)
     padding: 0 .5rem
     height: 100%
+  .fa-chevron-right
+    -webkit-text-stroke-color: white
+    -webkit-text-stroke-width: 1px
+
 </style>

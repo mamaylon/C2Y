@@ -86,7 +86,7 @@
           </a>
         </div>
         <div style="padding: 1rem" v-else>
-          Seu professor não associou nenhum curso a esta sala de aula ainda.
+          Seu professor não associou nenhum curso a esta sala de aula.
         </div>
       </template>
     </div>

@@ -34,6 +34,16 @@ class Post extends Model
             ->get();
     }
 
+    public static function findById ($id) {
+        return self::with('user')
+            ->where('id', $id)
+            ->with(['comments' => function ($q) {
+                $q->with('user')
+                    ->orderBy('created_at', 'desc');
+            }])
+            ->first();
+    }
+
     /**
      * Get all of the post's comments.
     */

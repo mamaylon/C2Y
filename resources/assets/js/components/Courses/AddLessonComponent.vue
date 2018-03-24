@@ -16,15 +16,23 @@
               <button type="button" :disabled="!course" @click="push" class="button is-outlined is-success">Concluir</button>
             </div>
           </form>
-          <div class="columns" v-for="j in range(0, Math.ceil(items.length/6))">
-            <article class="column lesson is-2" :class="course == items[i] ? 'is-active' : ''" @click="course = items[i]" v-for="i in range(j*6, Math.min((j*6)+6, items.length))">
-              <course-item-component :hide="true" :size="'is-128x128'" :item="items[i]"></course-item-component>
+          <div class="grid">
+            <article
+              v-for="item in items"
+              :key="item.id"
+              class="lesson"
+              :class="{'is-active': course == item}"
+              @click="course = item">
+              <course-item-component
+                :hide="true"
+                :size="'is-128x128'"
+                :item="item" />
             </article>
           </div>
         </section>
       </div>
     </div>
-  </section>  
+  </section>
 </template>
 
 <script>
@@ -70,6 +78,10 @@
 </script>
 
 <style lang="sass">
+  .grid
+    display: grid
+    grid-template-columns: repeat(6, 1fr)
+    grid-gap: .3rem
   .lesson.is-active img
     border: 2px solid var(--primary, red)
   .modal.is-active

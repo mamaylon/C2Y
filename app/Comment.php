@@ -46,7 +46,7 @@ class Comment extends Model
         return self::where('visualized', $visualized)
             ->where('receiver', $user)
             ->orderBy('created_at', 'desc')
-            ->with('user')
+            ->with(['user', 'commentable'])
             ->get();
     }
 }

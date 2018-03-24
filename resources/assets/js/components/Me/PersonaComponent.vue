@@ -5,16 +5,37 @@
         <span class="text-medium">Nome:</span> {{ user.name }}<br>
         <div class="text">
           <span class="text-medium">Aniversário:</span> {{ birthday(user.birthday) || 'Desconhecido' }}
-          <i v-if="!birthday && !diff"
+          <i v-if="!birthday(user.birthday) && !diff"
             class="fa fa-question-circle question"
             v-tooltip.top="'Verifique as configurações do Google+'"
             aria-hidden="true"></i>
         </div>
-        <span class="text-medium">Instituição:</span> UFSCar Sorocaba<br>
+        <div style="display: flex; align-items: center">
+          <span class="text-medium">Instituição:</span>
+          <template v-if="!editing">
+            <span
+              style="margin-left: .3rem">{{ user.school || 'Desconhecida' }}</span>
+            <i
+              style="margin-left: .4rem"
+              v-if="!diff"
+              @click="editing = true"
+              class="fa fa-pencil fa-fw pointer" />
+          </template>
+          <input type="text"
+            v-else
+            style="margin-left: .3rem"
+            v-model="inst"
+            @keydown.enter="edit"
+            @keydown.esc="edit"
+            class="input">
+        </div>
         <span class="text-medium">Usuário desde:</span> {{ dateToText(user.created_at) }}<br>
       </section>
-      <h4 class="subtitle text-medium" v-if="diff">Atividade de {{ firstName(user.name) }}</h4>
-      <h4 class="subtitle text-medium" v-else>Minhas atividades</h4>
+      <div class="title-bar">
+        <h4 class="subtitle text-medium" v-if="diff">Atividade de {{ firstName(user.name) }}</h4>
+        <h4 class="subtitle text-medium" v-else>Minhas atividades</h4>
+        <span class="tag is-primary">{{ lessons.length }}</span>
+      </div>
       <div
         class="list"
         v-if="lessons.length">
@@ -33,8 +54,11 @@
         v-else>
         Você não criou nenhuma atividade até o momento
       </div>
-      <h4 class="subtitle text-medium" v-if="diff">Cursos de {{ firstName(user.name) }}</h4>
-      <h4 class="subtitle text-medium" v-else>Meus cursos</h4>
+      <div class="title-bar">
+        <h4 class="subtitle text-medium" v-if="diff">Cursos de {{ firstName(user.name) }}</h4>
+        <h4 class="subtitle text-medium" v-else>Meus cursos</h4>
+        <span class="tag is-primary">{{ courses.length }}</span>
+      </div>
       <div
         class="list"
         v-if="courses.length">
@@ -83,11 +107,20 @@
         })
         .catch(this.error)
     },
-    data: _ => ({
-      lessons: [],
-      courses: []
-    }),
+    data () {
+      return {
+        lessons: [],
+        courses: [],
+        editing: false,
+        inst: this.user.school
+      }
+    },
     methods: {
+      edit () {
+        this.$store.dispatch('setSchool', { user: this.user.id, school: this.inst })
+        this.inst = ''
+        this.editing = false
+      },
       error (e) {
         console.log(e)
         this.$toastr.e('Erro ao carregar informações')
@@ -102,6 +135,8 @@
 </script>
 
 <style lang="sass" scoped>
+  .input
+    max-width: 20rem
   .list
     display: grid
     grid-template-columns: repeat(10, 1fr)
@@ -122,5 +157,14 @@
   .question
     margin-left: .3rem
     font-size: 1rem
+  .title-bar
+    display: flex
+    padding: 1rem 0 0 0
+    align-items: center
+    h4
+      margin: 0
+      margin-right: .5rem
+    span
+      margin-bottom: -0.3rem
 </style>
 

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AlterCommentsTable extends Migration
+class AlterUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AlterCommentsTable extends Migration
      */
     public function up()
     {
-        Schema::table('comments', function (Blueprint $table) {
-            $table->boolean('visualized')->default(false);
+        Schema::table('users', function (Blueprint $table) {
+            $table->text('school')->nullable();
         });
     }
 
@@ -25,9 +25,8 @@ class AlterCommentsTable extends Migration
      */
     public function down()
     {
-        Schema::table('comments', function (Blueprint $table) {
-            $table->dropColumn('visualized');
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('school');
         });
-
     }
 }
