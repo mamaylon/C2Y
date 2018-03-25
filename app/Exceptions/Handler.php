@@ -45,7 +45,7 @@ class Handler extends ExceptionHandler
     public function render($request, Exception $exception)
     {
         // dd($exception);
-        if (env('APP_ENV') != 'local') {
+        if ($exception instanceof CustomException && env('APP_ENV') != 'local') {
             return response()->view('error');
         }
         return parent::render($request, $exception);
