@@ -69,13 +69,18 @@ class ClassController extends Controller
     if (!$all) {
       return APIController::error('Required field not found. Request must contain "code" and "user"');
     }
+    // \DB::enableQueryLog();
     $class = Classroom::where('code', $request->code)
-      ->with(['users' => function ($q) {
+      ->whereRaw("'{$request->user}' not in (select user_id from classes_users)")
+      ->with(['users' => function ($q) use ($request) {
         $q->where('role', 'master');
       }])
       ->first();
+
+    // $queries = \DB::getQueryLog();
+    // dd($queries);
     if (!$class) {
-      return APIController::error('Classroom not found');
+      return APIController::error('Classroom not found', 403);
     }
     $class->master = $class->users[0];
     unset($class->users);
