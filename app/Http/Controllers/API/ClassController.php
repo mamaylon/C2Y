@@ -71,7 +71,7 @@ class ClassController extends Controller
     }
     // \DB::enableQueryLog();
     $class = Classroom::where('code', $request->code)
-      ->whereRaw("'{$request->user}' not in (select user_id from classes_users)")
+      ->whereRaw("'{$request->user}' not in (select user_id from classes_users where class_id = classes.id)")
       ->with(['users' => function ($q) use ($request) {
         $q->where('role', 'master');
       }])
