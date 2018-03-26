@@ -132,10 +132,17 @@ class Course extends Model
 
   // Find course to given user in a classroom
   public static function findForClassroom ($id, $user) {
-    return Course::where('id', $id)
+    $result = Course::where('id', $id)
       ->whereHas('classrooms.users', function ($q) use ($user) {
         $q->where('id', $user);
       })
+      ->with(['likes' => function ($query) use ($user) {
+        $query->where('user_id', $user);
+      }])
       ->first();
+    if ($result) {
+      $result->likes_count = $result->likes()->count();
+    }
+    return $result;
   }
 }
