@@ -1,6 +1,8 @@
 import axios from 'axios'
 
 const state = () => ({
+  name: null,
+  school: null,
   color: null,
   code: null
 })
@@ -12,6 +14,10 @@ module.exports = {
   mutations: {
     SET_CLASSROOM (store, payload) {
       store.classroom = payload
+    },
+    UPDATE_ACTIVE_CLASSROOM (store, payload) {
+      store.classroom.name = payload.name
+      store.classroom.school = payload.school
     },
     SET_COLOR (store, payload) {
       if (store.classroom) {

@@ -34,7 +34,7 @@
       <div class="title-bar">
         <h4 class="subtitle text-medium" v-if="diff">Atividade de {{ firstName(user.name) }}</h4>
         <h4 class="subtitle text-medium" v-else>Minhas atividades</h4>
-        <span class="tag is-primary">{{ lessons.length }}</span>
+        <span class="tag is-primary" style="z-index: 2">{{ lessons.length }}</span>
       </div>
       <div
         class="list"

@@ -1,6 +1,7 @@
 <template>
   <section class="body">
-    <h4 class="title text-medium">Crie sua classe</h4>
+    <h4 class="title text-medium" v-if="!data">Crie sua classe</h4>
+    <h4 class="title text-medium" v-else>Editar sua classe</h4>
     <div>Elit nostrud butcher, keytar trust fund pop-up ennui af kickstarter post-ironic deep v hot chicken ugh.  Leggings adaptogen bitters sapiente tousled umami.</div>
     <form @submit.prevent="submit">
       <div style="margin-top: 10px;">
@@ -36,10 +37,15 @@
           :class="{ 'is-outlined': !wait }"
           class="button is-primary is-fullwidth">
           <i class="fa fa-circle-o-notch fa-fw fa-spin" v-show="wait"></i>
-          {{ wait ? 'Criando classe' : 'Criar classe' }}
+          <template v-if="wait">
+            {{ data ? 'Alterando classe' : 'Criando classe' }}
+          </template>
+          <template v-else>
+            {{ data ? 'Alterar classe' : 'Criar classe' }}
+          </template>
         </button>
         <button type="button"
-          @click="origin.open()"
+          @click="origin.open ? origin.open() : $modal('close')"
           class="button is-outlined is-fullwidth">
           Voltar
         </button>
@@ -49,14 +55,17 @@
 </template>
 
 <script>
+  const def = (data, prop) => data
+    ? data[prop] || ''
+    : ''
   export default {
     name: 'FormClassroom',
-    props: ['origin'],
+    props: ['origin', 'data'],
     data () {
       return {
         form: {
-          name: '',
-          school: '',
+          name: def(this.data, 'name'),
+          school: def(this.data, 'school'),
           user: this.$store.getters.user.id
         },
         wait: false

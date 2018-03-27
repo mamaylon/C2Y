@@ -40,6 +40,17 @@ class Classroom extends Model
     }]);
   }
 
+  public static function findWithOwner ($id, $user) {
+    if (!$user) {
+      return null;
+    }
+    return self::where('id', $id)
+      ->whereHas('users', function ($q) use ($user) {
+        $q->where('id', $user)->where('role', 'master');
+      })
+      ->first();
+  }
+
   public static function show ($id = null, $all = false) {
   	$builder = self::getBuilder($all);
   	if ($id) {

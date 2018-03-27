@@ -3,10 +3,18 @@
     class="classroom"
     :style="classroom.color ? `--default: ${classroom.color}` : ''">
     <navigator :routes="routes">
-      <span v-tooltip.bottom="'Alternar cor do curso'"
-        @click="open()"
-        v-if="admin"
-        class="pointer color-picker"></span>
+      <template>
+        <i
+          @click="update()"
+          class="fa fa-fw fa-cog pointer"
+          style="font-size: 1.5rem; margin-right: .5rem"
+          v-if="admin"
+          v-tooltip="'Atualizar classe'" />
+        <span v-tooltip.bottom="'Alternar cor do curso'"
+          @click="color()"
+          v-if="admin"
+          class="pointer color-picker" />
+      </template>
     </navigator>
     <div class="scroll">
       <article class="container main">
@@ -24,113 +32,139 @@
 </template>
 
 <script>
-  import Navigator from '../commons/Navigator.vue'
-  import ColorPicker from './Modal/ColorPicker.vue'
-  import SideUsers from './SideUsers.vue'
-  import SideMenuClassroom from './SideMenuClassroom.vue'
-  import MainBoard from './MainBoard.vue'
-  import mixin from '../../mixins/index'
-  import { EventBus } from '../../modules/bus'
-  let fromStore = name => {
-    return function () {
-      return this.$store.getters[name]
-    }
+import Navigator from '../commons/Navigator.vue'
+import ColorPicker from './Modal/ColorPicker.vue'
+import SideUsers from './SideUsers.vue'
+import SideMenuClassroom from './SideMenuClassroom.vue'
+import MainBoard from './MainBoard.vue'
+import mixin from '../../mixins/index'
+import FormClassroom from './Modal/FormClassroom.vue'
+import { EventBus } from '../../modules/bus'
+let fromStore = name => {
+  return function () {
+    return this.$store.getters[name]
   }
+}
 
-  let created = function () {
-    let id = this.$route.params.id
-    let classroom = this.user.classrooms.find(it => it.id === id)
-    this.$store.dispatch('classroom', classroom)
-    this.routes = []
+let created = function () {
+  let id = this.$route.params.id
+  let classroom = this.user.classrooms.find(it => it.id === id)
+  this.$store.dispatch('classroom', classroom)
+  this.routes = []
+  this.routes.push({
+    icon: 'home',
+    text: this.classroom.name,
+    route: `/classroom/${classroom.id}`
+  })
+  let promise = this.$http.get(`/api/classroom/${classroom.id}`, {
+    params: { users: true }
+  })
+  promise
+    .then(result => {
+      let data = result.body.data
+      this.$store.dispatch('classroom', data.classroom)
+    })
+    .catch(err => {
+      this.err = err
+    })
+  EventBus.$on('user:assign', ({ user, role }) => {
+    this.classroom.users.find(it => it.id === user).role = role
+  })
+  if (this.postable) {
     this.routes.push({
-      icon: 'home',
-      text: classroom.name,
-      route: `/classroom/${classroom.id}`
-    })
-    let promise = this.$http.get(`/api/classroom/${classroom.id}`, {
-      params: { users: true }
-    })
-    promise
-      .then(result => {
-        let data = result.body.data
-        this.$store.dispatch('classroom', data.classroom)
-      })
-      .catch(err => {
-        this.err = err
-      })
-    EventBus.$on('user:assign', ({ user, role }) => {
-      this.classroom.users.find(it => it.id === user).role = role
-    })
-    if (this.postable) {
-      this.routes.push({
-        icon: 'file-text',
-        text: 'Publicação',
-        route: `/classroom/${classroom.id}/${this.postable}`
-      })
-    }
-    EventBus.$on('route:push', route => {
-      this.routes.push(route)
+      icon: 'file-text',
+      text: 'Publicação',
+      route: `/classroom/${classroom.id}/${this.postable}`
     })
   }
+  EventBus.$on('route:push', route => {
+    this.routes.push(route)
+  })
+}
 
-  export default {
-    name: 'Classroom',
-    created,
-    mixins: [mixin],
-    components: {
-      Navigator,
-      SideUsers,
-      SideMenuClassroom,
-      MainBoard
-    },
-    data: _ => ({
-      routes: [],
-      err: null
-    }),
-    methods: {
-      open () {
-        let color = this.$store.getters.classroom.color
-        let onClose = () => {
+export default {
+  name: 'Classroom',
+  created,
+  mixins: [mixin],
+  components: {
+    Navigator,
+    SideUsers,
+    SideMenuClassroom,
+    MainBoard
+  },
+  data: _ => ({
+    routes: [],
+    err: null
+  }),
+  methods: {
+    // Atualiza classe
+    submit (params) {
+      this.$http.put('/api/classroom/' + this.classroom.id, params)
+        .then(data => {
           this.$modal('close')
-          if (color === this.$store.getters.classroom.color) {
-            return
-          }
-          this.$store.dispatch('color', {
-            color: this.$store.getters.classroom.color,
-            code: this.$store.getters.classroom.code,
-            save: true
-          })
+          this.$store.dispatch('updateClassroom', data.body.data.classroom)
+        })
+        .catch(e => {
+          this.$modal('close')
+          this.$toastr.e('Erro ao atualizar classe')
+        })
+    },
+    color () {
+      let color = this.$store.getters.classroom.color
+      let onClose = () => {
+        this.$modal('close')
+        if (color === this.$store.getters.classroom.color) {
+          return
         }
-        this.$modal({
-          component: ColorPicker,
-          onClose,
-          class: 'min'
+        this.$store.dispatch('color', {
+          color: this.$store.getters.classroom.color,
+          code: this.$store.getters.classroom.code,
+          save: true
         })
       }
+      this.$modal({
+        component: ColorPicker,
+        onClose,
+        class: 'min'
+      })
     },
-    mounted () {
-      // this.$nextTick(_ => this.open())
-    },
-    destroyed () {
-      this.$store.dispatch('destroy', null)
-    },
-    computed: {
-      user: fromStore('user'),
-      classroom: fromStore('classroom'),
-      admin: function () {
-        return this.masters.some(item => item.id === this.user.id)
-      },
-      masters: function () {
-        if (!this.classroom.users) {
-          return []
-        }
-        return this.classroom.users.filter(user => !!user.role.match(this.regexMaster))
-      },
-      postable () {
-        return this.$route.params.post
+    update () {
+      this.$modal({
+        component: FormClassroom,
+        onClose: true,
+        data: this.classroom
+      })
+    }
+  },
+  mounted () {
+    // this.$nextTick(_ => this.open())
+  },
+  destroyed () {
+    this.$store.dispatch('destroy', null)
+  },
+  computed: {
+    user: fromStore('user'),
+    classroom: function () {
+      let cl = this.$store.getters.classroom
+      if (cl && this.routes.length) {
+        this.routes[0].text = cl.name
       }
+      return cl
+    },
+    admin: function () {
+      return this.masters.some(item => item.id === this.user.id)
+    },
+    masters: function () {
+      if (!this.classroom.users) {
+        return []
+      }
+      return this.classroom.users.filter(user => !!user.role.match(this.regexMaster))
+    },
+    postable () {
+      return this.$route.params.post
     }
   }
+}
 </script>
 
 <style lang="sass" scoped>

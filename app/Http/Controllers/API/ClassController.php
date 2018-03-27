@@ -157,7 +157,17 @@ class ClassController extends Controller
    */
   public function update(Request $request, $id)
   {
-    //
+    $class = Classroom::findWithOwner($id, $request->user);
+    if (!$class) {
+      return APIController::error('Classroom not found', 403);
+    }
+    try {
+      $class->fill($request->all());
+      $class->save();
+      return APIController::success(['classroom' => $class]);
+    } catch (Exception $e) {
+      return APIController::error($e->getMessage(), 500);
+    }
   }
 
   /**
