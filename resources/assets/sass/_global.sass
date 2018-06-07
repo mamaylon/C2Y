@@ -1,0 +1,199 @@
+textarea.autosize
+  width: 100%
+  border: 0
+  resize: vertical
+.root
+  flex: 1
+.or
+  display: inline-block
+  background-color: tomato
+  position: relative
+  &:after, &:before
+    content: ''
+    display: block
+    --size: 300%
+    width: var(--size)
+    height: 1px
+    background-color: #999
+    position: absolute
+    top: 50%
+    transform: translateY(-50%)
+    --margin: 0.5rem
+  &:after
+    left: 100%
+    margin-left: var(--margin)
+  &:before
+    left: 0
+    margin-left: calc((var(--size) * -1) - var(--margin))
+.capitalize
+  text-transform: capitalize
+.flex
+  display: flex
+  align-items: center
+.no-select
+  user-select: none
+.file-icon
+  margin-right: 10px
+.file input[type="file"]
+  width: 0 !important
+  border: none !important
+  opacity: 0;
+.is-fullwidth
+  width: 100%
+.z-index
+  z-index: 1
+.hidden
+  overflow: hidden
+.inline
+  display: inline-block
+.opacity
+  opacity: 0.6 !important
+.print
+  background-color: tomato
+.facebook
+  --default: $facebook
+  background-color: $facebook
+  border: $flat-border solid $facebook
+.facebook-text
+  color: $facebook !important
+.google
+  --default: $google
+  background-color: $google
+  border: $flat-border solid $google
+.google-text
+  color: $google !important
+.padding-left
+  padding-left: 20px
+.margin-top
+  margin-top: 30px !important
+.padding-top
+  padding-top: 20px
+.text-medium
+  font-weight: 500
+.text-bold
+  font-weight: bold
+.round
+  border-radius: 3px
+.flex-center
+  display: flex
+  align-items: center
+  justify-content: center
+  flex-direction: column
+.primary
+  color: $primary
+.primary:before
+  color: $primary !important
+.primary-color
+  color: $primary-color !important
+.ct-label
+  font-size: 0.7rem
+.card .ct-chart
+  margin-bottom: 5px
+.modal.is-active ~ *
+  @include blur(5px)
+.bg-white
+  background-color: white !important
+.pointer
+  cursor: pointer
+.ghost
+  @extend .pointer
+  @include opacity(0.7)
+  &:hover
+    @include opacity(1)
+.input.flat
+  border-top: none
+  border-left: none
+  border-right: none
+  box-shadow: none
+  border-radius: 0
+textarea.input.flat
+  border: thin solid $border
+  resize: none
+.margin-left
+  margin-left: 20px !important
+.margin-bottom
+  margin-bottom: 20px !important
+.no-margin
+  margin: 0 !important
+.no-margin-bottom
+  margin-bottom: 0 !important
+.no-padd
+  padding: 0 !important
+.no-padd-bottom
+  padding-bottom: 0 !important
+.has-border-top
+  @include has-border('top')
+.has-border-right
+  border-right: thin solid $border-color
+.has-shadow
+  @extend .nav.has-shadow
+.circle
+  border-radius: 50%
+.relative
+  position: relative !important
+body, html, #app
+  height: 100%
+  // overflow-y: auto
+body
+  background-color: $bg-color
+#router-view
+  padding-top: 20px
+  min-height: 70vh
+.box
+  border-radius: 3px
+.fade-enter-active, .fade-leave-active
+  transition: opacity .3s
+.fade-enter, .fade-leave-to
+  opacity: 0
+.modal-content
+  @extend .box
+.modal-dialog.min
+  width: var(--modal-min)
+  .modal-body, .modal-content
+    width: 100%
+.modal-dialog:not(.min)
+  .modal-content
+    width: auto
+    & > *:not(.modal-body), .modal-body > *
+      width: var(--modal, 640px)
+    padding: 0
+.thin-font
+  font-family: $login-font !important
+
+/* Ajuste para custom property */
+.input:focus
+  border-color: var(--primary, $primary)
+.tag.is-primary
+  background-color: var(--primary, $primary)
+.button.is-primary
+  &, &[disabled], &:hover, &:active
+    border-color: var(--primary, $primary)
+    color: white
+    background-color: var(--primary, $primary)
+  &.is-outlined
+    &, &[disabled]
+      color: var(--primary, $primary)
+      border-color: var(--primary, $primary)
+    &:hover, &:focus, &:active
+      &:not([disabled])
+        @extend .button.is-primary
+        color: white
+.card-footer
+  border-bottom-left-radius: 5px !important
+  border-bottom-right-radius: 5px !important
+a
+  color: var(--primary, $primary)
+
+.is-bold
+  font-weight: 700
+.columns
+  @media screen and (max-width: $tablet)
+    margin-left: 0
+    margin-right: 0
+  & .column
+    @media screen and (max-width: $tablet)
+      padding-left: 0
+      padding-right: 0
+
+.modal-dialog.max
+  min-width: 60vw

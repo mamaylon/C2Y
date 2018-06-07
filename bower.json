@@ -1,0 +1,20 @@
+{
+  "name": "c2y",
+  "description": "",
+  "main": "",
+  "authors": [
+    "Felipe J. L. Rita <felipelopesrita@hotmail.com>"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "prism": "prismjs#^1.6.0"
+  }
+}

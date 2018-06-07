@@ -1,0 +1,41 @@
+$padd: 5px
+#hero-component
+  background-color: white
+  border-bottom: thin solid $border-color
+  height: $hero-size
+  .logo
+    height: 100%
+    padding: $padd
+    img
+      height: 70%
+      position: absolute
+      top: 15%
+ul.nav-list
+  height: $hero-size
+  margin-top: $padd * -1
+  @media screen and (max-width: $tablet)
+    text-align: center
+ul.nav-list li
+  margin-left: 1em
+  &:first-child
+    margin-left: 0
+  @extend ul.nav-list
+  position: relative
+  display: inline-block
+  width: 2em
+  .tag
+    position: absolute
+    top: 55%
+    right: -40%
+  i
+    @extend .ghost
+    left: 0
+    position: absolute
+    font-size: 1.3em
+    width: 100%
+    transform: translateY(-50%)
+    top: 50%
+#notification-bar
+  @extend .has-text-right
+  @media screen and (max-width: 400px)
+    text-align: center
