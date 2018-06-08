@@ -3,6 +3,7 @@
 namespace C2Y\Http\Controllers;
 
 use Socialite;
+use Auth;
 use C2Y\SocialAccountService;
 use Illuminate\Http\Request;
 
@@ -40,7 +41,9 @@ class SocialAuthController extends Controller
     $provider = Socialite::driver('google')->user();
     $provider->birthday = null;
     $user = $service->createOrGetUser($provider, 'google');
+
     auth()->login($user);
+    
     return redirect()->to('/');
   }
 }

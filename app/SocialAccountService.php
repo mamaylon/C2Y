@@ -19,12 +19,16 @@ class SocialAccountService {
     return $user;
   }
 
-  public function createOrGetUser (ProviderUser $providerUser, $provider) {
+  public function createOrGetUser (ProviderUser $providerUser, $provider) 
+  {
 
     $account = SocialAccount::show($provider, $providerUser->getId());
-    if ($account) {
+
+    if ($account) 
+    {
       return $account->user;
     }
+
     $account = new SocialAccount([
       'provider_user_id' => $providerUser->getId(),
       'provider' => $provider
