@@ -25,5 +25,6 @@ module.exports = [
   { path: '/material/concept', component: require('./components/Form/CreateConcept.vue') },
   { path: '/material/bncc', component: require('./components/Form/CreateBncc.vue') },
   { path: '/material/pc', component: require('./components/Form/CreatePc.vue') },
+  
   { path: '*', redirect: '/material/' }
 ]

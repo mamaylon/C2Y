@@ -17,8 +17,6 @@ class ImageController extends Controller
         if (!$image)
             return null;
 
-        dd($image);
-
         if (!file_exists(public_path('upload/')))
             mkdir(public_path('upload/'), 0777, true);
 

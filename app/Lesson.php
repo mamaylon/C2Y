@@ -8,7 +8,6 @@ class Lesson extends Model
 {
   use Traits\Uuids;
   public $incrementing = false;
-
   protected $fillable = ['name', 'description', 'link', 'user_id', 'photo', 'photoType', 'model','goals','suggestions','resources','age_min', 'age_max', 'owner'];
   protected static $integer = ['age'];
 
@@ -37,7 +36,9 @@ class Lesson extends Model
   }
 
   public static function show ($params, $max = false) {
+
     $relations = ['bncc_components','pc_components', 'user'];
+
     $builder = self::select('*', DB::raw('count(1) over() as count'))->with($relations);
 
     if (isset($params['user']))
@@ -128,7 +129,7 @@ class Lesson extends Model
   {
     return $this->hasMany('C2Y\LessonReference');
   }
-
+  
   /**
   * The users completed that belong to the lesson.
   */

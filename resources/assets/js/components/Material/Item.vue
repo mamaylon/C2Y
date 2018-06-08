@@ -1,5 +1,4 @@
 <template>
-  
   <article class="media" id="item-component">
     
     <div class="is-hidden-tablet">
@@ -65,8 +64,7 @@
           </a>
         </div>
       </nav>-->
-    </div>
-    
+    </div>    
     <div class="media-right is-hidden-mobile">
     
       <router-link :to="'/material/game/' + item.id">
@@ -77,7 +75,6 @@
 
     </div>
   </article>
-
 </template>
 
 <script>

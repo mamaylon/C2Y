@@ -269,7 +269,6 @@
               </div>
             </div>
           </div>
-          
         </div>
       </article>
     </section>
@@ -347,7 +346,6 @@
 
         return url;
       }
-      
     },
     data () {
       return {

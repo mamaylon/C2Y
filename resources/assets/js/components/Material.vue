@@ -13,7 +13,7 @@
             </section>
             <section class="column is-8 items">
               <article class="box" id="box">
-                
+
                 <loading-component :message="false" v-if="loading">
                   <!--<item-component
                     :example="true"
@@ -22,7 +22,6 @@
                 </loading-component>
                 
                 <empty-component v-show="!lessons.length && !loading" :message="'Nenhuma atividade encontrada'"></empty-component>
-                
                 <item-component
                   v-show="!loading && lessons.length > 0"
                   @drop="remove" @error="err"

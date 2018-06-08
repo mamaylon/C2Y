@@ -10,7 +10,6 @@
         Parabéns, você cadastrou um atividade :)
       </div>
     </section>
-
     <create :title="'Criar atividade'" :api="'/api/lesson'" :hide="true" :model="form" :callback="callback" @error="handle">
       
       <div class="columns">
@@ -369,7 +368,6 @@
       </div>
 
     </create>
-
   </section>
 </template>
 
@@ -414,7 +412,7 @@
           timeout: 3000,
           onClose: true
         })
-        
+
         for(let i in this.form)
         {
           Array.isArray(this.form[i]) ? this.form[i] = [] : this.form[i] = ""
@@ -541,4 +539,5 @@
   .option-title
     font-weight: 700
     color: var(--color)
+
 </style>
