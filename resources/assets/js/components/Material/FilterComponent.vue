@@ -1,57 +1,75 @@
 <template>
-  <form class="box" action="#" method="get" @submit.prevent="search(form)">
-    <h4>Filtros de pesquisa</h4>
-    <div class="field">
-      <p class="control">
-        <input class="input" v-model="form.name" type="text" placeholder="Pesquisar">
-      </p>
-    </div>
-    <div class="field">
-      <p class="control">
-        <span class="select is-fullwidth">
-          <select v-model="form.concepts">
-            <option value="0">Todos os conceitos</option>
-            <option :value="item.id" v-for="item in concepts">{{ item.name }}</option>
-          </select>
-        </span>
-      </p>
-    </div>
-    <div class="field">
-      <p class="control">
-        <span class="select is-fullwidth">
-          <select v-model="form.topics">
-            <option value="0">Todos os temas </option>
-            <option :value="item.id" v-for="item in topics">{{ item.name }}</option>
-          </select>
-        </span>
-      </p>
-    </div>
-    <div class="field">
-      <p class="control">
-        <span class="select is-fullwidth">
-          <select v-model="form.age">
-            <option value="0" disabled>-- Idade --</option>
-          </select>
-        </span>
-      </p>
-    </div>
-    <div class="field has-text-centered">
-      <p class="">
-        <button type="submit" class="button is-primary is-outlined">Pesquisar</button>
-      </p>
-    </div>
-  </form>
+  <section style="flex: 1">
+    <form class="box" action="#" method="get" @submit.prevent="search(form)">
+      
+      <div class="columns">
+        <div class="column is-12">
+          <h4>Filtros de pesquisa</h4>
+          <span v-if="form.name.length > 0"><i>Título</i></span>
+          <input class="input" v-model="form.name" type="text" placeholder="Pesquisar">
+        </div>
+      </div>
+
+      <div class="columns">
+        <div class="column is-12">
+          <span v-if="form.pc_components.length > 0"><i>Elemento do PC</i></span>
+          <span class="select is-fullwidth">              
+            <select v-model="form.pc_components">
+              <option value="0">Todos os conceitos de PC</option>
+              <option :value="item.id" v-for="item in pc_component">{{ item.description }}</option>
+            </select>
+          </span>
+        </div>
+      </div>
+
+      <div class="columns">
+        <div class="column is-12">
+          <span v-if="form.bncc_components.length > 0"><i>Elemento da BNCC</i></span>
+          <span class="select is-fullwidth">            
+            <select v-model="form.bncc_components">
+              <option value="0">Todos os topicos da BNCC</option>
+              <option :value="item.id" v-for="item in bncc_component">{{ item.description }}</option>
+            </select>
+          </span>    
+        </div>
+      </div>
+      
+      <div class="columns">
+        <div class="column is-12">
+          <label>Faixa etária</label>
+          <br>
+          <br>
+          <br>
+          <vue-slider :min="2" :max="24" v-model="form.age"></vue-slider>    
+        </div>
+      </div>
+
+      <div class="columns">        
+        <div class="column is-12 flex-center">
+          <label><input type="checkbox" v-model="form.ageCheck" value="1" name=""/> Ignorar idade</label>
+          <br>
+          <button type="submit" class="button is-primary is-outlined">Pesquisar</button>
+        </div>
+      </div>
+
+    </form>    
+  </section>
 </template>
 
 <script>
   import Utils from '../../modules/utils'
+  import vueSlider from 'vue-slider-component'
+
   export default {
+    components: {      
+      vueSlider
+    },
     mounted () {
       let self = this
-      self.$http.get('/api/topic')
-        .then(data => (self.topics = data.body.data.topics))
-      self.$http.get('/api/concept')
-        .then(data => (self.concepts = data.body.data.concepts))
+      self.$http.get('/api/bncc/json')
+        .then(resp => (self.bncc_component = resp.body))
+      self.$http.get('/api/pc/json')
+        .then(resp => (self.pc_component = resp.body))
     },
     methods: {
       search (form) {
@@ -63,13 +81,14 @@
     },
     data () {
       return {
-        concepts: [],
-        topics: [],
+        bncc_component: [],
+        pc_component: [],
         form: {
+          pc_components:0,
+          bncc_components:0,
           name: '',
-          concepts: 0,
-          age: 0,
-          topics: 0
+          age: [2,24],
+          ageCheck: 0
         }
       }
     }

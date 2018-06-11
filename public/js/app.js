@@ -30548,16 +30548,82 @@ var _utils = __webpack_require__(14);
 
 var _utils2 = _interopRequireDefault(_utils);
 
+var _vueSliderComponent = __webpack_require__(320);
+
+var _vueSliderComponent2 = _interopRequireDefault(_vueSliderComponent);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 exports.default = {
+  components: {
+    vueSlider: _vueSliderComponent2.default
+  },
   mounted: function mounted() {
     var self = this;
-    self.$http.get('/api/topic').then(function (data) {
-      return self.topics = data.body.data.topics;
+    self.$http.get('/api/bncc/json').then(function (resp) {
+      return self.bncc_component = resp.body;
     });
-    self.$http.get('/api/concept').then(function (data) {
-      return self.concepts = data.body.data.concepts;
+    self.$http.get('/api/pc/json').then(function (resp) {
+      return self.pc_component = resp.body;
     });
   },
 
@@ -30572,61 +30638,18 @@ exports.default = {
   },
   data: function data() {
     return {
-      concepts: [],
-      topics: [],
+      bncc_component: [],
+      pc_component: [],
       form: {
+        pc_components: 0,
+        bncc_components: 0,
         name: '',
-        concepts: 0,
-        age: 0,
-        topics: 0
+        age: [2, 24],
+        ageCheck: 0
       }
     };
   }
-}; //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+};
 
 /***/ }),
 /* 104 */
@@ -70610,7 +70633,11 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('form', {
+  return _c('section', {
+    staticStyle: {
+      "flex": "1"
+    }
+  }, [_c('form', {
     staticClass: "box",
     attrs: {
       "action": "#",
@@ -70622,11 +70649,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.search(_vm.form)
       }
     }
-  }, [_c('h4', [_vm._v("Filtros de pesquisa")]), _vm._v(" "), _c('div', {
-    staticClass: "field"
-  }, [_c('p', {
-    staticClass: "control"
-  }, [_c('input', {
+  }, [_c('div', {
+    staticClass: "columns"
+  }, [_c('div', {
+    staticClass: "column is-12"
+  }, [_c('h4', [_vm._v("Filtros de pesquisa")]), _vm._v(" "), (_vm.form.name.length > 0) ? _c('span', [_c('i', [_vm._v("Título")])]) : _vm._e(), _vm._v(" "), _c('input', {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -70648,17 +70675,17 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       }
     }
   })])]), _vm._v(" "), _c('div', {
-    staticClass: "field"
-  }, [_c('p', {
-    staticClass: "control"
-  }, [_c('span', {
+    staticClass: "columns"
+  }, [_c('div', {
+    staticClass: "column is-12"
+  }, [(_vm.form.pc_components.length > 0) ? _c('span', [_c('i', [_vm._v("Elemento do PC")])]) : _vm._e(), _vm._v(" "), _c('span', {
     staticClass: "select is-fullwidth"
   }, [_c('select', {
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.form.concepts),
-      expression: "form.concepts"
+      value: (_vm.form.pc_components),
+      expression: "form.pc_components"
     }],
     on: {
       "change": function($event) {
@@ -70668,31 +70695,31 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
           var val = "_value" in o ? o._value : o.value;
           return val
         });
-        _vm.$set(_vm.form, "concepts", $event.target.multiple ? $$selectedVal : $$selectedVal[0])
+        _vm.$set(_vm.form, "pc_components", $event.target.multiple ? $$selectedVal : $$selectedVal[0])
       }
     }
   }, [_c('option', {
     attrs: {
       "value": "0"
     }
-  }, [_vm._v("Todos os conceitos")]), _vm._v(" "), _vm._l((_vm.concepts), function(item) {
+  }, [_vm._v("Todos os conceitos de PC")]), _vm._v(" "), _vm._l((_vm.pc_component), function(item) {
     return _c('option', {
       domProps: {
         "value": item.id
       }
-    }, [_vm._v(_vm._s(item.name))])
+    }, [_vm._v(_vm._s(item.description))])
   })], 2)])])]), _vm._v(" "), _c('div', {
-    staticClass: "field"
-  }, [_c('p', {
-    staticClass: "control"
-  }, [_c('span', {
+    staticClass: "columns"
+  }, [_c('div', {
+    staticClass: "column is-12"
+  }, [(_vm.form.bncc_components.length > 0) ? _c('span', [_c('i', [_vm._v("Elemento da BNCC")])]) : _vm._e(), _vm._v(" "), _c('span', {
     staticClass: "select is-fullwidth"
   }, [_c('select', {
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.form.topics),
-      expression: "form.topics"
+      value: (_vm.form.bncc_components),
+      expression: "form.bncc_components"
     }],
     on: {
       "change": function($event) {
@@ -70702,59 +70729,79 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
           var val = "_value" in o ? o._value : o.value;
           return val
         });
-        _vm.$set(_vm.form, "topics", $event.target.multiple ? $$selectedVal : $$selectedVal[0])
+        _vm.$set(_vm.form, "bncc_components", $event.target.multiple ? $$selectedVal : $$selectedVal[0])
       }
     }
   }, [_c('option', {
     attrs: {
       "value": "0"
     }
-  }, [_vm._v("Todos os temas ")]), _vm._v(" "), _vm._l((_vm.topics), function(item) {
+  }, [_vm._v("Todos os topicos da BNCC")]), _vm._v(" "), _vm._l((_vm.bncc_component), function(item) {
     return _c('option', {
       domProps: {
         "value": item.id
       }
-    }, [_vm._v(_vm._s(item.name))])
+    }, [_vm._v(_vm._s(item.description))])
   })], 2)])])]), _vm._v(" "), _c('div', {
-    staticClass: "field"
-  }, [_c('p', {
-    staticClass: "control"
-  }, [_c('span', {
-    staticClass: "select is-fullwidth"
-  }, [_c('select', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
+    staticClass: "columns"
+  }, [_c('div', {
+    staticClass: "column is-12"
+  }, [_c('label', [_vm._v("Faixa etária")]), _vm._v(" "), _c('br'), _vm._v(" "), _c('br'), _vm._v(" "), _c('br'), _vm._v(" "), _c('vue-slider', {
+    attrs: {
+      "min": 2,
+      "max": 24
+    },
+    model: {
       value: (_vm.form.age),
+      callback: function($$v) {
+        _vm.$set(_vm.form, "age", $$v)
+      },
       expression: "form.age"
+    }
+  })], 1)]), _vm._v(" "), _c('div', {
+    staticClass: "columns"
+  }, [_c('div', {
+    staticClass: "column is-12 flex-center"
+  }, [_c('label', [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.form.ageCheck),
+      expression: "form.ageCheck"
     }],
+    attrs: {
+      "type": "checkbox",
+      "value": "1",
+      "name": ""
+    },
+    domProps: {
+      "checked": Array.isArray(_vm.form.ageCheck) ? _vm._i(_vm.form.ageCheck, "1") > -1 : (_vm.form.ageCheck)
+    },
     on: {
       "change": function($event) {
-        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
-          return o.selected
-        }).map(function(o) {
-          var val = "_value" in o ? o._value : o.value;
-          return val
-        });
-        _vm.$set(_vm.form, "age", $event.target.multiple ? $$selectedVal : $$selectedVal[0])
+        var $$a = _vm.form.ageCheck,
+          $$el = $event.target,
+          $$c = $$el.checked ? (true) : (false);
+        if (Array.isArray($$a)) {
+          var $$v = "1",
+            $$i = _vm._i($$a, $$v);
+          if ($$el.checked) {
+            $$i < 0 && (_vm.$set(_vm.form, "ageCheck", $$a.concat([$$v])))
+          } else {
+            $$i > -1 && (_vm.$set(_vm.form, "ageCheck", $$a.slice(0, $$i).concat($$a.slice($$i + 1))))
+          }
+        } else {
+          _vm.$set(_vm.form, "ageCheck", $$c)
+        }
       }
     }
-  }, [_c('option', {
-    attrs: {
-      "value": "0",
-      "disabled": ""
-    }
-  }, [_vm._v("-- Idade --")])])])])]), _vm._v(" "), _vm._m(0)])
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: "field has-text-centered"
-  }, [_c('p', {}, [_c('button', {
+  }), _vm._v(" Ignorar idade")]), _vm._v(" "), _c('br'), _vm._v(" "), _c('button', {
     staticClass: "button is-primary is-outlined",
     attrs: {
       "type": "submit"
     }
-  }, [_vm._v("Pesquisar")])])])
-}]}
+  }, [_vm._v("Pesquisar")])])])])])
+},staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
@@ -71698,7 +71745,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       value: (!_vm.item.pc_components.length),
       expression: "!item.pc_components.length"
     }]
-  }, [_vm._v("Sem conceitos cadastrados")]), _c('br')], 2), _vm._v("\n          BNCC: \n            "), _c('em', [_vm._l((_vm.item.bncc_components), function(c) {
+  }, [_vm._v("Sem conceitos cadastrados.")]), _c('br')], 2), _vm._v("\n          BNCC: \n            "), _c('em', [_vm._l((_vm.item.bncc_components), function(c) {
     return _c('span', [_vm._v(" " + _vm._s(c.description) + "; ")])
   }), _vm._v(" "), _c('span', {
     directives: [{
@@ -71707,7 +71754,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       value: (!_vm.item.bncc_components.length),
       expression: "!item.bncc_components.length"
     }]
-  }, [_vm._v("Sem conceitos cadastrados")]), _c('br')], 2), _vm._v("\n          Idade Sugerida: \n            "), _c('em', [_vm._v("\n              " + _vm._s(_vm.item.age_min + ' a ' + _vm.item.age_max + " anos")), _c('br')])]) : _vm._e()], 1)])]), _vm._v(" "), _c('div', {
+  }, [_vm._v("Sem conceitos cadastrados.")]), _c('br')], 2), _vm._v("\n          Idade Sugerida: \n            "), _c('em', [_vm._v("\n              " + _vm._s(_vm.item.age_min + ' a ' + _vm.item.age_max + " anos")), _c('br')])]) : _vm._e()], 1)])]), _vm._v(" "), _c('div', {
     staticClass: "media-right is-hidden-mobile"
   }, [_c('router-link', {
     attrs: {

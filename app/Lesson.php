@@ -50,11 +50,23 @@ class Lesson extends Model
       $params['course'] = null;
     }
 
-    foreach ($params as $k => $param) {
-      if (in_array($k, $relations))
+    foreach ($params as $k => $param) 
+    {
+      if($k =="ageCheck"){}
+      else if($k == "age")
+      {
+        if(!isset($params['ageCheck']))
+        {
+          $builder = $builder->whereBetween($k.'_max', $param);
+          $builder = $builder->orWhereBetween($k.'_min', $param);  
+        }
+      }
+      else if (in_array($k, $relations))
+      {
         $builder = $builder->whereHas($k, function ($query) use ($param, $k) {
           $query->where('id', $param);
         });
+      }
       else if ($k != 'page' && $param && !in_array($k, self::$integer))
         $builder = $builder->where($k, 'ilike', '%'.$param.'%');
       else if ($k != 'page' && $param)
@@ -62,7 +74,8 @@ class Lesson extends Model
       else if ($max)
         $builder = $builder->limit($max)->offset(intval($param) * $max);
     }
-    $res = $builder->get();
+    $res = $builder->get();   
+
     return $res;
   }
 

@@ -37,12 +37,12 @@
             Tema Pensamento Computacional: 
               <em>
                 <span v-for="c in item.pc_components"> {{ c.description }}; </span>
-                <span v-show="!item.pc_components.length">Sem conceitos cadastrados</span><br>
+                <span v-show="!item.pc_components.length">Sem conceitos cadastrados.</span><br>
               </em>
             BNCC: 
               <em>
                 <span v-for="c in item.bncc_components"> {{ c.description }}; </span>
-                <span v-show="!item.bncc_components.length">Sem conceitos cadastrados</span><br>
+                <span v-show="!item.bncc_components.length">Sem conceitos cadastrados.</span><br>
               </em>
             Idade Sugerida: 
               <em>
