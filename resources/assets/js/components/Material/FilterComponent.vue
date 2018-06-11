@@ -15,7 +15,7 @@
           <span v-if="form.pc_components.length > 0"><i>Elemento do PC</i></span>
           <span class="select is-fullwidth">              
             <select v-model="form.pc_components">
-              <option value="0">Todos os conceitos de PC</option>
+              <option value="">Tópicos de PC</option>
               <option :value="item.id" v-for="item in pc_component">{{ item.description }}</option>
             </select>
           </span>
@@ -27,7 +27,7 @@
           <span v-if="form.bncc_components.length > 0"><i>Elemento da BNCC</i></span>
           <span class="select is-fullwidth">            
             <select v-model="form.bncc_components">
-              <option value="0">Todos os topicos da BNCC</option>
+              <option value="">Tópicos da BNCC</option>
               <option :value="item.id" v-for="item in bncc_component">{{ item.description }}</option>
             </select>
           </span>    
@@ -46,7 +46,7 @@
 
       <div class="columns">        
         <div class="column is-12 flex-center">
-          <label><input type="checkbox" v-model="form.ageCheck" value="1" name=""/> Ignorar idade</label>
+          <label><input type="checkbox" v-model="form.ageCheck" name=""/> Ignorar faixa etária</label>
           <br>
           <button type="submit" class="button is-primary is-outlined">Pesquisar</button>
         </div>
@@ -84,11 +84,11 @@
         bncc_component: [],
         pc_component: [],
         form: {
-          pc_components:0,
-          bncc_components:0,
+          pc_components:"",
+          bncc_components:"",
           name: '',
           age: [2,24],
-          ageCheck: 0
+          ageCheck: true
         }
       }
     }

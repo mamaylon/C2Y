@@ -30642,11 +30642,11 @@ exports.default = {
       bncc_component: [],
       pc_component: [],
       form: {
-        pc_components: 0,
-        bncc_components: 0,
+        pc_components: "",
+        bncc_components: "",
         name: '',
         age: [2, 24],
-        ageCheck: 0
+        ageCheck: true
       }
     };
   }
@@ -70701,9 +70701,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_c('option', {
     attrs: {
-      "value": "0"
+      "value": ""
     }
-  }, [_vm._v("Todos os conceitos de PC")]), _vm._v(" "), _vm._l((_vm.pc_component), function(item) {
+  }, [_vm._v("Tópicos de PC")]), _vm._v(" "), _vm._l((_vm.pc_component), function(item) {
     return _c('option', {
       domProps: {
         "value": item.id
@@ -70735,9 +70735,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_c('option', {
     attrs: {
-      "value": "0"
+      "value": ""
     }
-  }, [_vm._v("Todos os topicos da BNCC")]), _vm._v(" "), _vm._l((_vm.bncc_component), function(item) {
+  }, [_vm._v("Tópicos da BNCC")]), _vm._v(" "), _vm._l((_vm.bncc_component), function(item) {
     return _c('option', {
       domProps: {
         "value": item.id
@@ -70772,11 +70772,10 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }],
     attrs: {
       "type": "checkbox",
-      "value": "1",
       "name": ""
     },
     domProps: {
-      "checked": Array.isArray(_vm.form.ageCheck) ? _vm._i(_vm.form.ageCheck, "1") > -1 : (_vm.form.ageCheck)
+      "checked": Array.isArray(_vm.form.ageCheck) ? _vm._i(_vm.form.ageCheck, null) > -1 : (_vm.form.ageCheck)
     },
     on: {
       "change": function($event) {
@@ -70784,7 +70783,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
           $$el = $event.target,
           $$c = $$el.checked ? (true) : (false);
         if (Array.isArray($$a)) {
-          var $$v = "1",
+          var $$v = null,
             $$i = _vm._i($$a, $$v);
           if ($$el.checked) {
             $$i < 0 && (_vm.$set(_vm.form, "ageCheck", $$a.concat([$$v])))
@@ -70796,7 +70795,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         }
       }
     }
-  }), _vm._v(" Ignorar idade")]), _vm._v(" "), _c('br'), _vm._v(" "), _c('button', {
+  }), _vm._v(" Ignorar faixa etária")]), _vm._v(" "), _c('br'), _vm._v(" "), _c('button', {
     staticClass: "button is-primary is-outlined",
     attrs: {
       "type": "submit"
