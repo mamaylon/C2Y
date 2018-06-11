@@ -152,7 +152,7 @@
                 v-model="form.bncc_component" 
                 :options="bncc_components"
                 :multiple="true"
-                :close-on-select="false"
+                :close-on-select="true"
                 :hide-selected="true"
                 label="description"
                 track-by="id"
@@ -175,7 +175,7 @@
                 v-model="form.pc_component" 
                 :options="pc_components"
                 :multiple="true"
-                :close-on-select="false"
+                :close-on-select="true"
                 :hide-selected="true"
                 label="description"
                 track-by="id"
@@ -421,6 +421,7 @@
         }
 
         document.getElementById('link').click();
+        document.getElementById('delImg').click();
       },
       inputFilter(newFile, oldFile, prevent) {
         if (newFile && !oldFile) {

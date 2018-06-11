@@ -21,7 +21,7 @@
                   </span>
                 </span>
               </label>
-              <a v-show="form.photo" @click="form.photo ? form.photo = null : ''" class="button is-danger is-outlined">Remover foto</a>
+              <a id="delImg" v-show="form.photo" @click="form.photo ? form.photo = null : ''" class="button is-danger is-outlined">Remover foto</a>
             </div>
           </article>
           <form class="column is-9">

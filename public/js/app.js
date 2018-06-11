@@ -29161,6 +29161,7 @@ exports.default = {
       }
 
       document.getElementById('link').click();
+      document.getElementById('delImg').click();
     },
     inputFilter: function inputFilter(newFile, oldFile, prevent) {
       if (newFile && !oldFile) {
@@ -71043,6 +71044,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       expression: "form.photo"
     }],
     staticClass: "button is-danger is-outlined",
+    attrs: {
+      "id": "delImg"
+    },
     on: {
       "click": function($event) {
         _vm.form.photo ? _vm.form.photo = null : ''
@@ -74508,7 +74512,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "options": _vm.bncc_components,
       "multiple": true,
-      "close-on-select": false,
+      "close-on-select": true,
       "hide-selected": true,
       "label": "description",
       "track-by": "id",
@@ -74533,7 +74537,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "options": _vm.pc_components,
       "multiple": true,
-      "close-on-select": false,
+      "close-on-select": true,
       "hide-selected": true,
       "label": "description",
       "track-by": "id",
