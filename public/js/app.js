@@ -27996,6 +27996,12 @@ exports.default = {
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 /***/ }),
 /* 78 */
@@ -28565,7 +28571,38 @@ Object.defineProperty(exports, "__esModule", {
 
 exports.default = {
   name: 'CourseItem',
-  props: ['hide', 'item', 'link', 'size', 'lock']
+  props: ['hide', 'item', 'link', 'size', 'lock'],
+  methods: {
+    makeUrlBlob: function makeUrlBlob(base64, type) {
+      var url = '';
+      var blob = null;
+      var sliceSize = sliceSize || 512;
+
+      var byteCharacters = atob(base64);
+      var byteArrays = [];
+
+      for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+        var slice = byteCharacters.slice(offset, offset + sliceSize);
+
+        var byteNumbers = new Array(slice.length);
+        for (var i = 0; i < slice.length; i++) {
+          byteNumbers[i] = slice.charCodeAt(i);
+        }
+
+        var byteArray = new Uint8Array(byteNumbers);
+
+        byteArrays.push(byteArray);
+      }
+
+      blob = new Blob(byteArrays, { type: type });
+      var URL = window.URL || window.webkitURL;
+      if (URL && URL.createObjectURL) {
+        url = URL.createObjectURL(blob);
+      }
+
+      return url;
+    }
+  }
 };
 
 /***/ }),
@@ -29228,7 +29265,7 @@ exports.default = {
       }
     },
     clean: function clean() {
-      this.teste = "";
+      this.sName = "";
     }
   },
   data: function data() {
@@ -29255,7 +29292,7 @@ exports.default = {
       pc_components: [],
       success: false,
       ownersALL: [],
-      teste: ""
+      sName: ""
     };
   }
 }; //
@@ -73401,7 +73438,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       }
     }],
     attrs: {
-      "src": _vm.item && _vm.item.photo ? '/upload/' + _vm.item.photo : '/images/placeholders/256x256.png',
+      "src": _vm.item.photo != '0' ? (_vm.item.photo != null ? _vm.makeUrlBlob(_vm.item.photo, _vm.item.photoType) : '/images/placeholders/256x256.png') : '/images/placeholders/256x256.png',
       "alt": "Image"
     }
   }), _vm._v(" "), (_vm.lock) ? _c('div', {
@@ -73499,7 +73536,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.$set(_vm.form, "name", $event.target.value)
       }
     }
-  })]), _vm._v(" "), _c('div', {
+  }), _vm._v(" "), _c('br'), _vm._v(" "), _c('i', [_vm._v("Dica: passe o mouse sobre a imagem para ver o nome da atividade")])]), _vm._v(" "), _c('div', {
     staticClass: "column is-4",
     staticStyle: {
       "margin-left": "5px"
@@ -73545,7 +73582,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticStyle: {
       "margin-bottom": "20px"
     }
-  }, [_c('strong', [_vm._v("Seleção de novas atividades")]), _c('br'), _vm._v("\n          Aute  artisan minim commodo, paleo incididunt chillwave anim.  Affogato kale chips air plant VHS fingerstache fanny pack.  Taxidermy gochujang letterpress, tbh occupy succulents vinyl laborum dolor  proident ex labore.\n        ")])
+  }, [_c('strong', [_vm._v("Seleção de novas atividades")]), _c('br'), _vm._v("\n          Aqui você pode pesquisar as atividades pelo nome e seleciona-las para compor uma fase do curso, após pesquisar selecione a atividade e clique em \"concluir\".\n        ")])
 }]}
 module.exports.render._withStripped = true
 if (false) {
@@ -74417,11 +74454,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "close": _vm.clean
     },
     model: {
-      value: (_vm.teste),
+      value: (_vm.sName),
       callback: function($$v) {
-        _vm.teste = $$v
+        _vm.sName = $$v
       },
-      expression: "teste"
+      expression: "sName"
     }
   }, [_c('template', {
     slot: "noResult"

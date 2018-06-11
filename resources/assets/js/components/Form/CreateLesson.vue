@@ -95,7 +95,7 @@
             <label>Então por favor indique o(s) criador(es)*</label>
             <br>
             <multiselect 
-                v-model="teste" 
+                v-model="sName" 
                 :options="ownersALL"                
                 :hide-selected="true"
                 label="name"
@@ -496,7 +496,7 @@
         }
       },
       clean(){
-        this.teste = "";
+        this.sName = "";
       }
     },
     data () {
@@ -523,7 +523,7 @@
         pc_components: [],        
         success: false,
         ownersALL: [],
-        teste:""
+        sName:""
       }
     }
   }

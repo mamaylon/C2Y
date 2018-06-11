@@ -2,7 +2,7 @@
   <div class="card">
     <a class="card-image">
       <figure class="is-square" :class="size || ''">
-        <img :src="item && item.photo ? '/upload/' + item.photo : '/images/placeholders/256x256.png'" alt="Image" v-tooltip.auto="hide ? item.name : ''">
+        <img :src="item.photo != '0' ?( item.photo != null ? makeUrlBlob(item.photo,item.photoType):'/images/placeholders/256x256.png'):'/images/placeholders/256x256.png'" alt="Image" v-tooltip.auto="hide ? item.name : ''">
         <div class="lock" v-if="lock">
           <i class="fa fa-lock fa-2x fa-fw" aria-hidden="true"></i>
         </div>
@@ -24,7 +24,40 @@
 <script>
   export default {
     name: 'CourseItem',
-    props: [ 'hide', 'item', 'link', 'size', 'lock' ]
+    props: [ 'hide', 'item', 'link', 'size', 'lock' ],
+    methods:{
+      makeUrlBlob(base64,type)
+      {
+        var url = '';
+        var blob = null;
+        var sliceSize = sliceSize || 512;
+
+        var byteCharacters = atob(base64);
+        var byteArrays = [];
+
+        for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+          var slice = byteCharacters.slice(offset, offset + sliceSize);
+
+          var byteNumbers = new Array(slice.length);
+          for (var i = 0; i < slice.length; i++) {
+            byteNumbers[i] = slice.charCodeAt(i);
+          }
+
+          var byteArray = new Uint8Array(byteNumbers);
+
+          byteArrays.push(byteArray);
+        }
+
+        blob = new Blob(byteArrays, {type: type});
+        let URL = window.URL || window.webkitURL        
+        if (URL && URL.createObjectURL) 
+        {
+          url = URL.createObjectURL(blob)
+        }
+
+        return url;
+      }
+    }
   }
 </script>
 

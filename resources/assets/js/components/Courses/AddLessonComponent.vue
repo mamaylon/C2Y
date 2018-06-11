@@ -5,17 +5,23 @@
         <section style="padding: 2em">
           <div style="margin-bottom: 20px">
             <strong>Seleção de novas atividades</strong><br>
-            Aute  artisan minim commodo, paleo incididunt chillwave anim.  Affogato kale chips air plant VHS fingerstache fanny pack.  Taxidermy gochujang letterpress, tbh occupy succulents vinyl laborum dolor  proident ex labore.
+            Aqui você pode pesquisar as atividades pelo nome e seleciona-las para compor uma fase do curso, após pesquisar selecione a atividade e clique em "concluir".
           </div>
+
           <form @submit.prevent="submit" action="#" class="columns is-gapless">
             <div class="column is-4">
               <input type="text" v-model="form.name" style="margin-right: -10px" class="input flat" placeholder="Buscar por atividades">
+              <br>
+              <i>Dica: passe o mouse sobre a imagem para ver o nome da atividade</i>
             </div>
+            
             <div class="column is-4" style="margin-left: 5px">
               <button type="submit" class="button is-outlined is-primary">Buscar</button>
-              <button type="button" :disabled="!course" @click="push" class="button is-outlined is-success">Concluir</button>
+              <button type="button" :disabled="!course" @click="push" class="button is-outlined is-success">Concluir</button>              
             </div>
+            
           </form>
+
           <div class="grid">
             <article
               v-for="item in items"
