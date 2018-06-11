@@ -5,8 +5,9 @@
       <link-component :color="'var(--danger)'" text="Reportar bug" icon="bug" :click="bug"></link-component>
       <link-component :route="'/material/create'" :color="'#22A7F0'" :text="'Cadastrar atividade'" :icon="'puzzle-piece'"></link-component>
       <link-component :route="'/courses/create'" :color="'#3BCEAC'" :text="'Cadastrar curso'" :icon="'graduation-cap'"></link-component>
+      <!--
       <link-component :route="'/material/topic'" :color="'#2C3E50'" :text="'Cadastrar Tema/Assunto'" :icon="'list'"></link-component>
-      <link-component :route="'/material/concept'" :color="'#E71D36'" :text="'Cadastrar Conceito'" :icon="'paperclip'"></link-component>
+      <link-component :route="'/material/concept'" :color="'#E71D36'" :text="'Cadastrar Conceito'" :icon="'paperclip'"></link-component>-->
     </div>
     <section class="pointer shadow notification is-success">
       <i class="icon icon-plus fa-2x" aria-hidden="true"></i>

@@ -25949,6 +25949,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
+//
 
 exports.default = {
   components: {
@@ -73764,20 +73765,6 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "color": '#3BCEAC',
       "text": 'Cadastrar curso',
       "icon": 'graduation-cap'
-    }
-  }), _vm._v(" "), _c('link-component', {
-    attrs: {
-      "route": '/material/topic',
-      "color": '#2C3E50',
-      "text": 'Cadastrar Tema/Assunto',
-      "icon": 'list'
-    }
-  }), _vm._v(" "), _c('link-component', {
-    attrs: {
-      "route": '/material/concept',
-      "color": '#E71D36',
-      "text": 'Cadastrar Conceito',
-      "icon": 'paperclip'
     }
   })], 1), _vm._v(" "), _vm._m(0)])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
