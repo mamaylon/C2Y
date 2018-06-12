@@ -9,5 +9,5 @@ class BnccComponent extends Model
 	use Traits\Uuids;
 	public $incrementing = false;
 
-    protected $fillable = ['description'];
+    protected $fillable = ['cod','name','description'];
 }

@@ -10,7 +10,9 @@
   import FormComponent from './FormComponent.vue'
 
   let data = [
-    {input: 'description', text: 'Nome da bncc'}
+    {input: 'name', text: 'Nome da bncc'},
+    {input: 'cod', text: 'Código da bncc'},
+    {input: 'description', text: 'Descrição da bncc'}
   ]
 
   export default {

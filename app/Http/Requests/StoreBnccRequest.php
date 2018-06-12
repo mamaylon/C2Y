@@ -24,14 +24,14 @@ class StoreBnccRequest extends FormRequest
     public function rules()
     {
         return [
-            'description' => 'required'
+            'name' => 'required'
         ];
     }
 
     public function messages()
     {
         return [
-            'description.required' => 'Você acabou esquecendo de preencher o campo descrição :o',
+            'name.required' => 'Você acabou esquecendo de preencher o campo de nome',
         ];
     }
 

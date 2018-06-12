@@ -81,7 +81,7 @@
               <div class="content">
                 <ul>
                   <li v-for="(value,index) in lesson.bncc_components">
-                    <label>{{value.description}}</label>
+                    <label>{{value.name}}</label>
                   </li>
                   <li v-if="lesson.bncc_components.length == 0"><label>Nenhum componente foi inserido</label></li>
                 </ul>
@@ -92,7 +92,7 @@
               <div class="content">
                 <ul>
                   <li v-for="(value,index) in lesson.pc_components">
-                    <label>{{value.description}}</label>
+                    <label>{{value.name}}</label>
                   </li>
                   <li v-if="lesson.pc_components.length == 0"><label>Nenhum componente foi inserido</label></li>
                 </ul>

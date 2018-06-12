@@ -37,7 +37,7 @@ class PcController extends Controller
         foreach ($all as $pc) 
         {       
             $i++;   
-            $return = $return.'{"description": "'.$pc['description'].'", "id": "'.$pc['id'].'"}';
+            $return = $return.'{"name": "'.$pc['name'].'", "id": "'.$pc['id'].'"}';
 
             if($i == count($all))
             {

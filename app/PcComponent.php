@@ -9,5 +9,5 @@ class PcComponent extends Model
 	use Traits\Uuids;
 	public $incrementing = false;
 
-    protected $fillable = ['description'];
+    protected $fillable = ['name','description'];
 }

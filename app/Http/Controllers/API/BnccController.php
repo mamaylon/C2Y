@@ -37,7 +37,7 @@ class BnccController extends Controller
     	foreach ($all as $bncc) 
     	{    	
     		$i++;	
-    		$return = $return.'{"description": "'.$bncc['description'].'", "id": "'.$bncc['id'].'"}';
+    		$return = $return.'{"name": "'.$bncc['name']." ".$bncc['cod'].'", "id": "'.$bncc['id'].'"}';
 
     		if($i == count($all))
     		{

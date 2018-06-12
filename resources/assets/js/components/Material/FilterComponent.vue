@@ -16,7 +16,7 @@
           <span class="select is-fullwidth">              
             <select v-model="form.pc_components">
               <option value="">Tópicos de PC</option>
-              <option :value="item.id" v-for="item in pc_component">{{ item.description }}</option>
+              <option :value="item.id" v-for="item in pc_component">{{ item.name }}</option>
             </select>
           </span>
         </div>
@@ -28,7 +28,7 @@
           <span class="select is-fullwidth">            
             <select v-model="form.bncc_components">
               <option value="">Tópicos da BNCC</option>
-              <option :value="item.id" v-for="item in bncc_component">{{ item.description }}</option>
+              <option :value="item.id" v-for="item in bncc_component">{{ item.name}}{{item.cod}}</option>
             </select>
           </span>    
         </div>

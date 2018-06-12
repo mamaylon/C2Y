@@ -10,7 +10,8 @@
   import FormComponent from './FormComponent.vue'
 
   let data = [
-    {input: 'description', text: 'Nome do componente'}
+    {input: 'name', text: 'Nome do componente'},
+    {input: 'description', text: 'Descrição do componente'}
   ]
 
   export default {
