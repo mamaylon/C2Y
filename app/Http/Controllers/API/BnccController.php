@@ -25,13 +25,13 @@ class BnccController extends Controller
     */
     public function index()
     {
-        $all = BnccComponent::all();        
+        $all = BnccComponent::all()->sortBy("name");
         return APIController::success(['bncc_components' => $all]);
     }
 
     public function jsonSelect()
     {
-    	$all = BnccComponent::all();
+    	$all = BnccComponent::all()->sortBy("name");
         $jsonReturn = array();
     	
         foreach ($all as $bncc) 

@@ -25,13 +25,13 @@ class PcController extends Controller
     */
     public function index()
     {
-        $all = PcComponent::all();
+        $all = PcComponent::all()->sortBy("name");
         return APIController::success(['pc_components' => $all]);
     }
 
     public function jsonSelect()
     {
-        $all = PcComponent::all();
+        $all = PcComponent::all()->sortBy("name");
         $jsonReturn = array();
 
         foreach ($all as $pc)
