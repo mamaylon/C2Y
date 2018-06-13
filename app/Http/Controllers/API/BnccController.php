@@ -32,21 +32,14 @@ class BnccController extends Controller
     public function jsonSelect()
     {
     	$all = BnccComponent::all();
-    	$return = "[";
-    	$i = 1;
-    	foreach ($all as $bncc) 
-    	{    	
-    		$i++;	
-    		$return = $return.'{"name": "'.$bncc['name']." ".$bncc['cod'].'", "id": "'.$bncc['id'].'"}';
-
-    		if($i == count($all))
-    		{
-    			$return = $return.",";
-    		}
+        $jsonReturn = array();
+    	
+        foreach ($all as $bncc) 
+    	{
+            $jsonReturn[] = array("name"=>$bncc['name']." (".$bncc['cod'].")", "id"=>$bncc['id']);
     	}
-        $return = $return."]";
 
-        return $return;
+        return json_encode($jsonReturn);
     }
 
     /**

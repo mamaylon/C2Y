@@ -32,21 +32,14 @@ class PcController extends Controller
     public function jsonSelect()
     {
         $all = PcComponent::all();
-        $return = "[";
-        $i = 1;
-        foreach ($all as $pc) 
-        {       
-            $i++;   
-            $return = $return.'{"name": "'.$pc['name'].'", "id": "'.$pc['id'].'"}';
+        $jsonReturn = array();
 
-            if($i == count($all))
-            {
-                $return = $return.",";
-            }
+        foreach ($all as $pc)
+        {
+            $jsonReturn[] = array("name" => $pc['name'],"id" => $pc['id']);
         }
-        $return = $return."]";
 
-        return $return;
+        return $jsonReturn;
     }
 
     /**
