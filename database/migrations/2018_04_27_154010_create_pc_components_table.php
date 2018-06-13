@@ -16,7 +16,8 @@ class CreatePcComponentsTable extends Migration
         Schema::create('pc_components', function (Blueprint $table) {
             $table->uuid('id');
             $table->primary('id');
-            $table->string('description');
+            $table->string('name');
+            $table->text('description');
 
             $table->timestamps();
         });

@@ -15,8 +15,10 @@ class CreateBnccComponentsTable extends Migration
     {
         Schema::create('bncc_components', function (Blueprint $table) {
             $table->uuid('id');
-            $table->primary('id');
-            $table->string('description');
+            $table->primary('id');            
+            $table->string('name');
+            $table->string('cod');            
+            $table->text('description');
 
             $table->timestamps();
         });
