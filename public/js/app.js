@@ -70589,12 +70589,17 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticStyle: {
       "border-top": "thin solid #ddd"
     }
-  }, [_c('span', [_vm._v("C2Y! Ensina© 2018")]), _vm._v(" "), _c('span', [_vm._v("Desenvolvido por "), _c('a', {
+  }, [_c('span', [_vm._v("C2Y! Ensina© 2018")]), _vm._v(" "), _c('span', [_vm._v("Iniciado por "), _c('a', {
     attrs: {
       "target": "_blank",
       "href": "https://github.com/zerodois"
     }
-  }, [_vm._v("mim")])])])
+  }, [_vm._v("Felipe J. L. Rita")]), _vm._v(" e continuado por "), _c('a', {
+    attrs: {
+      "target": "_blank",
+      "href": "https://github.com/mamaylon"
+    }
+  }, [_vm._v("Maylon Macedo")])])])
 }]}
 module.exports.render._withStripped = true
 if (false) {
@@ -72900,7 +72905,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "column is-3"
   }, [_c('table', {
     staticClass: "is-fullwidth"
-  }, [_c('thead', [_c('tr', [(_vm.lesson.owner || _vm.lesson.owners.length == 1) ? _c('th', [_vm._v("\n                    Criador\n                  ")]) : _c('th', [_vm._v("\n                    Criadores\n                  ")])])]), _vm._v(" "), _c('tbody', [_vm._l((_vm.lesson.owners), function(owner) {
+  }, [_c('thead', [_c('tr', [(_vm.lesson.owner || _vm.lesson.owners.length == 1) ? _c('th', [_vm._v("\n                    Proposto por: \n                  ")]) : _c('th', [_vm._v("\n                    Proposto por:\n                  ")])])]), _vm._v(" "), _c('tbody', [_vm._l((_vm.lesson.owners), function(owner) {
     return _c('div', [_c('tr', [_c('td', [_c('label', [_vm._v(_vm._s(owner.name))])])]), _vm._v(" "), _c('tr', [_c('td', [_c('i', [_vm._v(_vm._s(owner.email))])])])])
   }), _vm._v(" "), (_vm.lesson.owner) ? _c('div', [_c('tr', [_c('td', [_c('label', [_vm._v(_vm._s(_vm.lesson.user.name))])])]), _vm._v(" "), _c('tr', [_c('td', [_c('i', [_vm._v(_vm._s(_vm.lesson.user.email))])])])]) : _vm._e()], 2)])])]), _vm._v(" "), _c('div', {
     staticClass: "columns"

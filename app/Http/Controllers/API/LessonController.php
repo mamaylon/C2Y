@@ -15,7 +15,7 @@ use C2Y\Http\Controllers\ImageController;
 
 class LessonController extends Controller
 {
-    private $results_per_page = 10;
+    private $results_per_page = 6;
 
     private function source ($model) {
         $str = str_ireplace('www.', '', $model->link);

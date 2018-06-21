@@ -32,10 +32,10 @@
                 <thead>
                   <tr>
                     <th v-if="lesson.owner || lesson.owners.length == 1">
-                      Criador
+                      Proposto por: 
                     </th>
                     <th v-else>
-                      Criadores
+                      Proposto por:
                     </th>
                   </tr>
                 </thead>
