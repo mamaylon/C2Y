@@ -291,7 +291,7 @@
     },    
     mounted()
     {
-      this.course = this.$route.params.course
+      this.course = this.$route.params.course      
       this.$http.get('/api/lesson/' + this.$route.params.id, { params: { user: this.user.id } }).then(data => (this.lesson = format(data.body.data.lesson)))
     },
     methods: {

@@ -100,9 +100,9 @@ class LessonController extends Controller
 
         $lesson = Lesson::create($info);
         
-        if(isset($info['refs']))
+        if(isset($info['references']))
         {
-            foreach ($info['refs'] as $ref)
+            foreach ($info['references'] as $ref)
             {
                $reff = new LessonReference();
                $reff->description = $ref['description'];
@@ -158,17 +158,17 @@ class LessonController extends Controller
             }
         }
         
-        if (isset($info['pc_component']))
+        if (isset($info['pc_components']))
         {
-            foreach ($info['pc_component'] as $pc_component)
+            foreach ($info['pc_components'] as $pc_component)
             {
                $lesson->pc_components()->attach($pc_component['id']);
             }
         }
         
-        if (isset($info['bncc_component']))
+        if (isset($info['bncc_components']))
         {
-            foreach ($info['bncc_component'] as $bncc_component)
+            foreach ($info['bncc_components'] as $bncc_component)
             {
                $lesson->bncc_components()->attach($bncc_component['id']);
             }
@@ -245,13 +245,179 @@ class LessonController extends Controller
     */
     public function update(Request $request, $id)
     {
-        $lesson = new Lesson($request->all());
-        $lesson->id = $id;
-        $lesson->exists = true;
-        try {
-            $lesson->save();
+        //novas informações
+        $newLesson = $request->all();
+        
+        //informações do banco
+        $lessonBD = Lesson::find($id);
+
+        //tratamento da imagem perfil da atividade caso tenha sido alterada        
+        if(strpos($newLesson['photo'], "data:") == 0)
+        {
+            $base64 = substr($newLesson['photo'],strpos($newLesson['photo'], ",")+1);
+            $type = substr($newLesson['photo'],strpos($newLesson['photo'], "/")+1,(strpos($newLesson['photo'], ";") - strpos($newLesson['photo'], "/"))-1);
+            
+            $newLesson['photo'] = $base64;
+            $newLesson['photoType'] = $type;
+        }
+
+        //preenchendo a versão do banco com a versão da tela        
+        $lessonBD->fill($newLesson);
+        
+        //ajustando a idade
+        $lessonBD->age_min = $newLesson['age_range'][0];
+        $lessonBD->age_max = $newLesson['age_range'][1];
+
+        //salvando os dados basicos
+        $lessonBD->save();
+
+        //tratativa para PC
+        $pcs = array();
+        if(count($newLesson['pc_components']) > 0)
+        { 
+            foreach ($newLesson['pc_components'] as $pc) 
+            {
+                $pcs[] = $pc['id'];
+            }
+        }        
+        $lessonBD->pc_components()->sync($pcs);
+        
+        //tratativa para BNCC
+        $bnccs = array();
+        if(count($newLesson['bncc_components']) > 0)
+        { 
+            foreach ($newLesson['bncc_components'] as $bncc) 
+            {
+                $bnccs[] = $bncc['id'];
+            }
+        } 
+        $lessonBD->bncc_components()->sync($bnccs);
+        
+        //tratativa para autores        
+        //associa os ja existentes e cria os novos
+        if($lessonBD->owner == "true")
+        {
+            if(count($lessonBD->owners) > 0)
+            {
+                $lessonBD->owners()->sync([]);
+            }
+        }      
+        else if( count($newLesson['owners']) > 0)
+        {            
+            $addOwn = array();
+            $createOwn = array(); 
+
+            foreach ($newLesson['owners'] as $owner) 
+            {              
+                if(!$lessonBD->owners->find($owner['id']))
+                {
+                    if($owner['id'] != "-1")
+                    {
+                        $addOwn[] = $owner['id'];
+                    }
+                    else
+                    {
+                        $createOwn[] = $owner;
+                    }
+                }
+                else
+                {
+                    $addOwn[] = $owner['id'];
+                }
+            }
+
+            foreach ($createOwn as $owner)
+            {   
+                if($owner['id'] == "-1" && $owner['name'] != "")
+                {
+                    $newOwner = new Owner();
+                    $newOwner->name = $owner['name'];
+                    $newOwner->email = $owner['email'];
+                    $newOwner->save();
+
+                    $addOwn[] = $newOwner->id;                    
+                }
+            }
+
+            $lessonBD->owners()->sync($addOwn);
+        }
+
+        //tratativa para referencias
+        $refExist = array();
+        foreach ($newLesson['references'] as $ref)
+        {
+            if(!array_key_exists("created_at", $ref))
+            {
+                if($ref['description'] != "")
+                {
+                    $reff = new LessonReference();
+                    $reff->description = $ref['description'];
+                    $reff->link = $ref['link'];
+
+                    $lessonBD->lesson_references()->save($reff);
+
+                    $refExist[] = $reff->id;
+                }
+            }
+            else
+            {
+                $refExist[] = $ref['id'];
+            }
+        }
+        LessonReference::where('lesson_id',$lessonBD->id)->whereNotIn('id',$refExist)->delete();
+
+        //tratativa para imagens        
+        //insere as novas imagens e depois apaga tudo que não estava na tela
+        $imgExist = array();
+        foreach ($newLesson['images'] as $photo)
+        {
+            if(!array_key_exists("created_at", $photo))
+            {
+                $image = new LessonImage();                
+                $image->name = $photo['name'];
+                $image->type = $photo['type'];
+                $image->file = $photo['strBlob'];
+
+                $lessonBD->lesson_images()->save($image);
+
+                $imgExist[] = $image->id;
+            }
+            else
+            {
+                $imgExist[] = $photo['id'];
+            }
+        }
+        LessonImage::where('lesson_id',$lessonBD->id)->whereNotIn('id',$imgExist)->delete();
+
+        //tratativa para arquivos        
+        //insere as novos arquivos e depois apaga tudo que não estava na tela
+        $fileExist = array();
+        foreach ($newLesson['files'] as $arq)
+        {
+            if(!array_key_exists("created_at", $arq))
+            {
+                $file = new LessonFile();                
+                $file->name = $arq['name'];
+                $file->type = $arq['type'];
+                $file->file = $arq['strBlob'];                
+
+                $lessonBD->lesson_files()->save($file);
+
+                $fileExist[] = $file->id;
+            }
+            else
+            {
+                $fileExist[] = $arq['id'];
+            }
+        }
+        LessonFile::where('lesson_id',$lessonBD->id)->whereNotIn('id',$fileExist)->delete();
+
+        try 
+        {
             return APIController::success(['id' => $id]);
-        } catch (Exception $e) {
+        }
+        catch (Exception $e) 
+        {
             return APIController::error($e->getMessage());
         }
     }

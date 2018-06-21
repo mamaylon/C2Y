@@ -28,7 +28,7 @@ class StoreLessonRequest extends FormRequest
             'model' => 'required',
             'owner' => 'required',
             'owners' => 'required_if:owner,"false"',
-            'bncc_component' => 'required_without:pc_component',
+            'bncc_components' => 'required_without:pc_components',
             'description' => 'required',
             'goals' => 'required'
         ];
@@ -40,7 +40,7 @@ class StoreLessonRequest extends FormRequest
             'model.required' => 'Hey o modelo da atividade é obrigatório!',
             'owner.required' => 'É necessario informar se você é o autor',
             'owners.required_if' => 'Como você não é o criador, é preciso dizer quem é',
-            'bncc_component.required_without' => 'É necessario escolher pelo menos um componente do Pensamento computacional OU da BNCC',
+            'bncc_components.required_without' => 'É necessario escolher pelo menos um componente do Pensamento computacional OU da BNCC',
             'description.required' => 'Sinto muito mas é necessario preencher a descrição.',
             'goals.required' => 'Sejamos objetivos, os objetivos são necessarios!'
         ];

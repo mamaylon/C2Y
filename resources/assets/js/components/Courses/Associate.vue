@@ -71,7 +71,7 @@
             prev[ level ].push(curr);
             return prev;
           }, {})
-          console.log(levels)
+          //console.log(levels)
           self.levels = []
           for (let i in levels)
             self.levels.push(levels[i])

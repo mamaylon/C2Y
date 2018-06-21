@@ -70,6 +70,10 @@
       <router-link :to="'/material/game/' + item.id">
         <i class="fa fa-arrow-right" aria-hidden="true"></i>
       </router-link>
+
+      <router-link v-if="user === item.user.id" :to="'/material/alter/' + item.id">
+        <i class="fa fa-pencil has-tooltip" aria-hidden="true"></i>
+      </router-link>
     
       <i v-if="user === item.user.id" @click="drop" class="fa fa-close text-danger pointer" aria-hidden="true"></i>
 
@@ -79,7 +83,7 @@
 
 <script>
   export default {
-    props: ['item', 'example'],
+    props: ['item', 'example'],    
     data () {
       return {
         user: window.User.id

@@ -40,17 +40,24 @@ class CourseController extends Controller
     }
 
     public function sync(Request $request) {
+        //novas informações
         $data = $request->course;
+
+        //informações do banco
         $course = Course::find($data['id']);
+       
         if (!$course)
             return APIController::error('Course not found');
         if ($course->user_id != $request->user)
             return APIController::error('User denied');
+        
         // Upload se foto é diferente
         if ($request->update && $course->photo != $data['photo']) {
             ImageController::delete($request->photo);
             $data['photo'] = ImageController::upload($data['photo']);
         }
+        
+        //preenche a versão do banco com as novas informações e persiste no banco
         if ($request->update) {
             $course->fill($data);
             $course->save();
@@ -59,11 +66,14 @@ class CourseController extends Controller
         $arr = [];
         $data = [];
         $course->lessons()->sync([]);
-        foreach ($request->lessons as $act) {
-            if (isset( $arr[ $act['lesson'] ] )) {
+        foreach ($request->lessons as $act) 
+        {
+            if (isset( $arr[ $act['lesson'] ] )) 
+            {
                 $data[] = $course->lessons()->attach($arr);
                 $arr = [];
             }
+            
             $arr[ $act['lesson'] ] = [ 'level' => $act['level'] ];
         }
 

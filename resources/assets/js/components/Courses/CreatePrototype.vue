@@ -7,7 +7,7 @@
         <div class="columns">
           <article class="column is-3 has-text-centered">
             <figure class="image is-square">
-              <img :src="form.photo ? form.photo : '/images/placeholders/256x256.png'">
+              <img :src="form.photo ? form.photo : (model.photo ? 'data:image/'+model.photoType+';base64,'+model.photo:'/images/placeholders/256x256.png')">
             </figure>
             <div class="file is-boxed">
               <label v-show="!form.photo" class="file-label">
@@ -70,7 +70,10 @@
       WhiteComponent,
       CropImage
     },
-    props: [ 'title', 'hide', 'model', 'api', 'callback' ],
+    props: [ 'title', 'hide', 'model', 'api', 'callback'],
+    mounted(){
+
+    },
     data () {
       return {
         image: null,
@@ -99,8 +102,19 @@
         let form = {}
         for (let i in self.form)
           form[i] = self.form[i]
+
         for (let i in self.model)
-          form[i] = self.model[i] ? self.model[i] : null
+        {
+          form[i] = !(self.model[i] == null) ? self.model[i] : null
+
+          if(i == "photo")
+          {
+            if(this.form.photo)
+            {
+              form[i] = this.form.photo;
+            }
+          }
+        }
 
         self.$http.post(self.api || '/api/course', form)
           .then(data => {

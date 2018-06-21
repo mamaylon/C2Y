@@ -10,7 +10,7 @@
         Parabéns, você cadastrou um atividade :)
       </div>
     </section>
-    <create :title="'Criar atividade'" :api="'/api/lesson'" :hide="true" :model="form" :callback="callback" @error="handle">
+    <create :title="titleBtn" :api="routeApi" :hide="true" :model="form" :callback="callback" @error="handle">
       
       <div class="columns">
         <a id="topo"></a>
@@ -113,7 +113,7 @@
                 <tr>                  
                   <td style="display:none">id</td>
                   <td>Nome</td>                                    
-                  <td>E-mail</td>
+                  <td>E-mail/Contato</td>
                   <td>Opções</td>
                 </tr>
               </thead>
@@ -147,10 +147,10 @@
       <div class="columns">
         <div class="column is-12">
           <div>
-            <span v-if="form.bncc_component.length > 0"><i>Elementos BNCC</i></span>
+            <span v-if="form.bncc_components.length > 0"><i>Elementos BNCC</i></span>
             <multiselect 
-                v-model="form.bncc_component" 
-                :options="bncc_components"
+                v-model="form.bncc_components" 
+                :options="bncc_component"
                 :multiple="true"
                 :close-on-select="true"
                 :hide-selected="true"
@@ -170,10 +170,10 @@
       <div class="columns">
         <div class="column is-12">
           <div>
-              <span v-if="form.pc_component.length > 0"><i>Elementos PC</i></span>
+              <span v-if="form.pc_components.length > 0"><i>Elementos PC</i></span>
               <multiselect 
-                v-model="form.pc_component" 
-                :options="pc_components"
+                v-model="form.pc_components" 
+                :options="pc_component"
                 :multiple="true"
                 :close-on-select="true"
                 :hide-selected="true"
@@ -345,7 +345,7 @@
               </thead>
 
               <tbody>
-                <tr v-for="(row, index) in form.refs">
+                <tr v-for="(row, index) in form.references">
                   <td><input class="input flat" type="text" v-model="row.description"></td>
                   <td><input class="input flat" type="text" v-model="row.link"></td>
                   <td>
@@ -389,14 +389,54 @@
     mounted () {      
       let self = this
 
+      if (self.$route.params.hasOwnProperty('id'))
+      {
+        self.carrega(self.$route.params.id);
+      }
+
       self.$http.get('/api/bncc/json')
-        .then(resp => (self.bncc_components = resp.body))
+        .then(resp => (self.bncc_component = resp.body))
       self.$http.get('/api/pc/json')
-        .then(resp => (self.pc_components = resp.body))
+        .then(resp => (self.pc_component = resp.body))
       self.$http.get('/api/owner/json')
         .then(resp => (self.ownersALL = resp.body))
     },
     methods: {
+      carrega(id){
+        let self = this;
+
+        self.titleBtn = 'Salvar atividade';
+        self.routeApi = 'api/lesson/alter/'+id;
+
+        self.$http.get('/api/lesson/' + id)
+          .then(data => {
+            let lesson = data.body.data.lesson;
+
+            for(let i in lesson)
+            {
+              if(self.form.hasOwnProperty(i))
+              {
+                if(!(lesson[i] == null))
+                {
+                  self.form[i] = lesson[i];                 
+                }                
+              }
+              else if(self.form.hasOwnProperty(i.substring(7)))
+              {
+                if(!(lesson[i] == null))
+                {
+                  self.form[i.substring(7)] = lesson[i];                 
+                }                 
+              }
+            }
+            
+            self.form.photo = lesson["photo"];
+            self.form.photo_type = lesson["photoType"];  
+            
+            self.form.age_range = [lesson["age_min"],lesson["age_max"]];
+
+          });
+      },
       handle (err) {
         this.err = err
         document.getElementById('link').click();
@@ -476,7 +516,7 @@
           }
           if(child == 2)
           {
-            this.form.refs.push({
+            this.form.references.push({
                 link: "",
                 description: ""
             });
@@ -486,7 +526,7 @@
           if(child == 1)
             this.form.owners.splice(index, 1);
           if(child == 2)
-            this.form.refs.splice(index, 1);
+            this.form.references.splice(index, 1);
       },
       onChange(atual)
       {
@@ -505,8 +545,8 @@
           name: '',
           link: '',          
           description: '',          
-          bncc_component: [],
-          pc_component: [],
+          bncc_components: [],
+          pc_components: [],
           model: '',
           suggestions: '',
           resources:'',
@@ -514,13 +554,15 @@
           age_range:[2,3],
           files: [],
           images: [],
-          refs:[],
+          references:[],
           owner: null,
           owners : []
         },
         err: false,
-        bncc_components: [],
-        pc_components: [],        
+        routeApi: '/api/lesson',
+        titleBtn: 'Criar atividade',
+        bncc_component: [],
+        pc_component: [],        
         success: false,
         ownersALL: [],
         sName:""

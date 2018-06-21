@@ -32,21 +32,14 @@ class OwnerController extends Controller
     public function jsonSelect()
     {
         $all = Owner::all();
-        $return = "[";
-        $i = 1;
-        foreach ($all as $owner) 
-        {       
-            $i++;   
-            $return = $return.'{"name": "'.$owner['name'].'", "email": "'.$owner['email'].'", "id": "'.$owner['id'].'"}';
+        $jsonReturn = array();
 
-            if($i == count($all))
-            {
-                $return = $return.",";
-            }
+        foreach ($all as $ow)
+        {
+            $jsonReturn[] = array("name" => $ow['name'],"id" => $ow['id'],"email"=>$ow['email']);
         }
-        $return = $return."]";
 
-        return $return;
+        return $jsonReturn;
     }
 
     /**

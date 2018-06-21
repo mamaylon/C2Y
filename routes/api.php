@@ -15,7 +15,7 @@ use Illuminate\Http\Request;
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
   return $request->user();
-});
+}); 
 
 // Courses routes
 Route::resource('course', 'API\CourseController');
@@ -24,6 +24,8 @@ Route::post('course/registry', 'API\CourseController@registry');
 
 // Lesson routes
 Route::post('lesson/complete/{id}', 'API\LessonController@complete');
+Route::post('lesson/alter/{id}', 'API\LessonController@update');
+
 Route::resource('lesson', 'API\LessonController');
 
 // Like route
