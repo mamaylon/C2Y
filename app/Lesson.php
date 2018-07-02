@@ -50,6 +50,7 @@ class Lesson extends Model
       $params['course'] = null;
     }
 
+    //quando habilita a idade ignora o resto
     foreach ($params as $k => $param) 
     {
       if($k =="ageCheck"){}
@@ -57,8 +58,7 @@ class Lesson extends Model
       {
         if(!isset($params['ageCheck']))
         {
-          $builder = $builder->whereBetween($k.'_max', $param);
-          $builder = $builder->orWhereBetween($k.'_min', $param);  
+          $builder = $builder->where(function($q) use($param) { $q->whereBetween('age_min', $param)->orWhereBetween('age_max', $param); });
         }
       }
       else if (in_array($k, $relations))
