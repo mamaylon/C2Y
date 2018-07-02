@@ -7,7 +7,7 @@
         <div class="columns">
           <article class="column is-3 has-text-centered">
             <figure class="image is-square">
-              <img :src="form.photo ? form.photo : (model ? 'data:image/'+model.photoType+';base64,'+model.photo:'/images/placeholders/256x256.png')">
+              <img :src="form.photo ? form.photo : (model ?( model.photo?'data:image/'+model.photoType+';base64,'+model.photo:'/images/placeholders/256x256.png'):'/images/placeholders/256x256.png')">
             </figure>
             <div class="file is-boxed">
               <label v-show="!form.photo" class="file-label">

@@ -71111,7 +71111,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "image is-square"
   }, [_c('img', {
     attrs: {
-      "src": _vm.form.photo ? _vm.form.photo : (_vm.model ? 'data:image/' + _vm.model.photoType + ';base64,' + _vm.model.photo : '/images/placeholders/256x256.png')
+      "src": _vm.form.photo ? _vm.form.photo : (_vm.model ? (_vm.model.photo ? 'data:image/' + _vm.model.photoType + ';base64,' + _vm.model.photo : '/images/placeholders/256x256.png') : '/images/placeholders/256x256.png')
     }
   })]), _vm._v(" "), _c('div', {
     staticClass: "file is-boxed"
