@@ -28573,6 +28573,7 @@ Object.defineProperty(exports, "__esModule", {
 //
 //
 //
+//
 
 exports.default = {
   props: ['course', 'likable']
@@ -28611,41 +28612,15 @@ Object.defineProperty(exports, "__esModule", {
 //
 //
 //
+//
+//
+//
+//
 
 exports.default = {
   name: 'CourseItem',
   props: ['hide', 'item', 'link', 'size', 'lock'],
-  methods: {
-    makeUrlBlob: function makeUrlBlob(base64, type) {
-      var url = '';
-      var blob = null;
-      var sliceSize = sliceSize || 512;
-
-      var byteCharacters = atob(base64);
-      var byteArrays = [];
-
-      for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
-        var slice = byteCharacters.slice(offset, offset + sliceSize);
-
-        var byteNumbers = new Array(slice.length);
-        for (var i = 0; i < slice.length; i++) {
-          byteNumbers[i] = slice.charCodeAt(i);
-        }
-
-        var byteArray = new Uint8Array(byteNumbers);
-
-        byteArrays.push(byteArray);
-      }
-
-      blob = new Blob(byteArrays, { type: type });
-      var URL = window.URL || window.webkitURL;
-      if (URL && URL.createObjectURL) {
-        url = URL.createObjectURL(blob);
-      }
-
-      return url;
-    }
-  }
+  methods: {}
 };
 
 /***/ }),
@@ -30791,6 +30766,8 @@ exports.default = {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+//
+//
 //
 //
 //
@@ -71809,10 +71786,14 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_c('figure', {
     staticClass: "image"
-  }, [_c('img', {
+  }, [(_vm.item.photo != '0' && _vm.item.photo != '') ? _c('img', {
     attrs: {
-      "src": _vm.item.photo != '0' ? _vm.makeUrlBlob(_vm.item.photo, _vm.item.photoType) : '/images/placeholders/128x128.png',
+      "src": 'data:image/' + _vm.item.photoType + ';base64, ' + _vm.item.photo,
       "alt": ""
+    }
+  }) : _c('img', {
+    attrs: {
+      "src": "/images/placeholders/256x256.png"
     }
   })])]), _vm._v(" "), _c('div', {
     staticClass: "has-text-centered"
@@ -71824,9 +71805,14 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "to": '/material/game/' + _vm.item.id
     }
-  }, [_c('img', {
+  }, [(_vm.item.photo != '0' && _vm.item.photo != '') ? _c('img', {
     attrs: {
-      "src": _vm.item.photo != '0' ? _vm.makeUrlBlob(_vm.item.photo, _vm.item.photoType) : '/images/placeholders/128x128.png'
+      "src": 'data:image/' + _vm.item.photoType + ';base64, ' + _vm.item.photo,
+      "alt": ""
+    }
+  }) : _c('img', {
+    attrs: {
+      "src": "/images/placeholders/128x128.png"
     }
   })])], 1)]), _vm._v(" "), _c('div', {
     staticClass: "media-content is-hidden-mobile"
@@ -72198,9 +72184,13 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "media-left"
   }, [_c('p', {
     staticClass: "image is-64x64"
-  }, [_c('img', {
+  }, [(_vm.course.photo != '0' && _vm.course.photo != null && _vm.course.photo != '') ? _c('img', {
     attrs: {
-      "src": _vm.course.photo ? '/upload/' + _vm.course.photo : '/images/placeholders/128x128.png'
+      "src": 'data:image/' + _vm.course.photoType + ';base64, ' + _vm.course.photo
+    }
+  }) : _c('img', {
+    attrs: {
+      "src": "/images/placeholders/128x128.png"
     }
   })])]), _vm._v(" "), _c('div', {
     staticClass: "media-content"
@@ -73507,7 +73497,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('figure', {
     staticClass: "is-square",
     class: _vm.size || ''
-  }, [_c('img', {
+  }, [(_vm.item.photo != '0' && _vm.item.photo != null && _vm.item.photo != '') ? _c('img', {
     directives: [{
       name: "tooltip",
       rawName: "v-tooltip.auto",
@@ -73518,7 +73508,21 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       }
     }],
     attrs: {
-      "src": _vm.item.photo != '0' ? (_vm.item.photo != null ? _vm.makeUrlBlob(_vm.item.photo, _vm.item.photoType) : '/images/placeholders/256x256.png') : '/images/placeholders/256x256.png',
+      "src": 'data:image/' + _vm.item.photoType + ';base64, ' + _vm.item.photo,
+      "alt": "Image"
+    }
+  }) : _c('img', {
+    directives: [{
+      name: "tooltip",
+      rawName: "v-tooltip.auto",
+      value: (_vm.hide ? _vm.item.name : ''),
+      expression: "hide ? item.name : ''",
+      modifiers: {
+        "auto": true
+      }
+    }],
+    attrs: {
+      "src": "/images/placeholders/256x256.png",
       "alt": "Image"
     }
   }), _vm._v(" "), (_vm.lock) ? _c('div', {
@@ -74970,7 +74974,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "image relative"
   }, [(_vm.course.photo) ? _c('img', {
     attrs: {
-      "src": (_vm.url ? '/upload/' : '') + _vm.course.photo
+      "src": 'data:image/' + _vm.course.photo_type + ';base64, ' + _vm.course.photo
     }
   }) : _c('img', {
     attrs: {

@@ -1,11 +1,12 @@
 <template>
   <article class="media" id="item-component">
     
-    <div class="is-hidden-tablet">
+    <div class="is-hidden-tablet"> 
       
       <router-link :to="'/material/game/' + item.id">
         <figure class="image">
-          <img :src="item.photo!= '0' ? makeUrlBlob(item.photo,item.photoType): '/images/placeholders/128x128.png'" alt="">
+          <img v-if="item.photo != '0' && item.photo != ''" :src="'data:image/'+item.photoType+';base64, '+item.photo" alt="">
+          <img src="/images/placeholders/256x256.png" v-else>
         </figure>
       </router-link>
       
@@ -18,7 +19,8 @@
     <figure class="media-left is-hidden-mobile">
       <p class="image is-64x64">
         <router-link :to="'/material/game/' + item.id">
-          <img :src="item.photo!= '0'  ? makeUrlBlob(item.photo,item.photoType): '/images/placeholders/128x128.png'">
+          <img v-if="item.photo != '0' && item.photo != ''" :src="'data:image/'+item.photoType+';base64, '+item.photo" alt="">
+          <img src="/images/placeholders/128x128.png" v-else>
         </router-link>
       </p>
     </figure>

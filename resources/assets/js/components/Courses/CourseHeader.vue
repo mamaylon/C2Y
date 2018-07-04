@@ -2,7 +2,8 @@
   <article class="media">
     <figure class="media-left">
       <p class="image is-64x64">
-        <img :src="course.photo ? '/upload/' + course.photo : '/images/placeholders/128x128.png'">
+        <img :src="'data:image/'+course.photoType+';base64, '+course.photo" v-if="course.photo != '0' && course.photo != null && course.photo != ''">
+        <img src="/images/placeholders/128x128.png" v-else>
       </p>
     </figure>
     <div class="media-content">

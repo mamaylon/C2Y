@@ -52,9 +52,16 @@ class CourseController extends Controller
             return APIController::error('User denied');
         
         // Upload se foto é diferente
-        if ($request->update && $course->photo != $data['photo']) {
-            ImageController::delete($request->photo);
-            $data['photo'] = ImageController::upload($data['photo']);
+        if ($request->update && $course->photo != $data['photo']) 
+        {
+            //ImageController::delete($request->photo);
+            //$data['photo'] = ImageController::upload($data['photo']);
+
+            $base64 = substr($data['photo'],strpos($data['photo'], ",")+1);
+            $type = substr($data['photo'],strpos($data['photo'], "/")+1,(strpos($data['photo'], ";") - strpos($data['photo'], "/"))-1);
+            
+            $data['photo'] = $base64;
+            $data['photoType'] = $type;
         }
         
         //preenche a versão do banco com as novas informações e persiste no banco
@@ -126,9 +133,16 @@ class CourseController extends Controller
     public function store(StoreCourseRequest $request)
     {
         $info = $request->all();
-        $info['photo'] = ImageController::upload($request->get('photo'));
-        $lesson = Course::create($info);
-        return APIController::success(['id' => $lesson->id ]);
+        //$info['photo'] = ImageController::upload($request->get('photo'));
+
+        $base64 = substr($info['photo'],strpos($info['photo'], ",")+1);
+        $type = substr($info['photo'],strpos($info['photo'], "/")+1,(strpos($info['photo'], ";") - strpos($info['photo'], "/"))-1);
+        
+        $info['photo'] = $base64;
+        $info['photoType'] = $type;
+        
+        $course = Course::create($info);
+        return APIController::success(['id' => $course->id ]);
     }
 
     /**
