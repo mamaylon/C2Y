@@ -60,7 +60,8 @@ class CreateLessonsTable extends Migration
             $table->uuid('id');
             $table->primary('id');
             $table->string('name');
-            $table->string('photo')->nullable();
+            $table->text('photo')->nullable();
+            $table->string('photo_type')->nullable();
             $table->text('description');
             $table->uuid('user_id');
             $table->foreign('user_id')->references('id')
