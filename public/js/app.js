@@ -30305,6 +30305,12 @@ var format = function format(item) {
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 exports.default = {
@@ -73097,7 +73103,15 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "column is-12"
   }, [_c('div', {
     staticClass: "flex-center"
-  }, [(_vm.course) ? _c('router-link', {
+  }, [_c('br'), _vm._v(" "), (!_vm.lesson.link && _vm.course) ? _c('a', {
+    staticClass: "button is-success is-outlined",
+    attrs: {
+      "disabled": _vm.lesson.completeds.length > 0
+    },
+    on: {
+      "click": _vm.complete
+    }
+  }, [_vm._v("\n                      " + _vm._s(_vm.lesson.completeds.length ? 'Atividade concluída' : 'Clique aqui quando concluir esta atividade') + "\n                    ")]) : _vm._e(), _vm._v(" "), _c('br'), _vm._v(" "), (_vm.course) ? _c('router-link', {
     staticClass: "button is-primary is-outlined",
     attrs: {
       "to": '/courses/graph/' + _vm.course

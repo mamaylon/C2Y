@@ -265,6 +265,12 @@
           <div class="columns">
             <div class="column is-12">
               <div class="flex-center">
+                <br>
+                <a v-if="!lesson.link && course" @click="complete" :disabled="lesson.completeds.length > 0" class="button is-success is-outlined">
+                        {{ lesson.completeds.length ? 'Atividade concluída' : 'Clique aqui quando concluir esta atividade' }}
+                      </a>
+                <br>
+
                 <router-link v-if="course" :to="'/courses/graph/' + course" class="button is-primary is-outlined">Voltar ao curso</router-link>
               </div>
             </div>
