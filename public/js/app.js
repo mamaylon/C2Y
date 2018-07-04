@@ -28045,8 +28045,6 @@ exports.default = {
 //
 //
 //
-//
-//
 
 /***/ }),
 /* 80 */
@@ -73530,14 +73528,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "aria-hidden": "true"
     }
-  })]) : _vm._e()])]), _vm._v(" "), _c('div', {
-    directives: [{
-      name: "show",
-      rawName: "v-show",
-      value: (!_vm.hide),
-      expression: "!hide"
-    }]
-  }, [_c('div', [_c('div', {
+  })]) : _vm._e()])]), _vm._v(" "), _c('div', [_c('div', [_c('div', {
     staticClass: "content has-text-centered"
   }, [_c('strong', {
     staticClass: "is-primary"
@@ -73618,7 +73609,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.$set(_vm.form, "name", $event.target.value)
       }
     }
-  }), _vm._v(" "), _c('br'), _vm._v(" "), _c('i', [_vm._v("Dica: passe o mouse sobre a imagem para ver o nome da atividade")])]), _vm._v(" "), _c('div', {
+  })]), _vm._v(" "), _c('div', {
     staticClass: "column is-4",
     staticStyle: {
       "margin-left": "5px"

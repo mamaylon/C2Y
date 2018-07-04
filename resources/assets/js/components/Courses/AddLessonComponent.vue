@@ -10,9 +10,7 @@
 
           <form @submit.prevent="submit" action="#" class="columns is-gapless">
             <div class="column is-4">
-              <input type="text" v-model="form.name" style="margin-right: -10px" class="input flat" placeholder="Buscar por atividades">
-              <br>
-              <i>Dica: passe o mouse sobre a imagem para ver o nome da atividade</i>
+              <input type="text" v-model="form.name" style="margin-right: -10px" class="input flat" placeholder="Buscar por atividades">              
             </div>
             
             <div class="column is-4" style="margin-left: 5px">

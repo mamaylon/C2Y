@@ -10,7 +10,7 @@
         </a> -->
       </figure>
     </a>
-    <div v-show="!hide">
+    <div>
       <div>
         <div class="content has-text-centered">
           <strong class="is-primary">{{ item ? item.name : 'O que são algoritmos?' }}</strong> <br>
