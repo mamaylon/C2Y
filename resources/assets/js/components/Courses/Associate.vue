@@ -6,7 +6,8 @@
         <article class="media">
             <figure class="media-left">
               <p class="image relative">
-                <img :src="'data:image/'+course.photo_type+';base64, '+course.photo" v-if="course.photo">
+                <img :src="'data:image/'+course.photo_type+';base64, '+course.photo" v-if="course.photo && course.photo_type != null">
+                <img :src="course.photo" v-else-if="course.photo">
                 <img src="/images/placeholders/128x128.png" v-else>
                 <span class="hover pointer">
                   <i class="fa fa-refresh fa-2x fa-fw" aria-hidden="true"></i>
@@ -104,6 +105,7 @@
           this.url = false
         }
         let vm = this
+
         Image.load(e, image => {
           vm.image = image
           vm.$modal({

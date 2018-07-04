@@ -50,9 +50,9 @@ class CourseController extends Controller
             return APIController::error('Course not found');
         if ($course->user_id != $request->user)
             return APIController::error('User denied');
-        
+
         // Upload se foto é diferente
-        if ($request->update && $course->photo != $data['photo']) 
+        if ($course->photo != $data['photo']) 
         {
             //ImageController::delete($request->photo);
             //$data['photo'] = ImageController::upload($data['photo']);
@@ -62,14 +62,13 @@ class CourseController extends Controller
             
             $data['photo'] = $base64;
             $data['photoType'] = $type;
+
         }
         
-        //preenche a versão do banco com as novas informações e persiste no banco
-        if ($request->update) {
-            $course->fill($data);
-            $course->save();
-        }
-
+        //preenche a versão do banco com as novas informações e persiste no banco        
+        $course->fill($data);
+        $course->save();
+        
         $arr = [];
         $data = [];
         $course->lessons()->sync([]);

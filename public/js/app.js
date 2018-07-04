@@ -28244,6 +28244,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
+//
 
 var watcher = function watcher() {
   return function (curr, old) {
@@ -28300,6 +28301,7 @@ exports.default = {
         this.url = false;
       }
       var vm = this;
+
       _image2.default.load(e, function (image) {
         vm.image = image;
         vm.$modal({
@@ -74972,9 +74974,13 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "media-left"
   }, [_c('p', {
     staticClass: "image relative"
-  }, [(_vm.course.photo) ? _c('img', {
+  }, [(_vm.course.photo && _vm.course.photo_type != null) ? _c('img', {
     attrs: {
       "src": 'data:image/' + _vm.course.photo_type + ';base64, ' + _vm.course.photo
+    }
+  }) : (_vm.course.photo) ? _c('img', {
+    attrs: {
+      "src": _vm.course.photo
     }
   }) : _c('img', {
     attrs: {
