@@ -29229,7 +29229,7 @@ exports.default = {
             }
           }
         }
-
+        console.log(self.form);
         self.form.photo = lesson["photo"];
         self.form.photo_type = lesson["photoType"];
 
@@ -71838,7 +71838,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       expression: "!item.pc_components.length"
     }]
   }, [_vm._v("Sem conceitos cadastrados.")]), _c('br')], 2), _vm._v("\n          BNCC: \n            "), _c('em', [_vm._l((_vm.item.bncc_components), function(c) {
-    return _c('span', [_vm._v(" " + _vm._s(c.name) + "; ")])
+    return _c('span', [_vm._v(" " + _vm._s(c.name) + "(" + _vm._s(c.cod) + "); ")])
   }), _vm._v(" "), _c('span', {
     directives: [{
       name: "show",
@@ -72934,7 +72934,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_vm._v("Componentes da BNCC")]), _vm._v(" "), _c('div', {
     staticClass: "content"
   }, [_c('ul', [_vm._l((_vm.lesson.bncc_components), function(value, index) {
-    return _c('li', [_c('label', [_vm._v(_vm._s(value.name))])])
+    return _c('li', [_c('label', [_vm._v(_vm._s(value.name) + "(" + _vm._s(value.cod) + ")")])])
   }), _vm._v(" "), (_vm.lesson.bncc_components.length == 0) ? _c('li', [_c('label', [_vm._v("Nenhum componente foi inserido")])]) : _vm._e()], 2)])]), _vm._v(" "), _c('div', {
     staticClass: "column is-6"
   }, [_c('label', {

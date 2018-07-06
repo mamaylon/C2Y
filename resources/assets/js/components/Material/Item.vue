@@ -43,7 +43,7 @@
               </em>
             BNCC: 
               <em>
-                <span v-for="c in item.bncc_components"> {{ c.name }}; </span>
+                <span v-for="c in item.bncc_components"> {{ c.name }}({{c.cod}}); </span>
                 <span v-show="!item.bncc_components.length">Sem conceitos cadastrados.</span><br>
               </em>
             Idade Sugerida: 

@@ -418,18 +418,18 @@
               {
                 if(!(lesson[i] == null))
                 {
-                  self.form[i] = lesson[i];                 
-                }                
+                  self.form[i] = lesson[i];                  
+                }                               
               }
               else if(self.form.hasOwnProperty(i.substring(7)))
               {
                 if(!(lesson[i] == null))
                 {
                   self.form[i.substring(7)] = lesson[i];                 
-                }                 
+                }
               }
             }
-            
+            console.log(self.form);
             self.form.photo = lesson["photo"];
             self.form.photo_type = lesson["photoType"];  
             
