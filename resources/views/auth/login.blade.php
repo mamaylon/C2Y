@@ -1,17 +1,18 @@
 @extends('layouts.app')
 
 @section('content')
-<!--
 <section class="container login-container">
+<!--
 	<img src="{{url('/images/manutencao.jpg')}}" alt="Image"/>
 -->
 	<div class="row margin-bottom">
 		<div class="columns is-12 has-text-centered login">
 			<div class="is-fullwidth">
-				<h1 class="has-text-centered relative">Conecte-se utilizando o Google :)</h1>
+				<h1 class="has-text-centered relative">Conecte-se no sistema utilizando o Google :)</h1>
 			</div>
 		</div>
 	</div>
+
 	<div class="row margin-top">
 		<div class="columns is-12 has-text-centered login">
 			<div class="is-fullwidth">
